@@ -24,7 +24,7 @@ Gdy zdecydujesz, z czego ma się składać Twój formularz, stwórz odpowiednie 
 
 Po zapoznaniu się z podlinkowanymi artykułami wiesz już, na czym polega neumorfizm. Jeśli potrzebujesz dodatkowych wskazówek, to zachęcam Cię do skorzystania z [generatora kodu CSS](https://neumorphism.io/). Możesz również inspirować się [przykładami innych](https://bashooka.com/inspiration/neumorphism-ui-design-examples/).
 
-Jeśli masz własną koncepcję komponentów, to nie widzę przeszkód, abyś z niej skorzystał. Jeśli nie, to możesz się wzorować na poniższej grafice od [Emy Lascan](https://dribbble.com/shots/9527558-Freebie-Neumorphic-UX-UI-Elements).
+Jeśli masz własną koncepcję komponentów, to nie widzę przeszkód, abyś z niej skorzystał. Jeśli nie, to możesz się wzorować na poniższej grafice od [Emy Lascan (MazePixel)](https://uibundle.com/products/428-freebie-neumorphic-ux-ui-elements).
 
 ![](./example.png)
 
