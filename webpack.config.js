@@ -8,7 +8,13 @@ module.exports = {
         filename: 'app.min.js',
     },
     module: {
-        rules: [],
+        rules: [
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                use: 'babel-loader',
+            },
+        ],
     },
     plugins: [
         new HtmlWebpackPlugin({
