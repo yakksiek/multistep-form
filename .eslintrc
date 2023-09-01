@@ -1,0 +1,23 @@
+{
+    "parser": "@babel/eslint-parser",
+    "extends": ["airbnb", "airbnb/hooks", "prettier"],
+    "rules": {
+        "no-console": "off",
+        "react/jsx-filename-extension": [
+            1,
+            {
+                "extensions": [".js"]
+            }
+        ],
+        "indent": ["error", 4, { "SwitchCase": 1 }],
+        "react/jsx-indent": ["error", 4],
+        "react/jsx-indent-props": ["error", 4],
+        "react/jsx-no-constructed-context-values": "off",
+        "func-names": ["error", "as-needed"],
+        "react/prop-types": 0
+    },
+    "globals": {
+        "window": true,
+        "document": true
+    }
+}
