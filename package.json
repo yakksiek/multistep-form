@@ -1,9 +1,14 @@
 {
     "dependencies": {
         "@babel/core": "^7.22.11",
+        "css-loader": "^6.8.1",
         "prop-types": "^15.8.1",
         "react": "^18.2.0",
-        "react-dom": "^18.2.0"
+        "react-dom": "^18.2.0",
+        "sass": "^1.66.1",
+        "sass-loader": "^13.3.2",
+        "style-loader": "^3.3.3",
+        "styled-components": "^5.3.11"
     },
     "devDependencies": {
         "@babel/eslint-parser": "^7.22.11",
@@ -31,7 +36,7 @@
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "start": "webpack serve --mode development",
-        "build": "webpack --mode production"
+        "build": "webpack --env production"
     },
     "keywords": [],
     "author": "",
