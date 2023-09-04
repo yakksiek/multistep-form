@@ -6,6 +6,7 @@ import { Country } from 'country-state-city';
 
 import Form from './Form';
 import { Select } from './FormFields';
+import useGeoLocation from '../hooks/useGeoLocation';
 import * as db from '../db';
 import * as h from '../helpers';
 
@@ -15,8 +16,7 @@ const initial = {
         state: '',
         city: '',
     },
-    // country: h.getNamesFromCSC(Country.getAllCountries()),
-    country: ['Poland'],
+    country: h.getNamesFromCSC(Country.getAllCountries()),
     state: [],
     city: [],
 };
@@ -32,6 +32,7 @@ const reducer = (state, action) => {
 
 function App() {
     const [state, dispatch] = useReducer(reducer, initial);
+    const location = useGeoLocation();
 
     const updateState = (dataToUpdate, newValue) => {
         dispatch({ type: 'update', payload: { name: dataToUpdate, value: newValue } });
@@ -43,13 +44,28 @@ function App() {
 
     useEffect(() => {
         h.renderConditionallySelects(state.form, updateState);
-    }, [state.form]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [state.form.country, state.form.state]);
+
+    useEffect(() => {
+        if (location.loaded && state.form.country === '') {
+            const { lat, long } = location.coords;
+            const userCountry = h.getUserCountry(lat, long);
+            const newForm = { ...state.form, country: userCountry };
+            updateState('form', newForm);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [location]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
 
+        if (name === 'country') {
+            return updateState('form', { ...state.form, country: value, state: '', city: '' });
+        }
+
         const newForm = { ...state.form, [name]: value };
-        dispatch({ type: 'update', payload: { name: 'form', value: newForm } });
+        return updateState('form', newForm);
     };
 
     const createFormFields = () => {
@@ -60,7 +76,6 @@ function App() {
             if (type === 'select') {
                 const selectedOptions = state.form[name];
                 const options = state[name];
-                const disabled = h.disableConditionallySelect(name, state.form);
 
                 return (
                     <Select
@@ -69,7 +84,6 @@ function App() {
                         options={options}
                         selectedOption={selectedOptions}
                         onChange={handleChange}
-                        disabled={disabled}
                     />
                 );
             }

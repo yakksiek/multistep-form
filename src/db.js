@@ -61,7 +61,6 @@ export const formFields = [
     {
         name: 'city',
         label: 'City',
-        required: true,
         type: 'select',
         id: 7,
     },

@@ -25,11 +25,9 @@ function getStates(countryName) {
 
 function getCities(countryName, stateName) {
     const [country] = findItemInCSC(countryName, Country.getAllCountries());
-    if (typeof country === 'undefined') throw new Error('could not find the country');
     const { isoCode: countryCode } = country;
 
     const [state] = findItemInCSC(stateName, State.getStatesOfCountry(countryCode));
-    if (typeof state === 'undefined') throw new Error('could not find the state');
     const { isoCode: stateCode } = state;
 
     const cities = City.getCitiesOfState(countryCode, stateCode);
@@ -39,28 +37,37 @@ function getCities(countryName, stateName) {
 
 export function renderConditionallySelects(form, updateState) {
     const selectedCountry = form.country;
-    const isCountryData = selectedCountry.length > 0;
-    if (!isCountryData) return;
+    if (selectedCountry.length === 0) return;
 
     const states = getStates(selectedCountry);
     updateState('state', states);
 
     const selectedState = form.state;
-    const isStateData = selectedState.length > 0;
-    if (!isStateData) return;
+    if (selectedState.length === 0) return;
 
     const cities = getCities(selectedCountry, selectedState);
     updateState('city', cities);
 }
 
-export function disableConditionallySelect(name, form) {
-    let disabled = false;
-    if (name === 'state') {
-        disabled = form.country === '';
-    }
-    if (name === 'city') {
-        disabled = form.state === '';
-    }
+export function getFirstElFromSplit(string, splitSign) {
+    const isString = typeof string === 'string';
+    if (!isString) throw new Error('not string type');
+    return string.split(splitSign)[0];
+}
 
-    return disabled;
+export function getUserCountry(lat, long) {
+    const [userLat, userLong] = [lat, long].map((el) => getFirstElFromSplit(el.toString(), '.'));
+
+    // eslint-disable-next-line array-callback-return, consistent-return
+    const getCountry = Country.getAllCountries().filter((country) => {
+        const { latitude, longitude } = country;
+        const [countryLat, countryLong] = [latitude, longitude].map((el) => getFirstElFromSplit(el, '.'));
+        if (countryLat === userLat && userLong === countryLong) return country;
+    });
+
+    const isCountry = getCountry.length !== 0;
+    if (!isCountry) throw new Error('no country found');
+
+    const [country] = getCountry;
+    return country.name;
 }
