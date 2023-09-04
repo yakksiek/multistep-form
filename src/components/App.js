@@ -4,6 +4,7 @@
 import React, { useReducer, useEffect } from 'react';
 import { Country } from 'country-state-city';
 
+import ContextProviders from '../context/ContextProviders';
 import Form from './Form';
 import { Select } from './FormFields';
 import useGeoLocation from '../hooks/useGeoLocation';
@@ -16,7 +17,7 @@ const initial = {
         state: '',
         city: '',
     },
-    country: h.getNamesFromCSC(Country.getAllCountries()),
+    country: Country.getAllCountries(),
     state: [],
     city: [],
 };
@@ -74,7 +75,7 @@ function App() {
             const { type, id, name } = field;
 
             if (type === 'select') {
-                const selectedOptions = state.form[name];
+                const value = state.form[name];
                 const options = state[name];
 
                 return (
@@ -82,8 +83,9 @@ function App() {
                         name={name}
                         key={id}
                         options={options}
-                        selectedOption={selectedOptions}
-                        onChange={handleChange}
+                        value={value}
+                        // onChange={handleChange}
+                        // updateState={updateState}
                     />
                 );
             }
@@ -92,13 +94,20 @@ function App() {
         return formInputs;
     };
 
+    const selectContextValue = {
+        form: state.form,
+        updateState,
+    };
+
     return (
         <div>
             <h1>Multistep form</h1>
             <h1 className="bold">The best multistep form work, designs, illustrations, and graphic elements</h1>
             <p>Lorem</p>
             <p className="bold">Lorem</p>
-            <Form>{createFormFields()}</Form>
+            <ContextProviders selectContextValue={selectContextValue}>
+                <Form>{createFormFields()}</Form>
+            </ContextProviders>
         </div>
     );
 }
