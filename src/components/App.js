@@ -1,10 +1,13 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable import/named */
 /* eslint-disable no-unused-vars */
 import React, { useReducer, useEffect } from 'react';
+import { Country } from 'country-state-city';
 
 import Form from './Form';
 import { Select } from './FormFields';
 import * as db from '../db';
+import * as h from '../helpers';
 
 const initial = {
     form: {
@@ -12,7 +15,8 @@ const initial = {
         state: '',
         city: '',
     },
-    country: db.countries,
+    // country: h.getNamesFromCSC(Country.getAllCountries()),
+    country: ['Poland'],
     state: [],
     city: [],
 };
@@ -34,24 +38,12 @@ function App() {
     };
 
     useEffect(() => {
-        console.log(state);
-    }, [state]);
+        console.log(state.form);
+    }, [state.form]);
 
     useEffect(() => {
-        const selectedCountry = state.form.country;
-        const isCountryData = selectedCountry.length > 0;
-        if (!isCountryData) return;
-
-        const states = db.states[selectedCountry];
-        updateState('state', states);
-
-        const selectedState = state.form.state;
-        const isStateData = selectedCountry.length > 0;
-        if (!isStateData) return;
-
-        const cities = db.cities[selectedState];
-        updateState('city', cities || []);
-    }, [state.form.country, state.form.state]);
+        h.renderConditionallySelects(state.form, updateState);
+    }, [state.form]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -64,18 +56,11 @@ function App() {
         // eslint-disable-next-line array-callback-return, consistent-return
         const formInputs = db.formFields.map((field) => {
             const { type, id, name } = field;
-            console.log(state[name]);
-            const selectedOptions = state.form[name];
-            const options = state[name];
 
             if (type === 'select') {
-                let disabled = false;
-                if (name === 'state') {
-                    disabled = state.form.country === '';
-                }
-                if (name === 'city') {
-                    disabled = state.form.state === '';
-                }
+                const selectedOptions = state.form[name];
+                const options = state[name];
+                const disabled = h.disableConditionallySelect(name, state.form);
 
                 return (
                     <Select
