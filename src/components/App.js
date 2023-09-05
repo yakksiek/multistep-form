@@ -6,13 +6,27 @@ import { Country } from 'country-state-city';
 
 import ContextProviders from '../context/ContextProviders';
 import Form from './Form';
-import { Select } from './FormFields';
+import Select from './FormFields/Select';
 import useGeoLocation from '../hooks/useGeoLocation';
 import * as db from '../db';
 import * as h from '../helpers';
+import TextInput from './FormFields/TextInput/TextInput';
 
 const initial = {
     form: {
+        firstName: 'asdf',
+        lastName: '',
+        email: '',
+        phone: '',
+        country: '',
+        state: '',
+        city: '',
+    },
+    errors: {
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
         country: '',
         state: '',
         city: '',
@@ -40,8 +54,8 @@ function App() {
     };
 
     useEffect(() => {
-        console.log(state);
-    }, [state]);
+        console.log(state.form);
+    }, [state.form]);
 
     useEffect(() => {
         h.renderConditionallySelects(state.form, updateState);
@@ -60,6 +74,7 @@ function App() {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
+        console.log(e.target);
 
         const newForm = { ...state.form, [name]: value };
         return updateState('form', newForm);
@@ -68,17 +83,23 @@ function App() {
     const createFormFields = () => {
         // eslint-disable-next-line array-callback-return, consistent-return
         const formInputs = db.formFields.map((field) => {
-            const { type, id, name } = field;
+            const { type, name } = field;
+            const stateValue = state.form[name];
 
             if (type === 'select') {
-                const value = state.form[name];
                 const options = state[name];
 
-                return <Select name={name} key={id} options={options} value={value} />;
+                return <Select name={name} key={name} options={options} value={stateValue} />;
             }
+
+            return <TextInput key={name} onChange={handleChange} name={name} value={stateValue} type={type} />;
         });
 
         return formInputs;
+    };
+
+    const onSubmit = (e) => {
+        e.preventDefault();
     };
 
     const selectContextValue = {
@@ -93,7 +114,7 @@ function App() {
             <p>Lorem</p>
             <p className="bold">Lorem</p>
             <ContextProviders selectContextValue={selectContextValue}>
-                <Form>{createFormFields()}</Form>
+                <Form onSubmit={onSubmit}>{createFormFields()}</Form>
             </ContextProviders>
         </div>
     );

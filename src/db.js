@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+
 export const countries = ['Switzerland', 'Poland', 'England'];
 export const states = {
     Switzerland: ['Zurich', 'Bern', 'Luzern'],
@@ -17,51 +18,56 @@ export const cities = {
 };
 
 export const formFields = [
-    // {
-    //     name: 'firstName',
-    //     label: 'Name',
-    //     required: true,
-    //     pattern: '^[a-zA-Z -]+$',
-    // },
-    // {
-    //     name: 'lastName',
-    //     label: 'Surname',
-    //     required: true,
-    //     pattern: '^[a-zA-Z -]+$',
-    // },
-    // {
-    //     name: 'email',
-    //     label: 'Email',
-    //     required: true,
-    //     // eslint-disable-next-line no-useless-escape
-    //     pattern: "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$", // prettier-ignore
-    // },
-    // {
-    //     name: 'date',
-    //     label: 'Date',
-    //     required: true,
-    //     // eslint-disable-next-line no-useless-escape
-    //     pattern: '^(20)\\d{2}-(0[1-9]|1[1,2])-(0[1-9]|[12][0-9]|3[01])$',
-    //     type: 'date',
-    // },
+    {
+        name: 'firstName',
+        label: 'Name',
+        required: true,
+        pattern: '^[a-zA-Z -]+$',
+        id: crypto.randomUUID(),
+        type: 'text',
+    },
+    {
+        name: 'lastName',
+        label: 'Surname',
+        required: true,
+        pattern: '^[a-zA-Z -]+$',
+        id: crypto.randomUUID(),
+        type: 'text',
+    },
+    {
+        name: 'email',
+        label: 'Email',
+        required: true,
+        pattern: "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$", // prettier-ignore
+        id: crypto.randomUUID(),
+        type: 'email',
+    },
+    {
+        name: 'phone',
+        label: 'Phone',
+        required: true,
+        pattern: '^[0-9]+$',
+        type: 'text',
+        value: '',
+    },
     {
         name: 'country',
         label: 'Country',
         required: true,
         type: 'select',
-        id: 5,
+        id: crypto.randomUUID(),
     },
     {
         name: 'state',
         label: 'State',
         required: true,
         type: 'select',
-        id: 6,
+        id: crypto.randomUUID(),
     },
     {
         name: 'city',
         label: 'City',
         type: 'select',
-        id: 7,
+        id: crypto.randomUUID(),
     },
 ];
