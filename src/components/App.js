@@ -61,10 +61,6 @@ function App() {
     const handleChange = (e) => {
         const { name, value } = e.target;
 
-        // if (name === 'country') {
-        //     return updateState('form', { ...state.form, country: value, state: '', city: '' });
-        // }
-
         const newForm = { ...state.form, [name]: value };
         return updateState('form', newForm);
     };
@@ -78,16 +74,7 @@ function App() {
                 const value = state.form[name];
                 const options = state[name];
 
-                return (
-                    <Select
-                        name={name}
-                        key={id}
-                        options={options}
-                        value={value}
-                        // onChange={handleChange}
-                        // updateState={updateState}
-                    />
-                );
+                return <Select name={name} key={id} options={options} value={value} />;
             }
         });
 

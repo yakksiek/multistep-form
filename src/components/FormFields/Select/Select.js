@@ -12,7 +12,7 @@ import {
     StyledOptionItem,
 } from './Select.styled';
 
-function Select({ name, options, value, onChange }) {
+function Select({ name, options, value }) {
     const [listVisible, setListVisible] = useState(false);
     const [highlightedIndex, setHeighlitedIndex] = useState(0);
     const { form, updateState } = useSelectContext();
