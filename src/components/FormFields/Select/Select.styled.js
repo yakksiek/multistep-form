@@ -11,9 +11,17 @@ const StyledCustomSelect = styled.div`
     padding: 0.5em;
     border-radius: 0.25em;
     outline: none;
+    cursor: pointer;
     &:focus {
         border-color: hsl(200, 100%, 50%);
     }
+
+    ${({ disabled }) =>
+        disabled &&
+        css`
+            pointer-events: none;
+            background-color: lightgrey;
+        `}
 `;
 
 const StyledValue = styled.span`
@@ -43,7 +51,7 @@ const StyledSelectOptions = styled.ul`
     top: calc(100% + 0.25em);
     left: 0;
     z-index: 100;
-    background-color: whites;
+    background-color: white;
     max-height: 15em;
     overflow-y: auto;
     width: calc(100% - 17px);

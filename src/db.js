@@ -51,17 +51,17 @@ export const formFields = [
         type: 'select',
         id: 5,
     },
-    // {
-    //     name: 'state',
-    //     label: 'State',
-    //     required: true,
-    //     type: 'select',
-    //     id: 6,
-    // },
-    // {
-    //     name: 'city',
-    //     label: 'City',
-    //     type: 'select',
-    //     id: 7,
-    // },
+    {
+        name: 'state',
+        label: 'State',
+        required: true,
+        type: 'select',
+        id: 6,
+    },
+    {
+        name: 'city',
+        label: 'City',
+        type: 'select',
+        id: 7,
+    },
 ];

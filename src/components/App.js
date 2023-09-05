@@ -40,8 +40,8 @@ function App() {
     };
 
     useEffect(() => {
-        console.log(state.form);
-    }, [state.form]);
+        console.log(state);
+    }, [state]);
 
     useEffect(() => {
         h.renderConditionallySelects(state.form, updateState);
@@ -61,9 +61,9 @@ function App() {
     const handleChange = (e) => {
         const { name, value } = e.target;
 
-        if (name === 'country') {
-            return updateState('form', { ...state.form, country: value, state: '', city: '' });
-        }
+        // if (name === 'country') {
+        //     return updateState('form', { ...state.form, country: value, state: '', city: '' });
+        // }
 
         const newForm = { ...state.form, [name]: value };
         return updateState('form', newForm);

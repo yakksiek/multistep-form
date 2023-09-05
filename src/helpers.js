@@ -19,8 +19,8 @@ function getStates(countryName) {
     const { isoCode } = country;
 
     const states = State.getStatesOfCountry(isoCode);
-    const stateNames = getNamesFromCSC(states);
-    return stateNames;
+    // const stateNames = getNamesFromCSC(states);
+    return states;
 }
 
 function getCities(countryName, stateName) {
@@ -31,8 +31,8 @@ function getCities(countryName, stateName) {
     const { isoCode: stateCode } = state;
 
     const cities = City.getCitiesOfState(countryCode, stateCode);
-    const citiesNamesArr = getNamesFromCSC(cities);
-    return citiesNamesArr;
+    // const citiesNamesArr = getNamesFromCSC(cities);
+    return cities;
 }
 
 export function renderConditionallySelects(form, updateState) {
