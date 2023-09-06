@@ -118,7 +118,6 @@ export const formFields = {
         {
             name: 'state',
             label: 'State',
-            required: true,
             type: 'select',
             id: crypto.randomUUID(),
         },

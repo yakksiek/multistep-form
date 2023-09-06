@@ -71,3 +71,62 @@ export function getUserCountry(lat, long) {
     const [country] = getCountry;
     return country.name;
 }
+
+// export validateSelects (selectFields, )
+
+export function validate(validationFields, inputElementsArr) {
+    let errors = {};
+    inputElementsArr.forEach((input) => {
+        const { name: inputName, value: inputValue } = input;
+        const validationField = validationFields.find((el) => el.name === inputName);
+        if (!validationField) throw new Error('no validation field');
+
+        const { label, pattern, required, name } = validationField;
+
+        if (required) {
+            if (inputValue.length === 0) {
+                const message = `[${label}] input is required`;
+                errors = { ...errors, [name]: message };
+                return;
+            }
+        }
+
+        if (pattern) {
+            const reg = new RegExp(pattern);
+            const isPatternMatch = reg.test(inputValue);
+            if (!isPatternMatch) {
+                const message = `Provided data in [${label}] not valid`;
+                errors = { ...errors, [name]: message };
+            }
+        }
+    });
+
+    return errors;
+}
+
+export function validateSelects(requiredSelectsFields, form) {
+    let selectErrors = {};
+    requiredSelectsFields.forEach((select) => {
+        const { name } = select;
+        const isInputValid = form[name] !== '';
+        if (!isInputValid) selectErrors = { ...selectErrors, [name]: `Field [${name}] cannot be empty` };
+    });
+
+    return selectErrors;
+}
+
+export function findInputElementsInForm(form) {
+    const inputElements = Array.from(form.elements).filter(
+        (element) => element.tagName.toLowerCase() === 'input' && element.type !== 'submit',
+    );
+
+    return inputElements;
+}
+
+export function checkForRequiredFieldType(fields, fieldType) {
+    return fields.filter((field) => field.type === fieldType && field.required);
+}
+
+export function isObjectEmpty(object) {
+    return Object.keys(object).length === 0;
+}

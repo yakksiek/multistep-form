@@ -3,6 +3,9 @@
 import React, { useState, useEffect, useRef, createRef } from 'react';
 
 import { useSelectContext } from '../../../context/SelectContext';
+import Label from '../Label/Label';
+import Wrapper from '../Wrapper';
+
 import {
     StyledCustomSelect,
     StyledDivider,
@@ -11,11 +14,12 @@ import {
     StyledValue,
     StyledOptionItem,
 } from './Select.styled';
+import FieldError from '../FieldError';
 
-function Select({ name, options, value }) {
+function Select({ name, options, value, error }) {
     const [listVisible, setListVisible] = useState(false);
     const [highlightedIndex, setHeighlitedIndex] = useState(0);
-    const { form, updateState } = useSelectContext();
+    const { form, updateState, errors } = useSelectContext();
     const optionRefs = useRef([]);
     const disabled = options.length === 0;
 
@@ -40,10 +44,14 @@ function Select({ name, options, value }) {
     const handleStateUpdate = (newValue) => {
         if (name === 'country') {
             updateState('city', []);
-            return updateState('form', { ...form, country: newValue, state: '', city: '' });
+            updateState('form', { ...form, country: newValue, state: '', city: '' });
+            const isErrorInState = errors[name];
+            if (!isErrorInState) return;
+            const { [name]: ommitedKey, ...rest } = errors;
+            updateState('errors', rest);
         }
 
-        return updateState('form', { ...form, [name]: newValue });
+        updateState('form', { ...form, [name]: newValue });
     };
 
     const handleKeyDown = (e) => {
@@ -114,20 +122,24 @@ function Select({ name, options, value }) {
     };
 
     return (
-        <StyledCustomSelect
-            tabIndex={0}
-            onBlur={handleBlur}
-            onClick={handleClick}
-            onKeyDown={handleKeyDown}
-            disabled={disabled}
-        >
-            <StyledValue name={name} value={value}>
-                {value}
-            </StyledValue>
-            <StyledDivider />
-            <StyledCaret />
-            <StyledSelectOptions isVisible={listVisible}>{optionsJSX()}</StyledSelectOptions>
-        </StyledCustomSelect>
+        <Wrapper>
+            <Label>{name}</Label>
+            <StyledCustomSelect
+                tabIndex={0}
+                onBlur={handleBlur}
+                onClick={handleClick}
+                onKeyDown={handleKeyDown}
+                disabled={disabled}
+            >
+                <StyledValue value={value} name={name} data-select={name}>
+                    {value || (!disabled && 'Choose one option')}
+                </StyledValue>
+                <StyledDivider />
+                <StyledCaret />
+                <StyledSelectOptions isVisible={listVisible}>{optionsJSX()}</StyledSelectOptions>
+            </StyledCustomSelect>
+            <FieldError>{error}</FieldError>
+        </Wrapper>
     );
 }
 

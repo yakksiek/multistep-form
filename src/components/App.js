@@ -34,7 +34,7 @@ const initial = {
         state: '',
         city: '',
     },
-    tabsNumber: db.formTabsFields.length,
+    tabNames: db.formTabsFields,
     country: Country.getAllCountries(),
     state: [],
     city: [],
@@ -51,7 +51,7 @@ const reducer = (state, action) => {
 
 function App() {
     const [state, dispatch] = useReducer(reducer, initial);
-    const { currentStepIndex, isFirstStep, isLastStep, back, next } = useMultiStepForm(state.tabsNumber);
+    const { currentStepIndex, isFirstStep, isLastStep, back, next } = useMultiStepForm(state.tabNames.length);
     const location = useGeoLocation();
 
     const updateState = (dataToUpdate, newValue) => {
@@ -68,21 +68,37 @@ function App() {
     }, [state.form.country, state.form.state]);
 
     useEffect(() => {
-        if (location.loaded && state.form.country === '') {
-            const { lat, long } = location.coords;
-            const userCountry = h.getUserCountry(lat, long);
-            const newForm = { ...state.form, country: userCountry };
-            updateState('form', newForm);
-        }
+        // if (location.loaded && state.form.country === '') {
+        //     const { lat, long } = location.coords;
+        //     const userCountry = h.getUserCountry(lat, long);
+        //     const newForm = { ...state.form, country: userCountry };
+        //     updateState('form', newForm);
+        // }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [location]);
+
+    const liveValidation = (input) => {
+        const inputName = input.name;
+        const isErrorInState = state.errors[inputName];
+        if (!isErrorInState) return;
+
+        const currentTabTitle = state.tabNames[currentStepIndex];
+        const currentFormFields = db.formFields[currentTabTitle];
+        const inputError = h.validate(currentFormFields, [input]);
+        const isErrorObjEmpty = Object.keys(inputError).length === 0;
+        if (!isErrorObjEmpty) return;
+
+        const { [inputName]: ommitedKey, ...rest } = state.errors;
+        updateState('errors', rest);
+    };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         console.log(e.target);
 
         const newForm = { ...state.form, [name]: value };
-        return updateState('form', newForm);
+        updateState('form', newForm);
+        liveValidation(e.target);
     };
 
     const createInputs = (fields) => {
@@ -90,14 +106,24 @@ function App() {
         const formInputs = fields.map((field) => {
             const { type, name } = field;
             const stateValue = state.form[name];
+            const error = state.errors[name];
 
             if (type === 'select') {
                 const options = state[name];
 
-                return <Select name={name} key={name} options={options} value={stateValue} />;
+                return <Select name={name} key={name} options={options} value={stateValue} error={error} />;
             }
 
-            return <TextInput key={name} onChange={handleChange} name={name} value={stateValue} type={type} />;
+            return (
+                <TextInput
+                    key={name}
+                    onChange={handleChange}
+                    name={name}
+                    value={stateValue}
+                    type={type}
+                    error={error}
+                />
+            );
         });
 
         return formInputs;
@@ -122,13 +148,31 @@ function App() {
 
     const onSubmit = (e) => {
         e.preventDefault();
+        const form = e.target;
+        const inputElements = h.findInputElementsInForm(form);
+        const currentTabTitle = state.tabNames[currentStepIndex];
+        const currentFormFields = db.formFields[currentTabTitle];
+        let errors = {};
+        const submitErrors = h.validate(currentFormFields, inputElements);
+        errors = { ...errors, ...submitErrors };
 
-        console.log(e.target);
+        const requiredSelectsFields = h.checkForRequiredFieldType(currentFormFields, 'select');
+        if (requiredSelectsFields) {
+            const selectErrors = h.validateSelects(requiredSelectsFields, state.form, errors);
+            errors = { ...errors, ...selectErrors };
+        }
+
+        updateState('errors', errors);
+        const isFormClean = h.isObjectEmpty(errors);
+        const isStateClean = h.isObjectEmpty(state.errors);
+        if (!isFormClean || !isStateClean) return;
+        next();
     };
 
     const selectContextValue = {
         form: state.form,
         updateState,
+        errors: state.errors,
     };
 
     return (
@@ -136,7 +180,7 @@ function App() {
             <ContextProviders selectContextValue={selectContextValue}>
                 <Form onSubmit={onSubmit}>
                     <div>
-                        {currentStepIndex + 1} / {state.tabsNumber}
+                        {currentStepIndex + 1} / {state.tabNames.length}
                     </div>
                     {generateTabsAndInputs()[currentStepIndex]}
 
@@ -144,9 +188,7 @@ function App() {
                         Back
                     </Form.NavBtn>
 
-                    <Form.NavBtn type="submit" onClick={next}>
-                        {isLastStep ? 'Summary' : 'Next'}
-                    </Form.NavBtn>
+                    <Form.NavBtn type="submit">{isLastStep ? 'Summary' : 'Next'}</Form.NavBtn>
                 </Form>
             </ContextProviders>
         </div>

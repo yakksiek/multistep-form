@@ -24,7 +24,9 @@ const StyledCustomSelect = styled.div`
         `}
 `;
 
-const StyledValue = styled.span`
+const StyledValue = styled.span.attrs((props) => ({
+    'data-select': props['data-select'],
+}))`
     flex-grow: 1;
 `;
 
