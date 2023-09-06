@@ -12,9 +12,12 @@ import * as db from '../db';
 import * as h from '../helpers';
 import TextInput from './FormFields/TextInput/TextInput';
 
+import useMultiStepForm from '../hooks/useMultiStepForm';
+import Tab from './Tab/Tab';
+
 const initial = {
     form: {
-        firstName: 'asdf',
+        firstName: '',
         lastName: '',
         email: '',
         phone: '',
@@ -31,6 +34,7 @@ const initial = {
         state: '',
         city: '',
     },
+    tabsNumber: db.formTabsFields.length,
     country: Country.getAllCountries(),
     state: [],
     city: [],
@@ -47,6 +51,7 @@ const reducer = (state, action) => {
 
 function App() {
     const [state, dispatch] = useReducer(reducer, initial);
+    const { currentStepIndex, isFirstStep, isLastStep, back, next } = useMultiStepForm(state.tabsNumber);
     const location = useGeoLocation();
 
     const updateState = (dataToUpdate, newValue) => {
@@ -54,8 +59,8 @@ function App() {
     };
 
     useEffect(() => {
-        console.log(state.form);
-    }, [state.form]);
+        console.log(state);
+    }, [state]);
 
     useEffect(() => {
         h.renderConditionallySelects(state.form, updateState);
@@ -80,9 +85,9 @@ function App() {
         return updateState('form', newForm);
     };
 
-    const createFormFields = () => {
+    const createInputs = (fields) => {
         // eslint-disable-next-line array-callback-return, consistent-return
-        const formInputs = db.formFields.map((field) => {
+        const formInputs = fields.map((field) => {
             const { type, name } = field;
             const stateValue = state.form[name];
 
@@ -98,8 +103,27 @@ function App() {
         return formInputs;
     };
 
+    const generateTabsAndInputs = function () {
+        // eslint-disable-next-line array-callback-return
+        const tabs = db.formTabsFields.map((tabName) => {
+            const tabFields = db.formFields[tabName];
+
+            const inputs = createInputs(tabFields);
+            return (
+                <Tab key={tabName} name={tabName}>
+                    <h2>{tabName}</h2>
+                    {inputs}
+                </Tab>
+            );
+        });
+
+        return tabs;
+    };
+
     const onSubmit = (e) => {
         e.preventDefault();
+
+        console.log(e.target);
     };
 
     const selectContextValue = {
@@ -108,13 +132,22 @@ function App() {
     };
 
     return (
-        <div>
-            <h1>Multistep form</h1>
-            <h1 className="bold">The best multistep form work, designs, illustrations, and graphic elements</h1>
-            <p>Lorem</p>
-            <p className="bold">Lorem</p>
+        <div style={{ border: '1px solid black' }}>
             <ContextProviders selectContextValue={selectContextValue}>
-                <Form onSubmit={onSubmit}>{createFormFields()}</Form>
+                <Form onSubmit={onSubmit}>
+                    <div>
+                        {currentStepIndex + 1} / {state.tabsNumber}
+                    </div>
+                    {generateTabsAndInputs()[currentStepIndex]}
+
+                    <Form.NavBtn type="button" onClick={back} disabled={isFirstStep}>
+                        Back
+                    </Form.NavBtn>
+
+                    <Form.NavBtn type="submit" onClick={next}>
+                        {isLastStep ? 'Summary' : 'Next'}
+                    </Form.NavBtn>
+                </Form>
             </ContextProviders>
         </div>
     );
