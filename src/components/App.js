@@ -17,22 +17,30 @@ import Tab from './Tab/Tab';
 
 const initial = {
     form: {
-        firstName: '',
-        lastName: '',
-        email: '',
-        phone: '',
-        country: '',
+        firstName: 'we',
+        lastName: 'qwe',
+        email: 'test@test.com',
+        phone: '333',
+        country: 'Poland',
         state: '',
         city: '',
+        school: [],
+        // firstName: '',
+        // lastName: '',
+        // email: '',
+        // phone: '',
+        // country: '',
+        // state: '',
+        // city: '',
     },
     errors: {
-        firstName: '',
-        lastName: '',
-        email: '',
-        phone: '',
-        country: '',
-        state: '',
-        city: '',
+        // firstName: '',
+        // lastName: '',
+        // email: '',
+        // phone: '',
+        // country: '',
+        // state: '',
+        // city: '',
     },
     tabNames: db.formTabsFields,
     country: Country.getAllCountries(),
@@ -51,7 +59,7 @@ const reducer = (state, action) => {
 
 function App() {
     const [state, dispatch] = useReducer(reducer, initial);
-    const { currentStepIndex, isFirstStep, isLastStep, back, next } = useMultiStepForm(state.tabNames.length);
+    const { currentStepIndex, isFirstStep, isLastStep, prevTab, nextTab } = useMultiStepForm(state.tabNames.length);
     const location = useGeoLocation();
 
     const updateState = (dataToUpdate, newValue) => {
@@ -85,16 +93,11 @@ function App() {
         const currentTabTitle = state.tabNames[currentStepIndex];
         const currentFormFields = db.formFields[currentTabTitle];
         const inputError = h.validate(currentFormFields, [input]);
-        const isErrorObjEmpty = Object.keys(inputError).length === 0;
-        if (!isErrorObjEmpty) return;
-
-        const { [inputName]: ommitedKey, ...rest } = state.errors;
-        updateState('errors', rest);
+        h.resetErrorInState(inputError, inputName, state.errors, updateState);
     };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        console.log(e.target);
 
         const newForm = { ...state.form, [name]: value };
         updateState('form', newForm);
@@ -104,14 +107,17 @@ function App() {
     const createInputs = (fields) => {
         // eslint-disable-next-line array-callback-return, consistent-return
         const formInputs = fields.map((field) => {
-            const { type, name } = field;
+            const { type, name, label } = field;
             const stateValue = state.form[name];
             const error = state.errors[name];
+            console.log(type);
 
             if (type === 'select') {
                 const options = state[name];
 
-                return <Select name={name} key={name} options={options} value={stateValue} error={error} />;
+                return (
+                    <Select key={name} label={label} name={name} options={options} value={stateValue} error={error} />
+                );
             }
 
             return (
@@ -122,6 +128,7 @@ function App() {
                     value={stateValue}
                     type={type}
                     error={error}
+                    label={label}
                 />
             );
         });
@@ -166,7 +173,7 @@ function App() {
         const isFormClean = h.isObjectEmpty(errors);
         const isStateClean = h.isObjectEmpty(state.errors);
         if (!isFormClean || !isStateClean) return;
-        next();
+        nextTab();
     };
 
     const selectContextValue = {
@@ -184,7 +191,7 @@ function App() {
                     </div>
                     {generateTabsAndInputs()[currentStepIndex]}
 
-                    <Form.NavBtn type="button" onClick={back} disabled={isFirstStep}>
+                    <Form.NavBtn type="button" onClick={prevTab} disabled={isFirstStep}>
                         Back
                     </Form.NavBtn>
 

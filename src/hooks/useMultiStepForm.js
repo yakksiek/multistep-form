@@ -1,18 +1,18 @@
 import { useState } from 'react';
 
 function useMultiStepForm(steps) {
-    const [currentStepIndex, setCurrentStepIndex] = useState(0);
+    const [currentStepIndex, setCurrentStepIndex] = useState(1);
     const isFirstStep = currentStepIndex === 0;
     const isLastStep = currentStepIndex === steps - 1;
 
-    const next = () => {
+    const nextTab = () => {
         setCurrentStepIndex((i) => {
             if (i > steps - 1) return i;
             return i + 1;
         });
     };
 
-    const back = () => {
+    const prevTab = () => {
         setCurrentStepIndex((i) => {
             if (i <= 0) return i;
             return i - 1;
@@ -23,7 +23,7 @@ function useMultiStepForm(steps) {
         setCurrentStepIndex(index);
     };
 
-    return { currentStepIndex, goTo, next, back, isFirstStep, isLastStep };
+    return { currentStepIndex, goTo, nextTab, prevTab, isFirstStep, isLastStep };
 }
 
 export default useMultiStepForm;

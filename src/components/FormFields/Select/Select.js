@@ -5,6 +5,7 @@ import React, { useState, useEffect, useRef, createRef } from 'react';
 import { useSelectContext } from '../../../context/SelectContext';
 import Label from '../Label/Label';
 import Wrapper from '../Wrapper';
+import * as h from '../../../helpers';
 
 import {
     StyledCustomSelect,
@@ -16,7 +17,7 @@ import {
 } from './Select.styled';
 import FieldError from '../FieldError';
 
-function Select({ name, options, value, error }) {
+function Select({ name, options, value, error, label }) {
     const [listVisible, setListVisible] = useState(false);
     const [highlightedIndex, setHeighlitedIndex] = useState(0);
     const { form, updateState, errors } = useSelectContext();
@@ -41,16 +42,20 @@ function Select({ name, options, value, error }) {
         scrollIntoView();
     }, [highlightedIndex]);
 
+    const resetSelectError = () => {
+        const errorInState = errors[name];
+        if (!errorInState) return;
+        const { [name]: ommitedKey, ...rest } = errors;
+        updateState('errors', rest);
+    };
+
     const handleStateUpdate = (newValue) => {
         if (name === 'country') {
             updateState('city', []);
             updateState('form', { ...form, country: newValue, state: '', city: '' });
-            const isErrorInState = errors[name];
-            if (!isErrorInState) return;
-            const { [name]: ommitedKey, ...rest } = errors;
-            updateState('errors', rest);
         }
 
+        resetSelectError();
         updateState('form', { ...form, [name]: newValue });
     };
 
@@ -123,7 +128,7 @@ function Select({ name, options, value, error }) {
 
     return (
         <Wrapper>
-            <Label>{name}</Label>
+            <Label>{label}</Label>
             <StyledCustomSelect
                 tabIndex={0}
                 onBlur={handleBlur}

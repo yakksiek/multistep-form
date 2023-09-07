@@ -130,3 +130,12 @@ export function checkForRequiredFieldType(fields, fieldType) {
 export function isObjectEmpty(object) {
     return Object.keys(object).length === 0;
 }
+
+export function resetErrorInState(inputError, inputName, stateErrors, updateState) {
+    console.log(inputError);
+    const isErrorObjEmpty = Object.keys(inputError).length === 0;
+    if (!isErrorObjEmpty) return;
+
+    const { [inputName]: ommitedKey, ...rest } = stateErrors;
+    updateState('errors', rest);
+}
