@@ -1,11 +1,12 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable import/named */
 /* eslint-disable no-unused-vars */
-import React, { useReducer, useEffect } from 'react';
+import React, { useReducer, useEffect, useState } from 'react';
 import { Country } from 'country-state-city';
 
 import ContextProviders from '../context/ContextProviders';
 import Form from './Form';
+import Fieldset from './FormFields/Fieldset';
 import Select from './FormFields/Select';
 import useGeoLocation from '../hooks/useGeoLocation';
 import * as db from '../db';
@@ -25,6 +26,7 @@ const initial = {
         state: '',
         city: '',
         school: [],
+        experience: [],
         // firstName: '',
         // lastName: '',
         // email: '',
@@ -32,16 +34,10 @@ const initial = {
         // country: '',
         // state: '',
         // city: '',
+        // school: [],
+        // experience: [],
     },
-    errors: {
-        // firstName: '',
-        // lastName: '',
-        // email: '',
-        // phone: '',
-        // country: '',
-        // state: '',
-        // city: '',
-    },
+    errors: {},
     tabNames: db.formTabsFields,
     country: Country.getAllCountries(),
     state: [],
@@ -50,8 +46,10 @@ const initial = {
 
 const reducer = (state, action) => {
     switch (action.type) {
-        case 'update':
+        case 'updateStateKey':
             return { ...state, [action.payload.name]: action.payload.value };
+        case 'updateFormKey':
+            return { ...state, form: { ...state.form, [action.payload.name]: action.payload.value } };
         default:
             return state;
     }
@@ -59,16 +57,25 @@ const reducer = (state, action) => {
 
 function App() {
     const [state, dispatch] = useReducer(reducer, initial);
-    const { currentStepIndex, isFirstStep, isLastStep, prevTab, nextTab } = useMultiStepForm(state.tabNames.length);
+    const {
+        currentStepIndex,
+        isFirstStep,
+        isLastStep,
+        prevTab,
+        nextTab,
+        formDataFields,
+        addFormField,
+        removeFormField,
+    } = useMultiStepForm(state.tabNames, db.formFields);
     const location = useGeoLocation();
-
-    const updateState = (dataToUpdate, newValue) => {
-        dispatch({ type: 'update', payload: { name: dataToUpdate, value: newValue } });
-    };
 
     useEffect(() => {
         console.log(state);
     }, [state]);
+
+    const updateState = (dataToUpdate, newValue) => {
+        dispatch({ type: 'updateStateKey', payload: { name: dataToUpdate, value: newValue } });
+    };
 
     useEffect(() => {
         h.renderConditionallySelects(state.form, updateState);
@@ -89,28 +96,35 @@ function App() {
         const inputName = input.name;
         const isErrorInState = state.errors[inputName];
         if (!isErrorInState) return;
-
-        const currentTabTitle = state.tabNames[currentStepIndex];
-        const currentFormFields = db.formFields[currentTabTitle];
-        const inputError = h.validate(currentFormFields, [input]);
+        const inputError = h.validate(formDataFields, [input]);
         h.resetErrorInState(inputError, inputName, state.errors, updateState);
     };
 
-    const handleChange = (e) => {
+    const handleChange = (e, id, groupName) => {
         const { name, value } = e.target;
-
-        const newForm = { ...state.form, [name]: value };
-        updateState('form', newForm);
         liveValidation(e.target);
+
+        if (groupName === 'school' || groupName === 'experience') {
+            const arrayCopy = [...state.form[groupName]];
+            const itemIndex = arrayCopy.findIndex((item) => item.id === id);
+            if (itemIndex === -1) {
+                const newObjItem = { id, value, name };
+                arrayCopy.push(newObjItem);
+            } else {
+                arrayCopy[itemIndex].value = value;
+            }
+
+            return dispatch({ type: 'updateFormKey', payload: { name: groupName, value: arrayCopy } });
+        }
+
+        return dispatch({ type: 'updateFormKey', payload: { name, value } });
     };
 
     const createInputs = (fields) => {
-        // eslint-disable-next-line array-callback-return, consistent-return
         const formInputs = fields.map((field) => {
-            const { type, name, label } = field;
-            const stateValue = state.form[name];
+            const { type, name, label, id, checked, groupName, deleteButton } = field;
+            let stateValue = state.form[name];
             const error = state.errors[name];
-            console.log(type);
 
             if (type === 'select') {
                 const options = state[name];
@@ -120,16 +134,36 @@ function App() {
                 );
             }
 
+            if (label === 'School' || label === 'Experience') {
+                const group = state.form[groupName];
+                const item = group.find((el) => el.id === id);
+                stateValue = item ? item.value : '';
+            }
+
             return (
                 <TextInput
-                    key={name}
+                    key={id}
                     onChange={handleChange}
                     name={name}
                     value={stateValue}
                     type={type}
                     error={error}
                     label={label}
-                />
+                    checked={checked}
+                    id={id}
+                    groupName={groupName}
+                >
+                    {deleteButton && (
+                        <button
+                            type="button"
+                            onChange={() => {
+                                removeFormField(id);
+                            }}
+                        >
+                            DELETE
+                        </button>
+                    )}
+                </TextInput>
             );
         });
 
@@ -137,11 +171,8 @@ function App() {
     };
 
     const generateTabsAndInputs = function () {
-        // eslint-disable-next-line array-callback-return
-        const tabs = db.formTabsFields.map((tabName) => {
-            const tabFields = db.formFields[tabName];
-
-            const inputs = createInputs(tabFields);
+        const tabs = state.tabNames.map((tabName) => {
+            const inputs = createInputs(formDataFields);
             return (
                 <Tab key={tabName} name={tabName}>
                     <h2>{tabName}</h2>
@@ -157,13 +188,11 @@ function App() {
         e.preventDefault();
         const form = e.target;
         const inputElements = h.findInputElementsInForm(form);
-        const currentTabTitle = state.tabNames[currentStepIndex];
-        const currentFormFields = db.formFields[currentTabTitle];
         let errors = {};
-        const submitErrors = h.validate(currentFormFields, inputElements);
+        const submitErrors = h.validate(formDataFields, inputElements);
         errors = { ...errors, ...submitErrors };
 
-        const requiredSelectsFields = h.checkForRequiredFieldType(currentFormFields, 'select');
+        const requiredSelectsFields = h.checkForRequiredFieldType(formDataFields, 'select');
         if (requiredSelectsFields) {
             const selectErrors = h.validateSelects(requiredSelectsFields, state.form, errors);
             errors = { ...errors, ...selectErrors };
@@ -190,7 +219,13 @@ function App() {
                         {currentStepIndex + 1} / {state.tabNames.length}
                     </div>
                     {generateTabsAndInputs()[currentStepIndex]}
-
+                    <div>{state[`${state.tabNames[currentStepIndex]}ExtraInputs`]}</div>
+                    {(currentStepIndex === 1 || currentStepIndex === 2) && (
+                        <button onClick={addFormField} type="button">
+                            Add field
+                        </button>
+                    )}
+                    <hr />
                     <Form.NavBtn type="button" onClick={prevTab} disabled={isFirstStep}>
                         Back
                     </Form.NavBtn>

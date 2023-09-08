@@ -139,3 +139,11 @@ export function resetErrorInState(inputError, inputName, stateErrors, updateStat
     const { [inputName]: ommitedKey, ...rest } = stateErrors;
     updateState('errors', rest);
 }
+
+export function updateArrayItemById(objectsArr, id, value) {
+    return objectsArr.reduce((acc, cur) => {
+        if (cur.id !== id) return [...acc, cur];
+
+        return [...acc, { ...cur, name: value }];
+    }, []);
+}

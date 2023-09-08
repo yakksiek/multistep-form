@@ -106,6 +106,7 @@ export const formFields = {
             required: true,
             pattern: '^[0-9]+$',
             type: 'text',
+            id: crypto.randomUUID(),
             value: '',
         },
         {
@@ -130,38 +131,22 @@ export const formFields = {
     ],
     education: [
         {
-            name: 'school',
+            name: 'school-1',
             label: 'School',
             pattern: '^[a-zA-Z -]+$',
             id: crypto.randomUUID(),
             type: 'text',
-        },
-        {
-            name: 'highschool',
-            label: 'High School',
-            id: crypto.randomUUID(),
-            type: 'radio',
-        },
-        {
-            name: 'higherEducation',
-            label: 'Higher Education',
-            id: crypto.randomUUID(),
-            type: 'radio',
-        },
-        {
-            name: 'course',
-            label: 'Course',
-            id: crypto.randomUUID(),
-            type: 'radio',
+            groupName: 'school',
         },
     ],
     experience: [
         {
-            name: 'job',
-            label: 'Job',
+            name: 'experience-1',
+            label: 'Experience',
             pattern: '^[a-zA-Z -]+$',
             id: crypto.randomUUID(),
             type: 'text',
+            groupName: 'experience',
         },
     ],
 };
