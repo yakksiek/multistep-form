@@ -1,17 +1,17 @@
 /* eslint-disable no-unused-vars */
 import { useState } from 'react';
 
-function useMultiStepForm(steps, allFields) {
+function useMultiStepForm(state, allFields, dispatch) {
     const [currentStepIndex, setCurrentStepIndex] = useState(1);
-    const [formDataFields, setFormDataFields] = useState(allFields[steps[currentStepIndex]]);
-    const stepsNumber = steps.length;
+    const [formDataFields, setFormDataFields] = useState(allFields[state.tabNames[currentStepIndex]]);
+    const stepsNumber = state.tabNames.length;
     const isFirstStep = currentStepIndex === 0;
     const isLastStep = currentStepIndex === stepsNumber - 1;
 
     const nextTab = () => {
         setCurrentStepIndex((i) => {
             if (i > stepsNumber - 1) return i;
-            setFormDataFields(allFields[steps[currentStepIndex + 1]]);
+            setFormDataFields(allFields[state.tabNames[currentStepIndex + 1]]);
             return i + 1;
         });
     };
@@ -19,7 +19,7 @@ function useMultiStepForm(steps, allFields) {
     const prevTab = () => {
         setCurrentStepIndex((i) => {
             if (i <= 0) return i;
-            setFormDataFields(allFields[steps[currentStepIndex - 1]]);
+            setFormDataFields(allFields[state.tabNames[currentStepIndex - 1]]);
             return i - 1;
         });
     };
@@ -42,11 +42,24 @@ function useMultiStepForm(steps, allFields) {
         setFormDataFields(copyDataFields);
     };
 
-    const removeFormField = (id) => {
+    const removeFormField = (id, groupName) => {
+        const filteredFormFields = formDataFields.filter((obj) => obj.id !== id);
+        const filteredSchoolState = state.form[groupName].filter((obj) => obj.id !== id);
+        setFormDataFields(filteredFormFields);
+        dispatch({ type: 'updateFormKey', payload: { name: groupName, value: filteredSchoolState } });
+    };
 
-    }
-
-    return { currentStepIndex, goTo, nextTab, prevTab, isFirstStep, isLastStep, formDataFields, addFormField, removeFormField };
+    return {
+        currentStepIndex,
+        goTo,
+        nextTab,
+        prevTab,
+        isFirstStep,
+        isLastStep,
+        formDataFields,
+        addFormField,
+        removeFormField,
+    };
 }
 
 export default useMultiStepForm;

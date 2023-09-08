@@ -66,7 +66,7 @@ function App() {
         formDataFields,
         addFormField,
         removeFormField,
-    } = useMultiStepForm(state.tabNames, db.formFields);
+    } = useMultiStepForm(state, db.formFields, dispatch);
     const location = useGeoLocation();
 
     useEffect(() => {
@@ -156,8 +156,8 @@ function App() {
                     {deleteButton && (
                         <button
                             type="button"
-                            onChange={() => {
-                                removeFormField(id);
+                            onClick={() => {
+                                removeFormField(id, groupName);
                             }}
                         >
                             DELETE
@@ -221,7 +221,7 @@ function App() {
                     {generateTabsAndInputs()[currentStepIndex]}
                     <div>{state[`${state.tabNames[currentStepIndex]}ExtraInputs`]}</div>
                     {(currentStepIndex === 1 || currentStepIndex === 2) && (
-                        <button onClick={addFormField} type="button">
+                        <button disabled={formDataFields.length === 3} onClick={addFormField} type="button">
                             Add field
                         </button>
                     )}
