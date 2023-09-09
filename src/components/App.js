@@ -231,7 +231,7 @@ function App() {
                         Back
                     </Form.NavBtn>
 
-                    <Form.NavBtn type="submit">{isLastStep - 1 ? 'Summary' : 'Next'}</Form.NavBtn>
+                    <Form.NavBtn type="submit">{isLastStep ? 'Summary' : 'Next'}</Form.NavBtn>
                 </Form>
             </ContextProviders>
         </div>
