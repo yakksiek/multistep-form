@@ -5,6 +5,10 @@ const GlobalStyles = createGlobalStyle`
     font-family: 'SFPro', sans-serif;
   }
 
+  ul {
+    list-style: none;
+  }
+
   .bold {
     font-family: 'SFProBold';
   }

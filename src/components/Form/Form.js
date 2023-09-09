@@ -1,7 +1,12 @@
 import React from 'react';
+import { StyledForm } from './Form.styled';
 
 function Form({ onSubmit, children }) {
-    return <form noValidate onSubmit={onSubmit}>{children}</form>;
+    return (
+        <StyledForm noValidate onSubmit={onSubmit}>
+            {children}
+        </StyledForm>
+    );
 }
 
 export default Form;

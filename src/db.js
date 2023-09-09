@@ -18,7 +18,7 @@ export const cities = {
 };
 
 export const formFields = {
-    address: [
+    'personal info': [
         {
             name: 'firstName',
             label: 'Name',
@@ -112,3 +112,10 @@ export const formFields = {
 };
 
 export const formTabsFields = Object.keys(formFields);
+
+export const tabDescriptions = [
+    'Enter your personal information to get closer to companies',
+    'Get to know better by adding your diploma, certificate and education life.',
+    'Help companies get to know you better by telling them about your past experiences.',
+    'User photo and summary',
+];

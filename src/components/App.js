@@ -8,6 +8,7 @@ import ContextProviders from '../context/ContextProviders';
 import useGeoLocation from '../hooks/useGeoLocation';
 import useImageUploader from '../hooks/useImageUploader';
 import Form from './Form';
+import FormSummary from './FormSummary';
 import Fieldset from './FormFields/Fieldset';
 import UserCard from './UserCard';
 import Select from './FormFields/Select';
@@ -139,7 +140,6 @@ function App() {
 
             if (type === 'select') {
                 const options = state[name];
-                console.log(name);
                 return <Select key={name} data={data} options={options} value={stateValue} />;
             }
 
@@ -214,8 +214,13 @@ function App() {
     };
 
     return (
-        <div style={{ border: '1px solid black' }}>
+        <div style={{ border: '1px solid black', display: 'flex' }}>
             <ContextProviders selectContextValue={selectContextValue}>
+                <FormSummary
+                    currentStepIndex={currentStepIndex}
+                    tabNames={state.tabNames}
+                    tabDescriptions={db.tabDescriptions}
+                />
                 <Form onSubmit={onSubmit}>
                     <div>
                         {currentStepIndex + 1} / {state.tabNames.length}
