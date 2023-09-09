@@ -134,12 +134,12 @@ function App() {
             let stateValue = state.form[name];
             let onChange = handleChange;
             const error = state.errors[name];
-            const data = { ...field, value: stateValue, onChange, error };
+            const data = { ...field, onChange, error };
 
             if (type === 'select') {
                 const options = state[name];
-
-                return <Select key={name} data={data} options={options} />;
+                console.log(name)
+                return <Select key={name} data={data} options={options} value={stateValue} />;
             }
 
             if (label === 'School' || label === 'Experience') {
@@ -153,7 +153,7 @@ function App() {
             }
 
             return (
-                <TextInput key={id} data={data}>
+                <TextInput key={id} data={data} value={stateValue}>
                     {deleteButton && (
                         <button
                             type="button"

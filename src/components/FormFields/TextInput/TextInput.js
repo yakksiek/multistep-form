@@ -49,8 +49,8 @@ import FieldError from '../FieldError';
 //     );
 // }
 
-function TextInput({ children, data }) {
-    const { type, name, label, id, checked, groupName, accept, onChange, error, value } = data;
+function TextInput({ children, data, value }) {
+    const { type, name, label, id, groupName, accept, onChange, error } = data;
 
     const wrapperID = `${name}-${id}`;
     return (
@@ -62,7 +62,7 @@ function TextInput({ children, data }) {
                 value={value}
                 type={type}
                 id={name}
-                checked={checked}
+                checked={value}
                 data-id={id}
                 accept={accept}
             />

@@ -17,7 +17,8 @@ import {
 } from './Select.styled';
 import FieldError from '../FieldError';
 
-function Select({ name, options, value, error, label }) {
+function Select({ options, value, data }) {
+    const { name, label, error } = data;
     const [listVisible, setListVisible] = useState(false);
     const [highlightedIndex, setHeighlitedIndex] = useState(0);
     const { form, updateState, errors } = useSelectContext();
