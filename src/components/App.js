@@ -5,14 +5,14 @@ import React, { useReducer, useEffect, useState } from 'react';
 import { Country } from 'country-state-city';
 
 import ContextProviders from '../context/ContextProviders';
+import useGeoLocation from '../hooks/useGeoLocation';
+import useImageUploader from '../hooks/useImageUploader';
 import Form from './Form';
 import Fieldset from './FormFields/Fieldset';
 import Select from './FormFields/Select';
-import useGeoLocation from '../hooks/useGeoLocation';
 import * as db from '../db';
 import * as h from '../helpers';
 import TextInput from './FormFields/TextInput/TextInput';
-
 import useMultiStepForm from '../hooks/useMultiStepForm';
 import Tab from './Tab/Tab';
 
@@ -27,6 +27,7 @@ const initial = {
         city: '',
         school: [],
         experience: [],
+        newsletter: false,
         // firstName: '',
         // lastName: '',
         // email: '',
@@ -67,11 +68,12 @@ function App() {
         addFormField,
         removeFormField,
     } = useMultiStepForm(state, db.formFields, dispatch);
+    const { selectedImage, previewUrl, isImageSelected, handleImageSelect, clearImage } = useImageUploader();
     const location = useGeoLocation();
 
     useEffect(() => {
         console.log(state);
-    }, [state]);
+    }, [state, selectedImage]);
 
     const updateState = (dataToUpdate, newValue) => {
         dispatch({ type: 'updateStateKey', payload: { name: dataToUpdate, value: newValue } });
@@ -101,8 +103,10 @@ function App() {
     };
 
     const handleChange = (e, id, groupName) => {
-        const { name, value } = e.target;
+        const { name, value, type } = e.target;
         liveValidation(e.target);
+        let newName = name;
+        let newValue = value;
 
         if (groupName === 'school' || groupName === 'experience') {
             const arrayCopy = [...state.form[groupName]];
@@ -113,25 +117,29 @@ function App() {
             } else {
                 arrayCopy[itemIndex].value = value;
             }
-
-            return dispatch({ type: 'updateFormKey', payload: { name: groupName, value: arrayCopy } });
+            newName = groupName;
+            newValue = arrayCopy;
         }
 
-        return dispatch({ type: 'updateFormKey', payload: { name, value } });
+        if (type === 'checkbox') {
+            newValue = e.target.checked;
+        }
+
+        return dispatch({ type: 'updateFormKey', payload: { name: newName, value: newValue } });
     };
 
     const createInputs = (fields) => {
         const formInputs = fields.map((field) => {
-            const { type, name, label, id, checked, groupName, deleteButton } = field;
+            const { type, name, label, id, groupName, deleteButton } = field;
             let stateValue = state.form[name];
+            let onChange = handleChange;
             const error = state.errors[name];
+            const data = { ...field, value: stateValue, onChange, error };
 
             if (type === 'select') {
                 const options = state[name];
 
-                return (
-                    <Select key={name} label={label} name={name} options={options} value={stateValue} error={error} />
-                );
+                return <Select key={name} data={data} options={options} />;
             }
 
             if (label === 'School' || label === 'Experience') {
@@ -140,19 +148,12 @@ function App() {
                 stateValue = item ? item.value : '';
             }
 
+            if (type === 'file') {
+                onChange = handleImageSelect;
+            }
+
             return (
-                <TextInput
-                    key={id}
-                    onChange={handleChange}
-                    name={name}
-                    value={stateValue}
-                    type={type}
-                    error={error}
-                    label={label}
-                    checked={checked}
-                    id={id}
-                    groupName={groupName}
-                >
+                <TextInput key={id} data={data}>
                     {deleteButton && (
                         <button
                             type="button"
@@ -230,7 +231,7 @@ function App() {
                         Back
                     </Form.NavBtn>
 
-                    <Form.NavBtn type="submit">{isLastStep ? 'Summary' : 'Next'}</Form.NavBtn>
+                    <Form.NavBtn type="submit">{isLastStep - 1 ? 'Summary' : 'Next'}</Form.NavBtn>
                 </Form>
             </ContextProviders>
         </div>

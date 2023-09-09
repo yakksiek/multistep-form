@@ -72,8 +72,6 @@ export const cities = {
 //     },
 // ];
 
-export const formTabsFields = ['address', 'education', 'experience'];
-
 export const formFields = {
     address: [
         {
@@ -149,4 +147,21 @@ export const formFields = {
             groupName: 'experience',
         },
     ],
+    summary: [
+        {
+            name: 'photo',
+            label: 'Upload your photo',
+            id: crypto.randomUUID(),
+            type: 'file',
+            accept: 'image/*',
+        },
+        {
+            name: 'newsletter',
+            label: 'Receive job offers straight to your email',
+            id: crypto.randomUUID(),
+            type: 'checkbox',
+        },
+    ],
 };
+
+export const formTabsFields = Object.keys(formFields);
