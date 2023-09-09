@@ -131,7 +131,7 @@ export const formFields = {
         {
             name: 'school-1',
             label: 'School',
-            pattern: '^[a-zA-Z -]+$',
+            pattern: "^[a-zA-Z0-9\\s.'-]*$",
             id: crypto.randomUUID(),
             type: 'text',
             groupName: 'school',
@@ -141,7 +141,7 @@ export const formFields = {
         {
             name: 'experience-1',
             label: 'Experience',
-            pattern: '^[a-zA-Z -]+$',
+            pattern: "^[a-zA-Z0-9\\s.'-]*$",
             id: crypto.randomUUID(),
             type: 'text',
             groupName: 'experience',

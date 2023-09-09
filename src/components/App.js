@@ -9,6 +9,7 @@ import useGeoLocation from '../hooks/useGeoLocation';
 import useImageUploader from '../hooks/useImageUploader';
 import Form from './Form';
 import Fieldset from './FormFields/Fieldset';
+import UserCard from './UserCard';
 import Select from './FormFields/Select';
 import * as db from '../db';
 import * as h from '../helpers';
@@ -23,8 +24,8 @@ const initial = {
         email: 'test@test.com',
         phone: '333',
         country: 'Poland',
-        state: '',
-        city: '',
+        state: 'Lublin Voivodeship',
+        city: 'Abramów',
         school: [],
         experience: [],
         newsletter: false,
@@ -138,7 +139,7 @@ function App() {
 
             if (type === 'select') {
                 const options = state[name];
-                console.log(name)
+                console.log(name);
                 return <Select key={name} data={data} options={options} value={stateValue} />;
             }
 
@@ -233,6 +234,7 @@ function App() {
 
                     <Form.NavBtn type="submit">{isLastStep ? 'Summary' : 'Next'}</Form.NavBtn>
                 </Form>
+                {isLastStep && <UserCard data={state.form} imgData={{ previewUrl, isImageSelected }} />}
             </ContextProviders>
         </div>
     );
