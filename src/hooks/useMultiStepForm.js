@@ -2,16 +2,17 @@
 import { useState } from 'react';
 
 function useMultiStepForm(state, allFields, dispatch) {
-    const [currentStepIndex, setCurrentStepIndex] = useState(3);
-    const [formDataFields, setFormDataFields] = useState(allFields[state.tabNames[currentStepIndex]]);
+    const [currentStepIndex, setCurrentStepIndex] = useState(0);
+    const [allFormDataFields, setAllFormDataFields] = useState(allFields);
     const stepsNumber = state.tabNames.length;
     const isFirstStep = currentStepIndex === 0;
     const isLastStep = currentStepIndex === stepsNumber - 1;
+    const currentTabName = state.tabNames[currentStepIndex];
+    const formDataFields = allFormDataFields[currentTabName];
 
     const nextTab = () => {
         setCurrentStepIndex((i) => {
             if (i > stepsNumber - 1) return i;
-            setFormDataFields(allFields[state.tabNames[currentStepIndex + 1]]);
             return i + 1;
         });
     };
@@ -19,7 +20,6 @@ function useMultiStepForm(state, allFields, dispatch) {
     const prevTab = () => {
         setCurrentStepIndex((i) => {
             if (i <= 0) return i;
-            setFormDataFields(allFields[state.tabNames[currentStepIndex - 1]]);
             return i - 1;
         });
     };
@@ -39,14 +39,14 @@ function useMultiStepForm(state, allFields, dispatch) {
             deleteButton: true,
         };
         const copyDataFields = [...formDataFields, copyCurrentFormField];
-        setFormDataFields(copyDataFields);
+        setAllFormDataFields((prevState) => ({ ...prevState, [currentTabName]: copyDataFields }));
     };
 
     const removeFormField = (id, groupName) => {
         const filteredFormFields = formDataFields.filter((obj) => obj.id !== id);
-        const filteredSchoolState = state.form[groupName].filter((obj) => obj.id !== id);
-        setFormDataFields(filteredFormFields);
-        dispatch({ type: 'updateFormKey', payload: { name: groupName, value: filteredSchoolState } });
+        const filteredGroupState = state.form[groupName].filter((obj) => obj.id !== id);
+        setAllFormDataFields((prevState) => ({ ...prevState, [currentTabName]: filteredFormFields }));
+        dispatch({ type: 'updateFormKey', payload: { name: groupName, value: filteredGroupState } });
     };
 
     return {
