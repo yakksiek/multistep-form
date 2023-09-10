@@ -10,7 +10,7 @@ function UserCard({ data, imgData }) {
 
     return (
         <div>
-            {isImageSelected && <img src={previewUrl} alt="selected" />}
+            {isImageSelected && <img style={{ width: '100px', height: '100px' }} src={previewUrl} alt="selected" />}
             <div>
                 <header>
                     <h3>
@@ -21,15 +21,15 @@ function UserCard({ data, imgData }) {
                     <p>
                         {country} {state} {city}
                     </p>
-                    <div>
-                        <h6>Education</h6>
-                        {renderListItems(school)}
-                    </div>
-                    <div>
-                        <h6>Experience</h6>
-                        {renderListItems(experience)}
-                    </div>
                 </header>
+                <div>
+                    <h6>Education</h6>
+                    {renderListItems(school)}
+                </div>
+                <div>
+                    <h6>Experience</h6>
+                    {renderListItems(experience)}
+                </div>
             </div>
         </div>
     );

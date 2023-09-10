@@ -133,28 +133,28 @@ function App() {
     const createInputs = (fields) => {
         const formInputs = fields.map((field) => {
             const { type, name, label, id, groupName, deleteButton } = field;
-            let stateValue = state.form[name];
-            let onChange = handleChange;
+            const value = state.form[name];
             const error = state.errors[name];
-            const data = { ...field, onChange, error };
+            let data = { ...field, onChange: handleChange, value, error };
 
             if (type === 'select') {
                 const options = state[name];
-                return <Select key={name} data={data} options={options} value={stateValue} />;
+                return <Select key={name} data={data} options={options} value={value} />;
             }
 
             if (label === 'School' || label === 'Experience') {
                 const group = state.form[groupName];
                 const item = group.find((el) => el.id === id);
-                stateValue = item ? item.value : '';
+                const newValue = item ? item.value : '';
+                data = { ...data, value: newValue };
             }
 
             if (type === 'file') {
-                onChange = handleImageSelect;
+                data = { ...data, onChange: handleImageSelect };
             }
 
             return (
-                <TextInput key={id} data={data} value={stateValue}>
+                <TextInput key={id} data={data}>
                     {deleteButton && (
                         <button
                             type="button"
@@ -238,8 +238,8 @@ function App() {
                     </Form.NavBtn>
 
                     <Form.NavBtn type="submit">{isLastStep ? 'Summary' : 'Next'}</Form.NavBtn>
+                    {isLastStep && <UserCard data={state.form} imgData={{ previewUrl, isImageSelected }} />}
                 </Form>
-                {isLastStep && <UserCard data={state.form} imgData={{ previewUrl, isImageSelected }} />}
             </ContextProviders>
         </div>
     );
