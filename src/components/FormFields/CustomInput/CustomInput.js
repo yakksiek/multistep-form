@@ -1,12 +1,12 @@
 import React from 'react';
 
-import StyledTextInput from './TextInput.styled';
+import StyledCustomInput from './CustomInput.styled';
 import Label from '../Label/Label';
 import Wrapper from '../Wrapper';
 import FieldError from '../FieldError';
 import StyledButton from '../../Button/Button.styled';
 
-function TextInput({ children, data }) {
+function CustomInput({ children, data }) {
     const { type, value, name, label, id, groupName, accept, onChange, error, deleteButton, handleClick } = data;
 
     if (label === 'School' || label === 'Experience') console.log(handleClick);
@@ -18,7 +18,7 @@ function TextInput({ children, data }) {
     return (
         <Wrapper>
             <Label htmlFor={name}>{label}</Label>
-            <StyledTextInput
+            <StyledCustomInput
                 name={name}
                 onChange={(e) => onChange(e, id, groupName)}
                 value={type === 'file' ? '' : value}
@@ -35,4 +35,4 @@ function TextInput({ children, data }) {
     );
 }
 
-export default TextInput;
+export default CustomInput;

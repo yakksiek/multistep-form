@@ -19,7 +19,6 @@ function getStates(countryName) {
     const { isoCode } = country;
 
     const states = State.getStatesOfCountry(isoCode);
-    // const stateNames = getNamesFromCSC(states);
     return states;
 }
 
@@ -31,7 +30,6 @@ function getCities(countryName, stateName) {
     const { isoCode: stateCode } = state;
 
     const cities = City.getCitiesOfState(countryCode, stateCode);
-    // const citiesNamesArr = getNamesFromCSC(cities);
     return cities;
 }
 
@@ -71,8 +69,6 @@ export function getUserCountry(lat, long) {
     const [country] = getCountry;
     return country.name;
 }
-
-// export validateSelects (selectFields, )
 
 export function validate(validationFields, inputElementsArr) {
     let errors = {};
@@ -147,3 +143,4 @@ export function updateArrayItemById(objectsArr, id, value) {
         return [...acc, { ...cur, name: value }];
     }, []);
 }
+

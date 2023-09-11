@@ -1,20 +1,20 @@
+/* eslint-disable consistent-return */
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable import/named */
 /* eslint-disable no-unused-vars */
 import React, { useReducer, useEffect, useState } from 'react';
 import { Country } from 'country-state-city';
 
+import * as db from '../db';
+import * as h from '../helpers';
 import ContextProviders from '../context/ContextProviders';
 import useGeoLocation from '../hooks/useGeoLocation';
 import useImageUploader from '../hooks/useImageUploader';
 import Form from './Form';
 import FormSummary from './FormSummary';
-import Fieldset from './FormFields/Fieldset';
 import UserCard from './UserCard';
 import Select from './FormFields/Select';
-import * as db from '../db';
-import * as h from '../helpers';
-import TextInput from './FormFields/TextInput/TextInput';
+import CustomInput from './FormFields/CustomInput';
 import useMultiStepForm from '../hooks/useMultiStepForm';
 import Tab from './Tab/Tab';
 import Button from './Button/Button';
@@ -154,15 +154,15 @@ function App() {
                 data = { ...data, onChange: handleImageSelect };
             }
 
-            return <TextInput key={id} data={data} />;
+            return <CustomInput key={id} data={data} />;
         });
 
         return formInputs;
     };
 
-    const generateTabsAndInputs = function () {
-        const tabs = state.tabNames.map((tabName) => {
-            const inputs = createInputs(formDataFields);
+    const generateTabsAndInputs = (formTabs, formFields) => {
+        const tabs = formTabs.map((tabName) => {
+            const inputs = createInputs(formFields);
             return (
                 <Tab key={tabName} name={tabName}>
                     <h2>{tabName}</h2>
@@ -203,16 +203,21 @@ function App() {
         errors: state.errors,
     };
 
-    const renderAddFieldButton = function () {
-        const isUserInputTAb = currentStepIndex === 1 || currentStepIndex === 2;
-        if (!isUserInputTAb) return;
+    const renderAddFieldButton = () => {
+        const isUserInputTab = currentStepIndex === 1 || currentStepIndex === 2;
+        if (!isUserInputTab) return;
 
-        // eslint-disable-next-line consistent-return
         return (
             <Button disabled={formDataFields.length === 3} onClick={addFormField} type="button">
                 Add field
             </Button>
         );
+    };
+
+    const renderSummary = () => {
+        if (!isLastStep) return;
+
+        return <UserCard data={state.form} imgData={{ previewUrl, isImageSelected }} />;
     };
 
     return (
@@ -228,7 +233,7 @@ function App() {
                         <div>
                             {currentStepIndex + 1} / {state.tabNames.length}
                         </div>
-                        {generateTabsAndInputs()[currentStepIndex]}
+                        {generateTabsAndInputs(state.tabNames, formDataFields)[currentStepIndex]}
                         {extraInputsJSX}
                         {renderAddFieldButton()}
                         <hr />
@@ -239,8 +244,7 @@ function App() {
                             <Button type="submit">{isLastStep ? 'Summary' : 'Next'}</Button>
                         </div>
                     </Form>
-
-                    {isLastStep && <UserCard data={state.form} imgData={{ previewUrl, isImageSelected }} />}
+                    {renderSummary()}
                 </div>
             </ContextProviders>
         </div>
