@@ -9,15 +9,13 @@ import StyledButton from '../../Button/Button.styled';
 function CustomInput({ children, data }) {
     const { type, value, name, label, id, groupName, accept, onChange, error, deleteButton, handleClick } = data;
 
-    if (label === 'School' || label === 'Experience') console.log(handleClick);
-
     const delInputButton = deleteButton && (
         <StyledButton onClick={() => handleClick(id, groupName)}>DELTE</StyledButton>
     );
 
     return (
-        <Wrapper>
-            <Label htmlFor={name}>{label}</Label>
+        <Wrapper variant="element">
+            <Label htmlFor={name}>{label}:</Label>
             <StyledCustomInput
                 name={name}
                 onChange={(e) => onChange(e, id, groupName)}

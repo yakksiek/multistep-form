@@ -20,6 +20,11 @@ const theme = {
             box-shadow: var(--box-shadow-convex);
             border-radius: 30px;
         `,
+        element: css`
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 25px;
+        `,
     },
 };
 

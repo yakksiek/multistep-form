@@ -10,6 +10,8 @@ const GlobalStyles = createGlobalStyle`
     --color-5: rgb(78 95 126);
     --border-radius-outer: 30px;
     --border-radius-inner: 20px;
+    --element-padding: 10px 50px;
+    --element-radius: 50px;
     --background-color: #ebecf0;
     --background-gradient: linear-gradient(to right bottom, #d2defe, #dae0fd, #e0e1fb, #e6e4f9, #ebe6f8, #ebe9fa, #ebebfb, #eceefc, #e9f2ff, #e7f6ff, #e6faff, #e7fdff);
     --container-padding: 2em;
@@ -30,7 +32,7 @@ const GlobalStyles = createGlobalStyle`
 
   body {
     font-family: 'SFProText', sans-serif;
-    font-size: 1.1em;
+    /* font-size: 1.1em; */
     /* background-image: linear-gradient(to right bottom, #d2defe, #d7ddfd, #dbdcfb, #dfdcf9, #e3dbf7, #e2def9, #e1e1fb, #e0e4fd, #ddebff, #ddf2ff, #e0f8ff, #e7fdff); */
     background: var(--background-color);
     background-repeat: no-repeat;
@@ -43,7 +45,7 @@ const GlobalStyles = createGlobalStyle`
     font-family: 'SFPro', sans-serif;
     font-size: 2.125em;
     font-weight: bold;
-    margin-bottom: 1em;
+    margin-bottom: 2em;
   }
 
   ul {

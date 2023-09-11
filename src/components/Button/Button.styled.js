@@ -5,9 +5,10 @@ const StyledButton = styled.button`
     font-family: 'SFProBold', sans-serif;
     /* font-weight: bold; */
     font-size: 0.9em;
-    border-radius: 50px;
-    padding: 10px 50px;
+    border-radius: var(--element-radius);
+    padding: var(--element-padding);
     box-shadow: var(--box-shadow-convex);
+    margin-top: 20px;
     margin-right: 15px;
     color: var(--color-4);
     cursor: pointer;

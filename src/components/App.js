@@ -237,7 +237,6 @@ function App() {
                         {generateTabsAndInputs(state.tabNames, formDataFields)[currentStepIndex]}
                         {extraInputsJSX}
                         {renderAddFieldButton()}
-                        <hr />
                         <div>
                             <Button type="button" onClick={prevTab} disabled={isFirstStep}>
                                 Back
