@@ -43,6 +43,7 @@ function useMultiStepForm(state, allFields, dispatch) {
     };
 
     const removeFormField = (id, groupName) => {
+        console.log(id);
         const filteredFormFields = formDataFields.filter((obj) => obj.id !== id);
         const filteredGroupState = state.form[groupName].filter((obj) => obj.id !== id);
         setAllFormDataFields((prevState) => ({ ...prevState, [currentTabName]: filteredFormFields }));

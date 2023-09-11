@@ -3,7 +3,6 @@ import React from 'react';
 import { StyledFormSummary, StyledListItem, StyledListNumber } from './FormSummary.styled';
 
 function FormSummary({ currentStepIndex, tabNames, tabDescriptions }) {
-    console.log(currentStepIndex);
     const stepsJSX = tabNames.map((item, index) => {
         const isActive = currentStepIndex === index;
         return (

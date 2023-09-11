@@ -4,13 +4,18 @@ import StyledTextInput from './TextInput.styled';
 import Label from '../Label/Label';
 import Wrapper from '../Wrapper';
 import FieldError from '../FieldError';
+import StyledButton from '../../Button/Button.styled';
 
 function TextInput({ children, data }) {
-    const { type, value, name, label, id, groupName, accept, onChange, error } = data;
+    const { type, value, name, label, id, groupName, accept, onChange, error, deleteButton, handleClick } = data;
 
-    // const wrapperID = `${name}-${id}`;
+    if (label === 'School' || label === 'Experience') console.log(handleClick);
+
+    const delInputButton = deleteButton && (
+        <StyledButton onClick={() => handleClick(id, groupName)}>DELTE</StyledButton>
+    );
+
     return (
-        // <Wrapper id={wrapperID}>
         <Wrapper>
             <Label htmlFor={name}>{label}</Label>
             <StyledTextInput
@@ -25,6 +30,7 @@ function TextInput({ children, data }) {
             />
             <FieldError>{error}</FieldError>
             {children}
+            {delInputButton}
         </Wrapper>
     );
 }

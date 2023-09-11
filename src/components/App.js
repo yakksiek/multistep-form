@@ -17,6 +17,7 @@ import * as h from '../helpers';
 import TextInput from './FormFields/TextInput/TextInput';
 import useMultiStepForm from '../hooks/useMultiStepForm';
 import Tab from './Tab/Tab';
+import Button from './Button/Button';
 
 const initial = {
     form: {
@@ -146,27 +147,14 @@ function App() {
                 const group = state.form[groupName];
                 const item = group.find((el) => el.id === id);
                 const newValue = item ? item.value : '';
-                data = { ...data, value: newValue };
+                data = { ...data, value: newValue, deleteButton, handleClick: removeFormField };
             }
 
             if (type === 'file') {
                 data = { ...data, onChange: handleImageSelect };
             }
 
-            return (
-                <TextInput key={id} data={data}>
-                    {deleteButton && (
-                        <button
-                            type="button"
-                            onClick={() => {
-                                removeFormField(id, groupName);
-                            }}
-                        >
-                            DELETE
-                        </button>
-                    )}
-                </TextInput>
-            );
+            return <TextInput key={id} data={data} />;
         });
 
         return formInputs;
@@ -207,10 +195,24 @@ function App() {
         nextTab();
     };
 
+    const extraInputsJSX = state[`${state.tabNames[currentStepIndex]}ExtraInputs`];
+
     const selectContextValue = {
         form: state.form,
         updateState,
         errors: state.errors,
+    };
+
+    const renderAddFieldButton = function () {
+        const isUserInputTAb = currentStepIndex === 1 || currentStepIndex === 2;
+        if (!isUserInputTAb) return;
+
+        // eslint-disable-next-line consistent-return
+        return (
+            <Button disabled={formDataFields.length === 3} onClick={addFormField} type="button">
+                Add field
+            </Button>
+        );
     };
 
     return (
@@ -221,25 +223,25 @@ function App() {
                     tabNames={state.tabNames}
                     tabDescriptions={db.tabDescriptions}
                 />
-                <Form onSubmit={onSubmit}>
-                    <div>
-                        {currentStepIndex + 1} / {state.tabNames.length}
-                    </div>
-                    {generateTabsAndInputs()[currentStepIndex]}
-                    <div>{state[`${state.tabNames[currentStepIndex]}ExtraInputs`]}</div>
-                    {(currentStepIndex === 1 || currentStepIndex === 2) && (
-                        <button disabled={formDataFields.length === 3} onClick={addFormField} type="button">
-                            Add field
-                        </button>
-                    )}
-                    <hr />
-                    <Form.NavBtn type="button" onClick={prevTab} disabled={isFirstStep}>
-                        Back
-                    </Form.NavBtn>
+                <div style={{ flex: 2 }}>
+                    <Form onSubmit={onSubmit}>
+                        <div>
+                            {currentStepIndex + 1} / {state.tabNames.length}
+                        </div>
+                        {generateTabsAndInputs()[currentStepIndex]}
+                        {extraInputsJSX}
+                        {renderAddFieldButton()}
+                        <hr />
+                        <div>
+                            <Button type="button" onClick={prevTab} disabled={isFirstStep}>
+                                Back
+                            </Button>
+                            <Button type="submit">{isLastStep ? 'Summary' : 'Next'}</Button>
+                        </div>
+                    </Form>
 
-                    <Form.NavBtn type="submit">{isLastStep ? 'Summary' : 'Next'}</Form.NavBtn>
                     {isLastStep && <UserCard data={state.form} imgData={{ previewUrl, isImageSelected }} />}
-                </Form>
+                </div>
             </ContextProviders>
         </div>
     );
