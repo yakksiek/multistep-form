@@ -1,9 +1,11 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Reset } from 'styled-reset';
+import { ThemeProvider } from 'styled-components';
 
 import GlobalFonts from './fonts';
-import GlobalStyles from './GlobalStyles';
+import GlobalStyles from './components/styled/GlobalStyles';
+import theme from './components/styled/theme';
 
 import App from './components/App';
 
@@ -13,6 +15,8 @@ root.render(
         <Reset />
         <GlobalFonts />
         <GlobalStyles />
-        <App />
+        <ThemeProvider theme={theme}>
+            <App />
+        </ThemeProvider>
     </>,
 );

@@ -2,7 +2,7 @@ import React from 'react';
 
 import StyledCustomInput from './CustomInput.styled';
 import Label from '../Label/Label';
-import Wrapper from '../Wrapper';
+import Wrapper from '../../Wrapper';
 import FieldError from '../FieldError';
 import StyledButton from '../../Button/Button.styled';
 

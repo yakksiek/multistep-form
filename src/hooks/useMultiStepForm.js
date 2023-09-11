@@ -2,7 +2,7 @@
 import { useState } from 'react';
 
 function useMultiStepForm(state, allFields, dispatch) {
-    const [currentStepIndex, setCurrentStepIndex] = useState(3);
+    const [currentStepIndex, setCurrentStepIndex] = useState(0);
     const [allFormDataFields, setAllFormDataFields] = useState(allFields);
     const stepsNumber = state.tabNames.length;
     const isFirstStep = currentStepIndex === 0;

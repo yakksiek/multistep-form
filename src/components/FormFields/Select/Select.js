@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef, createRef } from 'react';
 
 import { useSelectContext } from '../../../context/SelectContext';
 import Label from '../Label/Label';
-import Wrapper from '../Wrapper';
+import Wrapper from '../../Wrapper';
 import * as h from '../../../helpers';
 
 import {

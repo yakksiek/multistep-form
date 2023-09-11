@@ -6,6 +6,9 @@ import SFProWoff2 from './SFProDisplay-Regular.woff2';
 import SFProBoldWoff from './SFProDisplay-Bold.woff';
 import SFProBoldWoff2 from './SFProDisplay-Bold.woff2';
 
+import SFProTextWoff from './sf-pro-text-regular-webfont.woff';
+import SFProTextWoff2 from './sf-pro-text-regular-webfont.woff2';
+
 const fontFiles = [
     {
         family: 'SFPro',
@@ -17,6 +20,11 @@ const fontFiles = [
         woff: SFProBoldWoff,
         woff2: SFProBoldWoff2,
         style: 'bold',
+    },
+    {
+        family: 'SFProText',
+        woff: SFProTextWoff,
+        woff2: SFProTextWoff2,
     },
 ];
 

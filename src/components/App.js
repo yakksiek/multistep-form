@@ -18,6 +18,7 @@ import CustomInput from './FormFields/CustomInput';
 import useMultiStepForm from '../hooks/useMultiStepForm';
 import Tab from './Tab/Tab';
 import Button from './Button/Button';
+import Wrapper from './Wrapper';
 
 const initial = {
     form: {
@@ -209,7 +210,7 @@ function App() {
 
         return (
             <Button disabled={formDataFields.length === 3} onClick={addFormField} type="button">
-                Add field
+                +
             </Button>
         );
     };
@@ -221,18 +222,18 @@ function App() {
     };
 
     return (
-        <div style={{ border: '1px solid black', display: 'flex' }}>
+        <Wrapper variant="container" style={{ border: '1px solid black', display: 'flex' }}>
             <ContextProviders selectContextValue={selectContextValue}>
                 <FormSummary
                     currentStepIndex={currentStepIndex}
                     tabNames={state.tabNames}
                     tabDescriptions={db.tabDescriptions}
                 />
-                <div style={{ flex: 2 }}>
+                <Wrapper variant="section">
                     <Form onSubmit={onSubmit}>
-                        <div>
+                        {/* <div>
                             {currentStepIndex + 1} / {state.tabNames.length}
-                        </div>
+                        </div> */}
                         {generateTabsAndInputs(state.tabNames, formDataFields)[currentStepIndex]}
                         {extraInputsJSX}
                         {renderAddFieldButton()}
@@ -245,9 +246,9 @@ function App() {
                         </div>
                     </Form>
                     {renderSummary()}
-                </div>
+                </Wrapper>
             </ContextProviders>
-        </div>
+        </Wrapper>
     );
 }
 

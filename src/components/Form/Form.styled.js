@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
 const StyledForm = styled.form`
-    /* flex: 2; */
+    /* box-shadow: var(--box-shadow); */
+  
 `;
 
 const StyledNavFormBtn = styled.button``;

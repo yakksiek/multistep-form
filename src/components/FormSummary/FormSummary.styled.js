@@ -2,6 +2,10 @@ import styled from 'styled-components';
 
 const StyledFormSummary = styled.div`
     flex: 1;
+    background-color: white;
+    background-color: var(--backgorund-gradient);
+    /* text-align: center; */
+    padding: var(--container-padding);
 `;
 
 const StyledListItem = styled.li`
@@ -22,4 +26,8 @@ const StyledListNumber = styled.span`
     /* margin-right: 10px; */
 `;
 
-export { StyledFormSummary, StyledListItem, StyledListNumber };
+const StyledFormSummarySubtitle = styled.p`
+    color: var(--color-4-light);
+`;
+
+export { StyledFormSummary, StyledListItem, StyledListNumber, StyledFormSummarySubtitle };
