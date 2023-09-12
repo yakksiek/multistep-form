@@ -24,26 +24,26 @@ import IconWrapper from './IconWrapper';
 
 const initial = {
     form: {
-        firstName: 'we',
-        lastName: 'qwe',
-        email: 'test@test.com',
-        phone: '333',
-        country: 'Poland',
-        state: 'Lublin Voivodeship',
-        city: 'Abramów',
-        school: [],
-        experience: [],
-        newsletter: false,
-        // firstName: '',
-        // lastName: '',
-        // email: '',
-        // phone: '',
-        // country: '',
-        // state: '',
-        // city: '',
+        // firstName: 'we',
+        // lastName: 'qwe',
+        // email: 'test@test.com',
+        // phone: '333',
+        // country: 'Poland',
+        // state: 'Lublin Voivodeship',
+        // city: 'Abramów',
         // school: [],
         // experience: [],
         // newsletter: false,
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
+        country: '',
+        state: '',
+        city: '',
+        school: [],
+        experience: [],
+        newsletter: false,
     },
     errors: {},
     tabNames: db.formTabsFields,
@@ -89,15 +89,15 @@ function App() {
     useEffect(() => {
         h.renderConditionallySelects(state.form, updateState);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [state.form.country, state.form.state]);
+    }, [state.form]);
 
     useEffect(() => {
-        // if (location.loaded && state.form.country === '') {
-        //     const { lat, long } = location.coords;
-        //     const userCountry = h.getUserCountry(lat, long);
-        //     const newForm = { ...state.form, country: userCountry };
-        //     updateState('form', newForm);
-        // }
+        if (location.loaded && state.form.country === '') {
+            const { lat, long } = location.coords;
+            const userCountry = h.getUserCountry(lat, long);
+            const newForm = { ...state.form, country: userCountry };
+            updateState('form', newForm);
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [location]);
 

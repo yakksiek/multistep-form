@@ -8,12 +8,7 @@ import Label from '../Label/Label';
 import Wrapper from '../../Wrapper';
 import * as h from '../../../helpers';
 
-import {
-    StyledCustomSelect,
-    StyledSelectOptions,
-    StyledValue,
-    StyledOptionItem,
-} from './Select.styled';
+import { StyledCustomSelect, StyledSelectOptions, StyledValue, StyledOptionItem } from './Select.styled';
 import FieldError from '../FieldError';
 
 function Select({ options, value, data }) {
@@ -50,9 +45,13 @@ function Select({ options, value, data }) {
     };
 
     const handleStateUpdate = (newValue) => {
+        console.log(name);
         if (name === 'country') {
+            const newData = { country: newValue, state: '', city: '' };
+            updateState('form', { ...form, ...newData });
             updateState('city', []);
-            updateState('form', { ...form, country: newValue, state: '', city: '' });
+            updateState('state', []);
+            return;
         }
 
         resetSelectError();
@@ -114,7 +113,10 @@ function Select({ options, value, data }) {
                 <StyledOptionItem
                     key={item.isoCode || index}
                     ref={optionRefs.current[index]}
-                    onMouseOver={() => handleOver(index)}
+                    onMouseOver={() => {
+                        handleOver(index);
+                        handleStateUpdate(item.name);
+                    }}
                     isOver={isOver}
                     onClick={(e) => selectOption(e, item.name)}
                 >
