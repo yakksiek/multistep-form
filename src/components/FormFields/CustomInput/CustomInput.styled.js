@@ -10,6 +10,7 @@ const StyledCustomInput = styled.input`
     color: var(--color-4-light);
     font-family: 'SFProText', sans-serif;
     border: 1px solid transparent;
+    width: 100%;
     &:focus {
         outline: none;
         border-color: var(--color-4-light);

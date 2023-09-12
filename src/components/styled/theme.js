@@ -1,12 +1,5 @@
 import { css } from 'styled-components';
 
-// export default {
-//     container: css`
-//         flex: 2;
-//         padding: 2em;
-//     `,
-// };
-
 const theme = {
     wrapper: {
         section: css`
@@ -20,10 +13,34 @@ const theme = {
             box-shadow: var(--box-shadow-convex);
             border-radius: 30px;
         `,
-        element: css`
+        'flex-column': css`
             display: flex;
             flex-direction: column;
             margin-bottom: 25px;
+        `,
+        btnContainer: css`
+            margin-top: auto;
+            padding-top: 50px;
+            display: grid;
+            grid-auto-flow: column;
+            gap: 10px;
+            justify-content: end;
+        `,
+    },
+    button: {
+        dark: css`
+            color: var(--background-color);
+            background-color: var(--color-4);
+            &:hover {
+                background-color: var(--color-4-dark);
+            }
+        `,
+        circle: css`
+            height: auto;
+            margin-top: 0;
+            width: 40px;
+            height: 40px;
+            padding: 10px 25px;
         `,
     },
 };

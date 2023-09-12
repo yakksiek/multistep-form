@@ -4,6 +4,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useReducer, useEffect, useState } from 'react';
 import { Country } from 'country-state-city';
+import { UilPlusCircle } from '@iconscout/react-unicons';
 
 import * as db from '../db';
 import * as h from '../helpers';
@@ -19,6 +20,7 @@ import useMultiStepForm from '../hooks/useMultiStepForm';
 import Tab from './Tab/Tab';
 import Button from './Button/Button';
 import Wrapper from './Wrapper';
+import IconWrapper from './IconWrapper';
 
 const initial = {
     form: {
@@ -210,7 +212,10 @@ function App() {
 
         return (
             <Button disabled={formDataFields.length === 3} onClick={addFormField} type="button">
-                +
+                <IconWrapper>
+                    <UilPlusCircle />
+                </IconWrapper>
+                add field
             </Button>
         );
     };
@@ -222,7 +227,7 @@ function App() {
     };
 
     return (
-        <Wrapper variant="container" style={{ border: '1px solid black', display: 'flex' }}>
+        <Wrapper variant="container">
             <ContextProviders selectContextValue={selectContextValue}>
                 <FormSummary
                     currentStepIndex={currentStepIndex}
@@ -231,18 +236,17 @@ function App() {
                 />
                 <Wrapper variant="section">
                     <Form onSubmit={onSubmit}>
-                        {/* <div>
-                            {currentStepIndex + 1} / {state.tabNames.length}
-                        </div> */}
                         {generateTabsAndInputs(state.tabNames, formDataFields)[currentStepIndex]}
                         {extraInputsJSX}
                         {renderAddFieldButton()}
-                        <div>
+                        <Wrapper variant="btnContainer">
                             <Button type="button" onClick={prevTab} disabled={isFirstStep}>
                                 Back
                             </Button>
-                            <Button type="submit">{isLastStep ? 'Summary' : 'Next'}</Button>
-                        </div>
+                            <Button type="submit" variant="dark">
+                                {isLastStep ? 'Summary' : 'Next'}
+                            </Button>
+                        </Wrapper>
                     </Form>
                     {renderSummary()}
                 </Wrapper>

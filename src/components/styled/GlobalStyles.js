@@ -6,7 +6,8 @@ const GlobalStyles = createGlobalStyle`
     --color-2: rgb(190 177 200);
     --color-3: rgb(188 211 211);
     --color-4: rgb(44 65 105);
-    --color-4-light: rgba(44, 65, 105, 0.75);
+    --color-4-light: rgba(44, 65, 105, 0.85);
+    --color-4-dark: rgb(39 57 96);
     --color-5: rgb(78 95 126);
     --border-radius-outer: 30px;
     --border-radius-inner: 20px;
@@ -46,6 +47,10 @@ const GlobalStyles = createGlobalStyle`
     font-size: 2.125em;
     font-weight: bold;
     margin-bottom: 2em;
+  }
+
+  svg {
+    vertical-align: middle;
   }
 
   ul {
