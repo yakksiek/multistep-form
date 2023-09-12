@@ -24,26 +24,26 @@ import IconWrapper from './IconWrapper';
 
 const initial = {
     form: {
-        // firstName: 'we',
-        // lastName: 'qwe',
-        // email: 'test@test.com',
-        // phone: '333',
-        // country: 'Poland',
-        // state: 'Lublin Voivodeship',
-        // city: 'Abramów',
-        // school: [],
-        // experience: [],
-        // newsletter: false,
-        firstName: '',
-        lastName: '',
-        email: '',
-        phone: '',
-        country: '',
-        state: '',
-        city: '',
+        firstName: 'we',
+        lastName: 'qwe',
+        email: 'test@test.com',
+        phone: '333',
+        country: 'Poland',
+        state: 'Lublin Voivodeship',
+        city: 'Abramów',
         school: [],
         experience: [],
         newsletter: false,
+        // firstName: '',
+        // lastName: '',
+        // email: '',
+        // phone: '',
+        // country: '',
+        // state: '',
+        // city: '',
+        // school: [],
+        // experience: [],
+        // newsletter: false,
     },
     errors: {},
     tabNames: db.formTabsFields,
@@ -240,6 +240,7 @@ function App() {
                         {generateTabsAndInputs(state.tabNames, formDataFields)[currentStepIndex]}
                         {extraInputsJSX}
                         {renderAddFieldButton()}
+                        {renderSummary()}
                         <Wrapper variant="btnContainer">
                             <Button type="button" onClick={prevTab} disabled={isFirstStep}>
                                 Back
@@ -249,7 +250,7 @@ function App() {
                             </Button>
                         </Wrapper>
                     </Form>
-                    {renderSummary()}
+                   
                 </Wrapper>
             </ContextProviders>
         </Wrapper>
