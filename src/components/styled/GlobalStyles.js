@@ -12,7 +12,8 @@ const GlobalStyles = createGlobalStyle`
     --border-radius-outer: 30px;
     --border-radius-inner: 20px;
     --element-padding: 10px 50px;
-    --element-radius: 50px;
+    --element-radius: 40px;
+    --input-padding: 0.625em 1.5em;
     --background-color: #ebecf0;
     --background-gradient: linear-gradient(to right bottom, #d2defe, #dae0fd, #e0e1fb, #e6e4f9, #ebe6f8, #ebe9fa, #ebebfb, #eceefc, #e9f2ff, #e7f6ff, #e6faff, #e7fdff);
     --container-padding: 2em;
@@ -57,15 +58,9 @@ const GlobalStyles = createGlobalStyle`
     list-style: none;
   }
 
-  .bold {
+  /* .bold {
     font-family: 'SFProBold';
-  }
-
-  button {
-    border: none;
-    background-color: transparent;
-    box-shadow: var(--box-shadow-convex);
-  }
+  } */
 `;
 
 export default GlobalStyles;

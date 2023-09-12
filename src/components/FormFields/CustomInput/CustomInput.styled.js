@@ -11,6 +11,7 @@ const StyledCustomInput = styled.input`
     font-family: 'SFProText', sans-serif;
     border: 1px solid transparent;
     width: 100%;
+    padding: var(--input-padding);
     &:focus {
         outline: none;
         border-color: var(--color-4-light);

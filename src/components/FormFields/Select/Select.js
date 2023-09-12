@@ -1,6 +1,7 @@
 /* eslint-disable default-case */
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect, useRef, createRef } from 'react';
+import { UilAngleDown, UilAngleUp } from '@iconscout/react-unicons';
 
 import { useSelectContext } from '../../../context/SelectContext';
 import Label from '../Label/Label';
@@ -9,8 +10,6 @@ import * as h from '../../../helpers';
 
 import {
     StyledCustomSelect,
-    StyledDivider,
-    StyledCaret,
     StyledSelectOptions,
     StyledValue,
     StyledOptionItem,
@@ -93,7 +92,7 @@ function Select({ options, value, data }) {
     };
 
     const handleClick = () => {
-        setListVisible(true);
+        setListVisible((prevState) => !prevState);
     };
 
     const handleBlur = () => {
@@ -127,21 +126,23 @@ function Select({ options, value, data }) {
         return items;
     };
 
+    const renderArrow = listVisible ? <UilAngleUp /> : <UilAngleDown />;
+
     return (
-        <Wrapper>
-            <Label>{label}</Label>
+        <Wrapper variant="flex-column">
+            <Label>{label}:</Label>
             <StyledCustomSelect
                 tabIndex={0}
                 onBlur={handleBlur}
                 onClick={handleClick}
                 onKeyDown={handleKeyDown}
                 disabled={disabled}
+                isVisible={listVisible}
             >
                 <StyledValue value={value} name={name} data-select={name}>
                     {value || (!disabled && 'Choose one option')}
                 </StyledValue>
-                <StyledDivider />
-                <StyledCaret />
+                {renderArrow}
                 <StyledSelectOptions isVisible={listVisible}>{optionsJSX()}</StyledSelectOptions>
             </StyledCustomSelect>
             <FieldError>{error}</FieldError>

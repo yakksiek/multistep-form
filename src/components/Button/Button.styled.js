@@ -3,6 +3,7 @@ import styled from 'styled-components';
 const DefaultStyledButton = styled.button`
     font-family: 'SFProBold', sans-serif;
     font-size: 0.9em;
+    border: none;
     border-radius: var(--element-radius);
     padding: var(--element-padding);
     box-shadow: var(--box-shadow-convex);

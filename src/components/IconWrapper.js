@@ -8,8 +8,8 @@ const StyledIconWrapper = styled.div`
     align-items: center;
 `;
 
-function IconWrapper({ children }) {
-    return <StyledIconWrapper>{children}</StyledIconWrapper>;
+function IconWrapper({ children, style }) {
+    return <StyledIconWrapper style={style}>{children}</StyledIconWrapper>;
 }
 
 export default IconWrapper;

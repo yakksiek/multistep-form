@@ -43,6 +43,7 @@ const initial = {
         // city: '',
         // school: [],
         // experience: [],
+        // newsletter: false,
     },
     errors: {},
     tabNames: db.formTabsFields,
@@ -212,7 +213,7 @@ function App() {
 
         return (
             <Button disabled={formDataFields.length === 3} onClick={addFormField} type="button">
-                <IconWrapper>
+                <IconWrapper style={{ marginRight: '10px' }}>
                     <UilPlusCircle />
                 </IconWrapper>
                 add field
