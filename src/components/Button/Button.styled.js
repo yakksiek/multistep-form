@@ -4,7 +4,7 @@ const DefaultStyledButton = styled.button`
     font-family: 'SFProBold', sans-serif;
     font-size: 0.9em;
     border: none;
-    border-radius: var(--element-radius);
+    border-radius: var(--outer-radius);
     padding: var(--element-padding);
     box-shadow: var(--box-shadow-convex);
     margin-top: 20px;

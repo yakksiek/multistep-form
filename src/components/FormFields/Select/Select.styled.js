@@ -18,7 +18,7 @@ const StyledCustomSelect = styled.div`
     background-color: var(--background-color);
     box-shadow: var(--box-shadow-convex);
     /* padding: var(--element-padding); */
-    border-radius: var(--element-radius);
+    border-radius: var(--outer-radius);
     font-size: 1em;
     color: var(--color-4-light);
     font-family: 'SFProText', sans-serif;
