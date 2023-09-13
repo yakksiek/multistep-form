@@ -34,10 +34,10 @@ module.exports = function (env = {}) {
                 //     exclude: /node_modules/,
                 //     use: ['style-loader', 'css-loader', 'sass-loader'],
                 // },
-                // {
-                //     test: /\.(png|svg|jpg|gif)$/,
-                //     type: 'asset/resource',
-                // },
+                {
+                    test: /\.(png|svg|jpg|gif)$/,
+                    type: 'asset/resource',
+                },
             ],
         },
         plugins: [
