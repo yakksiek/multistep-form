@@ -97,7 +97,7 @@ export const formFields = {
     summary: [
         {
             name: 'photo',
-            label: 'Upload your photo',
+            label: 'Here you can add your photo',
             id: crypto.randomUUID(),
             type: 'file',
             accept: 'image/*',

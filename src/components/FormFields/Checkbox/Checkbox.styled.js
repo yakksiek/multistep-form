@@ -5,6 +5,7 @@ const StyledToggleContainer = styled.label`
     display: inline-block;
     width: 60px;
     height: 34px;
+    flex-shrink: 0;
 `;
 
 const StyledCheckbox = styled.input`

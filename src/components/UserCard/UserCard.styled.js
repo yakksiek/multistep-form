@@ -19,12 +19,18 @@ const StyledUserCard = styled.div`
 
     header {
         margin-bottom: 1em;
+
+        h2 {
+            margin: 0;
+            font-size: 3rem;
+        }
     }
 `;
 
 const StyledImgWrapper = styled.div`
     height: 100px;
     width: 100px;
+    flex-shrink: 0;
     border-radius: 50%;
     overflow: hidden;
     border: 2px solid var(--color-4);
@@ -32,7 +38,9 @@ const StyledImgWrapper = styled.div`
     align-items: center;
     justify-content: center;
     box-shadow: var(--box-shadow-convex);
+    background-color: var(--color-3);
     margin-bottom: 0.6em;
+    position: relative;
 `;
 
 const StyledUserImg = styled.img`

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 
 // import Label from '../Label/Label';
@@ -7,8 +8,8 @@ function Checkbox({ data }) {
     const { type, value: checked, onChange, name, id } = data;
 
     return (
-        <StyledToggleContainer>
-            <StyledCheckbox type={type} checked={checked} onChange={onChange} name={name} id={id}/>
+        <StyledToggleContainer >
+            <StyledCheckbox type={type} checked={checked} onChange={onChange} name={name} id={id} />
             <StyledSlider checked={checked}>
                 <StyledCircle checked={checked} />
             </StyledSlider>

@@ -14,7 +14,7 @@ const DefaultStyledButton = styled.button`
     justify-content: center;
     align-items: center;
     &:hover {
-        background-color: rgb(227 229 235);
+        background-color: var(--background-color-dark);
     }
     &:active {
         box-shadow: var(--box-shadow-concave);

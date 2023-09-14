@@ -21,6 +21,7 @@ function useImageUploader() {
     };
 
     const clearImage = () => {
+        console.log('działa');
         setSelectedImage(null);
         setPreviewUrl('');
         setIsImageSelected(false);

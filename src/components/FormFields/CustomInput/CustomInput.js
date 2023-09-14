@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
-import { UilTrashAlt } from '@iconscout/react-unicons';
+import { UilTrashAlt, UilImageUpload } from '@iconscout/react-unicons';
 import styled, { css } from 'styled-components';
 
 import StyledCustomInput from './CustomInput.styled';
@@ -22,12 +22,19 @@ function CustomInput({ children, data }) {
         </StyledButton>
     );
 
+    const inputFileIcon = type === 'file' && (
+        <IconWrapper variant="fill">
+            <UilImageUpload />
+        </IconWrapper>
+    );
+
     return (
         <Wrapper variant="flex-column">
             <StyledInputWrapper type={type}>
                 <Label htmlFor={id} type={type}>
                     {label}:
                 </Label>
+                {inputFileIcon}
                 {type === 'checkbox' ? (
                     <Checkbox data={data} />
                 ) : (
@@ -65,6 +72,9 @@ const StyledInputWrapper = styled.div`
             padding: var(--element-padding);
             box-shadow: var(--box-shadow-convex);
             height: 55px;
+            &:hover {
+                background-color: var(--background-color-dark);
+            }
         `}
 `;
 

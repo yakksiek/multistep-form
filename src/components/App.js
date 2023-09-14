@@ -256,7 +256,7 @@ function App() {
     const renderSummary = () => {
         if (!isLastStep) return;
 
-        return <UserCard data={state.form} imgData={{ previewUrl, isImageSelected }} />;
+        return <UserCard data={state.form} imgData={{ previewUrl, isImageSelected, clearImage }} />;
     };
 
     return (

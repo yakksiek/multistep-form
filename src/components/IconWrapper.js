@@ -1,15 +1,21 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const StyledIconWrapper = styled.div`
-    /* margin-right: 10px; */
+const DefaultStyledIconWrapper = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 `;
 
-function IconWrapper({ children, style }) {
-    return <StyledIconWrapper style={style}>{children}</StyledIconWrapper>;
+const StyledIconWrapper = styled(DefaultStyledIconWrapper)(({ theme, variant }) => theme.icon[variant]);
+
+function IconWrapper({ children, style, variant }) {
+    return (
+        <StyledIconWrapper variant={variant} style={style}>
+            {children}
+        </StyledIconWrapper>
+    );
 }
 
 export default IconWrapper;

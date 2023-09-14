@@ -43,6 +43,14 @@ const theme = {
             padding: 10px 25px;
         `,
     },
+    icon: {
+        fill: css`
+            background-color: var(--background-color);
+            box-shadow: var(--box-shadow-concave);
+            padding: 15px;
+            border-radius: 50%;
+        `,
+    },
 };
 
 export default theme;

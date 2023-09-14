@@ -16,6 +16,7 @@ const GlobalStyles = createGlobalStyle`
     --inner-radius: 10px;
     --input-padding: 0.625em 1.5em;
     --background-color: #ebecf0;
+    --background-color-dark: rgb(227 229 235);
     --background-gradient: linear-gradient(to right bottom, #d2defe, #dae0fd, #e0e1fb, #e6e4f9, #ebe6f8, #ebe9fa, #ebebfb, #eceefc, #e9f2ff, #e7f6ff, #e6faff, #e7fdff);
     --container-padding: 2em;
     --box-shadow: -4px -4px 12px var(--background-gradient), -6px -6px 8px rgba(255, 255, 255, 0.6),
