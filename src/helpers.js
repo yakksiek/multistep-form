@@ -144,3 +144,8 @@ export function updateArrayItemById(objectsArr, id, value) {
     }, []);
 }
 
+export function capitalize(string) {
+    const isValidName = typeof string === 'string' && string !== '';
+    if (!isValidName) throw new Error('not string type');
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}

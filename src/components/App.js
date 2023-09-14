@@ -21,6 +21,7 @@ import Tab from './Tab/Tab';
 import Button from './Button/Button';
 import Wrapper from './Wrapper';
 import IconWrapper from './IconWrapper';
+import Checkbox from './FormFields/Checkbox';
 
 const initial = {
     form: {
@@ -190,6 +191,10 @@ function App() {
                 data = { ...data, onChange: handleImageSelect };
             }
 
+            // if (type === 'checkbox') {
+            //     return <Checkbox key={id} data={data} />;
+            // }
+
             return <CustomInput key={id} data={data} />;
         });
 
@@ -199,9 +204,11 @@ function App() {
     const generateTabsAndInputs = (formTabs, formFields) => {
         const tabs = formTabs.map((tabName) => {
             const inputs = createInputs(formFields);
+            const name = h.capitalize(tabName);
+
             return (
                 <Tab key={tabName} name={tabName}>
-                    <h2>{tabName}</h2>
+                    <h2>{name}</h2>
                     {inputs}
                 </Tab>
             );
