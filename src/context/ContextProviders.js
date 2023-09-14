@@ -6,8 +6,7 @@ import { ImageUploaderContext } from './ImageUploaderContext';
 const ContextProviders = function ({ imageUploaderContextValue, selectContextValue, children }) {
     return (
         <ImageUploaderContext.Provider value={imageUploaderContextValue}>
-            {children}
-            <SelectContext.Provider value={selectContextValue} />
+            <SelectContext.Provider value={selectContextValue}>{children}</SelectContext.Provider>
         </ImageUploaderContext.Provider>
     );
 };
