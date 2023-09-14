@@ -27,7 +27,7 @@ const initial = {
         firstName: 'Zenon',
         lastName: 'Zenonkiewicz',
         email: 'test@test.com',
-        phone: '333-333-333',
+        phone: '333333333',
         country: 'Poland',
         state: 'Lublin Voivodeship',
         city: 'Abramów',
@@ -276,7 +276,7 @@ function App() {
                     tabNames={state.tabNames}
                     tabDescriptions={db.tabDescriptions}
                 />
-                <Wrapper variant="section">
+                <Wrapper variant="form">
                     <Form onSubmit={onSubmit}>
                         {generateTabsAndInputs(state.tabNames, formDataFields)[currentStepIndex]}
                         {extraInputsJSX}
@@ -287,7 +287,7 @@ function App() {
                                 Back
                             </Button>
                             <Button type="submit" variant="dark">
-                                {isLastStep ? 'Summary' : 'Next'}
+                                {isLastStep ? 'Send form' : 'Next'}
                             </Button>
                         </Wrapper>
                     </Form>

@@ -1,6 +1,12 @@
 import React from 'react';
 
-import { StyledFormSummary, StyledListItem, StyledListNumber, StyledFormSummarySubtitle } from './FormSummary.styled';
+import {
+    StyledFormSummary,
+    StyledListItem,
+    StyledListNumber,
+    StyledFormSummarySubtitle,
+    StyledList
+} from './FormSummary.styled';
 
 function FormSummary({ currentStepIndex, tabNames, tabDescriptions }) {
     const stepsJSX = tabNames.map((item, index) => {
@@ -18,7 +24,7 @@ function FormSummary({ currentStepIndex, tabNames, tabDescriptions }) {
                 <h2>Step {currentStepIndex + 1}</h2>
                 <StyledFormSummarySubtitle>{tabDescriptions[currentStepIndex]}</StyledFormSummarySubtitle>
             </header>
-            <ul>{stepsJSX}</ul>
+            <StyledList>{stepsJSX}</StyledList>
         </StyledFormSummary>
     );
 }

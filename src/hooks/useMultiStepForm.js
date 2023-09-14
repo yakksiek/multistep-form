@@ -2,7 +2,7 @@
 import { useState } from 'react';
 
 function useMultiStepForm(state, allFields, dispatch) {
-    const [currentStepIndex, setCurrentStepIndex] = useState(3);
+    const [currentStepIndex, setCurrentStepIndex] = useState(0);
     const [allFormDataFields, setAllFormDataFields] = useState(allFields);
     const stepsNumber = state.tabNames.length;
     const isFirstStep = currentStepIndex === 0;
@@ -43,7 +43,6 @@ function useMultiStepForm(state, allFields, dispatch) {
     };
 
     const removeFormField = (id, groupName) => {
-        console.log(id);
         const filteredFormFields = formDataFields.filter((obj) => obj.id !== id);
         const filteredGroupState = state.form[groupName].filter((obj) => obj.id !== id);
         setAllFormDataFields((prevState) => ({ ...prevState, [currentTabName]: filteredFormFields }));

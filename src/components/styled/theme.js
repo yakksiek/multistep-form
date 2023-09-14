@@ -1,13 +1,14 @@
 import { css } from 'styled-components';
 
 const theme = {
+    // tak, domyślam się, że jest to bardzo złe rozwiązanie :D 
     wrapper: {
-        section: css`
+        form: css`
             flex: 2;
-            padding: 2em;
+            padding: 2em 5em;
         `,
         container: css`
-            max-width: 1000px;
+            max-width: 900px;
             margin: 1em auto;
             display: flex;
             box-shadow: var(--box-shadow-convex);

@@ -6,7 +6,6 @@ import { UilAngleDown, UilAngleUp } from '@iconscout/react-unicons';
 import { useSelectContext } from '../../../context/SelectContext';
 import Label from '../Label/Label';
 import Wrapper from '../../Wrapper';
-import * as h from '../../../helpers';
 
 import { StyledCustomSelect, StyledSelectOptions, StyledValue, StyledOptionItem } from './Select.styled';
 import FieldError from '../FieldError';
@@ -115,7 +114,7 @@ function Select({ options, value, data }) {
                     ref={optionRefs.current[index]}
                     onMouseOver={() => {
                         handleOver(index);
-                        handleStateUpdate(item.name);
+                        // handleStateUpdate(item.name);
                     }}
                     isOver={isOver}
                     onClick={(e) => selectOption(e, item.name)}

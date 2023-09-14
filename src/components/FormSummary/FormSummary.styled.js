@@ -2,15 +2,24 @@ import styled from 'styled-components';
 
 const StyledFormSummary = styled.div`
     flex: 1;
-    background-color: white;
-    background-color: var(--backgorund-gradient);
-    /* text-align: center; */
     padding: var(--container-padding);
+    box-shadow: var(--box-shadow-convex);
+    border-top-left-radius: 32px;
+    border-bottom-left-radius: 32px;
+    background-color: var(--color-4);
+    color: var(--background-color);
+`;
+
+const StyledList = styled.ul`
+    margin-top: 50px;
 `;
 
 const StyledListItem = styled.li`
-    color: ${({ isActive }) => (isActive ? 'black' : 'lightgrey')};
+    color: ${({ isActive }) => (isActive ? 'white' : 'var(--color-1)')};
     margin-bottom: 2em;
+    text-align: center;
+    display: flex;
+    align-items: center;
 `;
 
 const StyledListNumber = styled.span`
@@ -23,11 +32,12 @@ const StyledListNumber = styled.span`
     justify-content: center;
     align-items: center;
     font-weight: bold;
-    /* margin-right: 10px; */
+    margin-right: 1em;
 `;
 
 const StyledFormSummarySubtitle = styled.p`
-    color: var(--color-4-light);
+    font-family: 'SFProBold', sans-serif;
+    line-height: 1.5;
 `;
 
-export { StyledFormSummary, StyledListItem, StyledListNumber, StyledFormSummarySubtitle };
+export { StyledFormSummary, StyledListItem, StyledListNumber, StyledFormSummarySubtitle, StyledList };

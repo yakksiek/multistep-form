@@ -3,30 +3,22 @@ import styled, { css } from 'styled-components';
 const StyledCustomSelect = styled.div`
     margin-top: 10px;
     position: relative;
-    /* width: 20em; */
     min-height: 1.5em;
-    border: 0.05em solid #777;
     display: flex;
     align-items: center;
     gap: 0.5em;
     padding: 0.5em;
-    border-radius: 0.25em;
     outline: none;
     cursor: pointer;
-
     border: none;
     background-color: var(--background-color);
     box-shadow: var(--box-shadow-convex);
-    /* padding: var(--element-padding); */
     border-radius: var(--outer-radius);
     font-size: 1em;
     color: var(--color-4-light);
     font-family: 'SFProText', sans-serif;
-    /* border: 1px solid transparent; */
-    /* width: 100%; */
     &:focus {
         outline: none;
-        /* border-color: var(--color-4-light); */
     }
 
     ${({ isVisible }) =>
@@ -58,7 +50,6 @@ const StyledSelectOptions = styled.ul`
     padding: 0;
     display: none;
     position: absolute;
-    /* top: calc(100% + 0.25em); */
 
     left: 0;
     z-index: 100;
@@ -78,6 +69,8 @@ const StyledSelectOptions = styled.ul`
             display: block;
             border-top-left-radius: 0;
             border-top-right-radius: 0;
+            border-bottom-right-radius: 10px;
+            border-bottom-left-radius: 10px;
         `};
 `;
 
