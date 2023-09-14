@@ -75,10 +75,6 @@ const GlobalStyles = createGlobalStyle`
   ul {
     list-style: none;
   }
-
-  /* .bold {
-    font-family: 'SFProBold';
-  } */
 `;
 
 export default GlobalStyles;

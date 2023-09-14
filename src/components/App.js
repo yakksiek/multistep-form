@@ -239,6 +239,12 @@ function App() {
         errors: state.errors,
     };
 
+    const imageUploaderContextValue = {
+        previewUrl,
+        isImageSelected,
+        clearImage,
+    };
+
     const renderAddFieldButton = () => {
         const isUserInputTab = currentStepIndex === 1 || currentStepIndex === 2;
         if (!isUserInputTab) return;
@@ -256,12 +262,15 @@ function App() {
     const renderSummary = () => {
         if (!isLastStep) return;
 
-        return <UserCard data={state.form} imgData={{ previewUrl, isImageSelected, clearImage }} />;
+        return <UserCard data={state.form} />;
     };
 
     return (
         <Wrapper variant="container">
-            <ContextProviders selectContextValue={selectContextValue}>
+            <ContextProviders
+                selectContextValue={selectContextValue}
+                imageUploaderContextValue={imageUploaderContextValue}
+            >
                 <FormSummary
                     currentStepIndex={currentStepIndex}
                     tabNames={state.tabNames}

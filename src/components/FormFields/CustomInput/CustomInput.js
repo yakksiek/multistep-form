@@ -1,9 +1,8 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
 import { UilTrashAlt, UilImageUpload } from '@iconscout/react-unicons';
-import styled, { css } from 'styled-components';
 
-import StyledCustomInput from './CustomInput.styled';
+import { useImageUploaderContext } from '../../../context/ImageUploaderContext';
 import Label from '../Label/Label';
 import Wrapper from '../../Wrapper';
 import FieldError from '../FieldError';
@@ -11,7 +10,10 @@ import StyledButton from '../../Button/Button.styled';
 import IconWrapper from '../../IconWrapper';
 import Checkbox from '../Checkbox/Checkbox';
 
+import { StyledCustomInput, StyledInputWrapper } from './CustomInput.styled';
+
 function CustomInput({ children, data }) {
+    const { isImageSelected, clearImage } = useImageUploaderContext();
     const { type, value, name, label, id, groupName, accept, onChange, error, deleteButton, handleClick } = data;
 
     const delInputButton = deleteButton && (
@@ -22,10 +24,26 @@ function CustomInput({ children, data }) {
         </StyledButton>
     );
 
+    const handleTrashClick = (e) => {
+        e.preventDefault();
+        if (!isImageSelected) return;
+        clearImage();
+    };
+
     const inputFileIcon = type === 'file' && (
-        <IconWrapper variant="fill">
-            <UilImageUpload />
-        </IconWrapper>
+        <>
+            <IconWrapper variant="fill">
+                <UilImageUpload />
+            </IconWrapper>
+
+            {isImageSelected && (
+                <StyledButton variant="circle" onClick={handleTrashClick}>
+                    <IconWrapper variant="fill" style={{ position: 'absolute' }}>
+                        <UilTrashAlt />
+                    </IconWrapper>
+                </StyledButton>
+            )}
+        </>
     );
 
     return (
@@ -34,7 +52,7 @@ function CustomInput({ children, data }) {
                 <Label htmlFor={id} type={type}>
                     {label}:
                 </Label>
-                {inputFileIcon}
+
                 {type === 'checkbox' ? (
                     <Checkbox data={data} />
                 ) : (
@@ -49,6 +67,7 @@ function CustomInput({ children, data }) {
                         accept={accept}
                     />
                 )}
+                {inputFileIcon}
                 {delInputButton}
             </StyledInputWrapper>
             <FieldError>{error}</FieldError>
@@ -56,26 +75,5 @@ function CustomInput({ children, data }) {
         </Wrapper>
     );
 }
-
-const StyledInputWrapper = styled.div`
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-    align-items: center;
-    ${(props) =>
-        (props.type === 'file' || props.type === 'checkbox') &&
-        css`
-            position: relative;
-            display: flex;
-            align-items: center;
-            border-radius: var(--outer-radius);
-            padding: var(--element-padding);
-            box-shadow: var(--box-shadow-convex);
-            height: 55px;
-            &:hover {
-                background-color: var(--background-color-dark);
-            }
-        `}
-`;
 
 export default CustomInput;
