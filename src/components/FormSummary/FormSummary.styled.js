@@ -17,9 +17,9 @@ const StyledList = styled.ul`
 const StyledListItem = styled.li`
     color: ${({ isActive }) => (isActive ? 'white' : 'var(--color-1)')};
     margin-bottom: 2em;
-    text-align: center;
     display: flex;
     align-items: center;
+    line-height: 1.2;
 `;
 
 const StyledListNumber = styled.span`

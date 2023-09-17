@@ -55,16 +55,20 @@ export function getFirstElFromSplit(string, splitSign) {
 
 export function getUserCountry(lat, long) {
     const [userLat, userLong] = [lat, long].map((el) => getFirstElFromSplit(el.toString(), '.'));
+    console.log(Math.round(lat));
+    console.log(Math.round(long));
+    console.log(long);
 
     // eslint-disable-next-line array-callback-return, consistent-return
     const getCountry = Country.getAllCountries().filter((country) => {
         const { latitude, longitude } = country;
+        if (country.name === 'Poland') console.log(country);
         const [countryLat, countryLong] = [latitude, longitude].map((el) => getFirstElFromSplit(el, '.'));
         if (countryLat === userLat && userLong === countryLong) return country;
     });
 
     const isCountry = getCountry.length !== 0;
-    if (!isCountry) throw new Error('no country found');
+    if (!isCountry) return '';
 
     const [country] = getCountry;
     return country.name;

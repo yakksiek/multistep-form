@@ -9,9 +9,6 @@ const StyledToggleContainer = styled.label`
 `;
 
 const StyledCheckbox = styled.input`
-    /* opacity: 0;
-    width: 0;
-    height: 0; */
     display: none;
 `;
 
@@ -65,7 +62,6 @@ const StyledCircle = styled.div`
         props.checked &&
         css`
             transform: translateX(26px);
-            /* background-color: var(--background-color); */
             box-shadow: var(--box-shadow-concave);
         `}
 `;

@@ -7,7 +7,7 @@ const DefaultStyledIconWrapper = styled.div`
     align-items: center;
     cursor: pointer;
     &:hover {
-        background-color: red;
+        background-color: var(--background-color-dark);
     }
 `;
 

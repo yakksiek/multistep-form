@@ -1,7 +1,7 @@
 import { css } from 'styled-components';
 
 const theme = {
-    // tak, domyślam się, że jest to bardzo złe rozwiązanie :D
+    // tak, domyślam się, że te użycie theme to takie słabe :D
     wrapper: {
         form: css`
             flex: 2;

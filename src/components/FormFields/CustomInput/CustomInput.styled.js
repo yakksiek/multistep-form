@@ -1,14 +1,14 @@
 import styled, { css } from 'styled-components';
 
 const StyledCustomInput = styled.input`
+    margin-top: var(--input-top-margin);
     background-color: var(--background-color);
     box-shadow: var(--box-shadow-concave);
     border-radius: var(--outer-radius);
     font-size: 1em;
     color: var(--color-4-light);
     font-family: 'SFProText', sans-serif;
-    border: 1px solid transparent;
-    width: 100%;
+    border: 2px solid transparent;
     padding: var(--input-padding);
 
     &:focus {
@@ -20,19 +20,25 @@ const StyledCustomInput = styled.input`
         props.type === 'file' &&
         css`
             position: absolute;
-            opacity: 0;
-            /* display: none; */
-            width: 80%;
+            /* opacity: 0; */
+            display: none;
+            /* width: 80%; */
             /* width: auto; */
             height: calc(100% - 20px);
             width: calc(100% - 100px);
             cursor: pointer;
+        `}
+    ${(props) =>
+        props.type === 'checkbox' &&
+        css`
+            display: none;
         `}
 `;
 
 const StyledInputWrapper = styled.div`
     display: flex;
     justify-content: space-between;
+    align-items: flex-end;
     gap: 10px;
     align-items: center;
     ${(props) =>

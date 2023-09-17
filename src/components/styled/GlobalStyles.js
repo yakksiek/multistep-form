@@ -16,11 +16,12 @@ const GlobalStyles = createGlobalStyle`
     --outer-radius: 32px;
     --inner-radius: 10px;
     --input-padding: 0.625em 1.5em;
+    --input-top-margin: 0.8em;
     --background-color: #ebecf0;
     --background-color-dark: rgb(227 229 235);
-    --background-gradient: linear-gradient(to right bottom, #d2defe, #dae0fd, #e0e1fb, #e6e4f9, #ebe6f8, #ebe9fa, #ebebfb, #eceefc, #e9f2ff, #e7f6ff, #e6faff, #e7fdff);
+    /* --background-gradient: linear-gradient(to right bottom, #d2defe, #dae0fd, #e0e1fb, #e6e4f9, #ebe6f8, #ebe9fa, #ebebfb, #eceefc, #e9f2ff, #e7f6ff, #e6faff, #e7fdff);
     --box-shadow: -4px -4px 12px var(--background-gradient), -6px -6px 8px rgba(255, 255, 255, 0.6),
-        6px 6px 8px rgba(255, 255, 255, 0.08), 6px 6px 10px rgba(0, 0, 0, 0.2);
+        6px 6px 8px rgba(255, 255, 255, 0.08), 6px 6px 10px rgba(0, 0, 0, 0.2); */
 
 
 

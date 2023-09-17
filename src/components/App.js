@@ -2,10 +2,11 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable import/named */
 /* eslint-disable no-unused-vars */
-import React, { useReducer, useEffect, useState } from 'react';
-import { Country } from 'country-state-city';
+import React, { useReducer, useEffect } from 'react';
 import { UilPlusCircle } from '@iconscout/react-unicons';
 
+import reducer from '../reducer/reducer';
+import initial from '../reducer/initialState';
 import * as db from '../db';
 import * as h from '../helpers';
 import ContextProviders from '../context/ContextProviders';
@@ -22,79 +23,6 @@ import Button from './Button/Button';
 import Wrapper from './Wrapper';
 import IconWrapper from './IconWrapper';
 import Checkbox from './FormFields/Checkbox';
-
-const initial = {
-    form: {
-        firstName: 'Zenon',
-        lastName: 'Zenonkiewicz',
-        email: 'test@test.com',
-        phone: '333333333',
-        country: 'Poland',
-        state: 'Lublin Voivodeship',
-        city: 'Abramów',
-        school: [
-            {
-                id: '8478c902-eda2-4ad8-9377-9c54a3a33fe2',
-                value: 'School primary',
-                name: 'school-1',
-            },
-            {
-                id: 'school-2',
-                value: 'School secondary',
-                name: 'school-2',
-            },
-            {
-                id: 'school-3',
-                value: 'High school',
-                name: 'school-3',
-            },
-        ],
-        experience: [
-            {
-                id: '07c0a7f8-2ea8-43f7-a44d-cf0b9131483f',
-                value: 'Junior here and there',
-                name: 'experience-1',
-            },
-            {
-                id: 'experience-2',
-                value: 'next job',
-                name: 'experience-2',
-            },
-            {
-                id: 'experience-3',
-                value: 'another job',
-                name: 'experience-3',
-            },
-        ],
-        newsletter: false,
-        // firstName: '',
-        // lastName: '',
-        // email: '',
-        // phone: '',
-        // country: '',
-        // state: '',
-        // city: '',
-        // school: [],
-        // experience: [],
-        // newsletter: false,
-    },
-    errors: {},
-    tabNames: db.formTabsFields,
-    country: Country.getAllCountries(),
-    state: [],
-    city: [],
-};
-
-const reducer = (state, action) => {
-    switch (action.type) {
-        case 'updateStateKey':
-            return { ...state, [action.payload.name]: action.payload.value };
-        case 'updateFormKey':
-            return { ...state, form: { ...state.form, [action.payload.name]: action.payload.value } };
-        default:
-            return state;
-    }
-};
 
 function App() {
     const [state, dispatch] = useReducer(reducer, initial);
@@ -127,7 +55,9 @@ function App() {
     useEffect(() => {
         if (location.loaded && state.form.country === '') {
             const { lat, long } = location.coords;
+            console.log(lat, long);
             const userCountry = h.getUserCountry(lat, long);
+            console.log(userCountry);
             const newForm = { ...state.form, country: userCountry };
             updateState('form', newForm);
         }
@@ -191,9 +121,9 @@ function App() {
                 data = { ...data, onChange: handleImageSelect };
             }
 
-            // if (type === 'checkbox') {
-            //     return <Checkbox key={id} data={data} />;
-            // }
+            if (type === 'checkbox') {
+                return <Checkbox key={id} data={data} />;
+            }
 
             return <CustomInput key={id} data={data} />;
         });

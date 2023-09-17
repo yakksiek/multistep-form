@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 
 const StyledCustomSelect = styled.div`
-    margin-top: 10px;
+    margin-top: var(--input-top-margin);
     position: relative;
     min-height: 1.5em;
     display: flex;
