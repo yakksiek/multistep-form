@@ -24,7 +24,7 @@ function useMultiStepForm(state, allFields, dispatch) {
         });
     };
 
-    const goTo = (index) => {
+    const goToIndexTab = (index) => {
         setCurrentStepIndex(index);
     };
 
@@ -51,7 +51,7 @@ function useMultiStepForm(state, allFields, dispatch) {
 
     return {
         currentStepIndex,
-        goTo,
+        goToIndexTab,
         nextTab,
         prevTab,
         isFirstStep,

@@ -35,6 +35,7 @@ function App() {
         formDataFields,
         addFormField,
         removeFormField,
+        goToIndexTab,
     } = useMultiStepForm(state, db.formFields, dispatch);
     const { selectedImage, previewUrl, isImageSelected, handleImageSelect, clearImage } = useImageUploader();
     const location = useGeoLocation();
@@ -55,9 +56,7 @@ function App() {
     useEffect(() => {
         if (location.loaded && state.form.country === '') {
             const { lat, long } = location.coords;
-            console.log(lat, long);
             const userCountry = h.getUserCountry(lat, long);
-            console.log(userCountry);
             const newForm = { ...state.form, country: userCountry };
             updateState('form', newForm);
         }
@@ -165,6 +164,15 @@ function App() {
         const isFormClean = h.isObjectEmpty(errors);
         const isStateClean = h.isObjectEmpty(state.errors);
         if (!isFormClean || !isStateClean) return;
+
+        if (currentStepIndex + 1 === state.tabNames.length) {
+            // eslint-disable-next-line no-alert, no-undef
+            alert('wysłano');
+            dispatch({ type: 'resetState' });
+            goToIndexTab(0);
+            clearImage();
+            return;
+        }
         nextTab();
     };
 
