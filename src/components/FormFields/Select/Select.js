@@ -9,6 +9,7 @@ import Wrapper from '../../Wrapper';
 
 import { StyledCustomSelect, StyledSelectOptions, StyledValue, StyledOptionItem } from './Select.styled';
 import FieldError from '../FieldError';
+import IconWrapper from '../../IconWrapper';
 
 function Select({ options, value, data }) {
     const { name, label, error } = data;
@@ -114,7 +115,6 @@ function Select({ options, value, data }) {
                     ref={optionRefs.current[index]}
                     onMouseOver={() => {
                         handleOver(index);
-                        // handleStateUpdate(item.name);
                     }}
                     isOver={isOver}
                     onClick={(e) => selectOption(e, item.name)}
@@ -143,7 +143,7 @@ function Select({ options, value, data }) {
                 <StyledValue value={value} name={name} data-select={name}>
                     {value || (!disabled && 'Choose one option')}
                 </StyledValue>
-                {renderArrow}
+                {!disabled && renderArrow}
                 <StyledSelectOptions isVisible={listVisible}>{optionsJSX()}</StyledSelectOptions>
             </StyledCustomSelect>
             <FieldError>{error}</FieldError>
