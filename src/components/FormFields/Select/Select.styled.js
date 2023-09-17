@@ -18,7 +18,7 @@ const StyledCustomSelect = styled.div`
     color: var(--color-4-light);
     font-family: 'SFProText', sans-serif;
     &:focus {
-        outline: none;
+        outline: 2px solid var(--color-4);
     }
 
     ${({ isVisible }) =>
@@ -35,6 +35,9 @@ const StyledCustomSelect = styled.div`
         css`
             pointer-events: none;
             background-color: lightgrey;
+            &:focus {
+                outline: none;
+            }
         `}
 `;
 
@@ -62,7 +65,7 @@ const StyledSelectOptions = styled.ul`
     background-color: var(--background-color);
     box-shadow: var(--box-shadow-convex);
     border: none;
-    border-top: 1px solid var(--color-4);
+    border-top: 2px solid var(--color-4);
     ${({ isVisible }) =>
         isVisible &&
         css`

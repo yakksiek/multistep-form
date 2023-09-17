@@ -19,12 +19,6 @@ const GlobalStyles = createGlobalStyle`
     --input-top-margin: 0.8em;
     --background-color: #ebecf0;
     --background-color-dark: rgb(227 229 235);
-    /* --background-gradient: linear-gradient(to right bottom, #d2defe, #dae0fd, #e0e1fb, #e6e4f9, #ebe6f8, #ebe9fa, #ebebfb, #eceefc, #e9f2ff, #e7f6ff, #e6faff, #e7fdff);
-    --box-shadow: -4px -4px 12px var(--background-gradient), -6px -6px 8px rgba(255, 255, 255, 0.6),
-        6px 6px 8px rgba(255, 255, 255, 0.08), 6px 6px 10px rgba(0, 0, 0, 0.2); */
-
-
-
     --box-shadow-convex: -4px -4px 12px rgba(255, 255, 255, 0.8), -6px -6px 8px rgba(255, 255, 255, 0.6),
         6px 6px 8px rgba(255, 255, 255, 0.08), 6px 6px 10px rgba(0, 0, 0, 0.2);
     --box-shadow-flat: -2px -2px 6px rgba(255, 255, 255, 0.6), -2px -2px 4px rgba(255, 255, 255, 0.4),
@@ -39,8 +33,6 @@ const GlobalStyles = createGlobalStyle`
 
   body {
     font-family: 'SFProText', sans-serif;
-    /* font-size: 1.1em; */
-    /* background-image: linear-gradient(to right bottom, #d2defe, #d7ddfd, #dbdcfb, #dfdcf9, #e3dbf7, #e2def9, #e1e1fb, #e0e4fd, #ddebff, #ddf2ff, #e0f8ff, #e7fdff); */
     background: var(--background-color);
     background-repeat: no-repeat;
     height: 100vh;

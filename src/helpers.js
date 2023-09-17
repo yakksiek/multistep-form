@@ -55,9 +55,6 @@ export function getFirstElFromSplit(string, splitSign) {
 
 export function getUserCountry(lat, long) {
     const [userLat, userLong] = [lat, long].map((el) => getFirstElFromSplit(el.toString(), '.'));
-    console.log(Math.round(lat));
-    console.log(Math.round(long));
-    console.log(long);
 
     // eslint-disable-next-line array-callback-return, consistent-return
     const getCountry = Country.getAllCountries().filter((country) => {

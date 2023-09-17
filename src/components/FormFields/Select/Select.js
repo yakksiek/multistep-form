@@ -2,14 +2,11 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect, useRef, createRef } from 'react';
 import { UilAngleDown, UilAngleUp } from '@iconscout/react-unicons';
-
 import { useSelectContext } from '../../../context/SelectContext';
 import Label from '../Label/Label';
 import Wrapper from '../../Wrapper';
-
 import { StyledCustomSelect, StyledSelectOptions, StyledValue, StyledOptionItem } from './Select.styled';
 import FieldError from '../FieldError';
-import IconWrapper from '../../IconWrapper';
 
 function Select({ options, value, data }) {
     const { name, label, error } = data;
@@ -39,13 +36,15 @@ function Select({ options, value, data }) {
 
     const resetSelectError = () => {
         const errorInState = errors[name];
+        console.log(errorInState);
         if (!errorInState) return;
         const { [name]: ommitedKey, ...rest } = errors;
         updateState('errors', rest);
     };
 
     const handleStateUpdate = (newValue) => {
-        console.log(name);
+        resetSelectError();
+
         if (name === 'country') {
             const newData = { country: newValue, state: '', city: '' };
             updateState('form', { ...form, ...newData });
@@ -54,11 +53,12 @@ function Select({ options, value, data }) {
             return;
         }
 
-        resetSelectError();
         updateState('form', { ...form, [name]: newValue });
     };
 
     const handleKeyDown = (e) => {
+        if (disabled) return;
+
         switch (e.code) {
             case 'Space':
                 setListVisible((prevState) => !prevState);
