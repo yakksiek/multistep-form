@@ -2,7 +2,7 @@
 
 # Multi-page form
 
-The application features a multi-page form interface, styled using Styled-Components to ensure. It includes a custom select component, allowing users to navigate through options with keys. Additionally, the app uses a photo file upload system and live form validation. 
+The application features a multi-page form interface, styled using Styled-Components. It includes a custom select component, allowing users to navigate through options with keys. Additionally, the app uses a photo file upload system and live form validation. 
 
 **Main features**:
 
