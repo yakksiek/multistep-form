@@ -41,7 +41,6 @@ function App() {
     const location = useGeoLocation();
 
     useEffect(() => {
-        console.log(state);
     }, [state, selectedImage]);
 
     const updateState = (dataToUpdate, newValue) => {

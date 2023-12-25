@@ -1,22 +1,5 @@
 /* eslint-disable no-unused-vars */
 
-export const countries = ['Switzerland', 'Poland', 'England'];
-export const states = {
-    Switzerland: ['Zurich', 'Bern', 'Luzern'],
-    Poland: ['Mazowieckie', 'Lubelskie'],
-    England: ['Kent', 'Lancashire', 'Devon'],
-};
-export const cities = {
-    Zurich: ['Zurich', 'Uster', 'Winthertur'],
-    Bern: ['Huttwil', 'Ipsach', 'Jens'],
-    Luzern: ['Ballwil', 'Dierikon', 'Ebikon'],
-    Mazowieckie: ['Warsaw', 'Pułtusk', 'Piaseczno'],
-    Lubelskie: ['Lublin', 'Chełm', 'Krasnystaw'],
-    Kent: ['Canterbury', 'Maidstone', 'Rochester', 'Margate'],
-    Lancashire: ['Preston', 'Blackburn', 'Burnley', 'Lancaster'],
-    Devon: ['Exeter', 'Plymouth', 'Torquay', 'Newton Abbot'],
-};
-
 export const formFields = {
     'personal info': [
         {
