@@ -59,7 +59,6 @@ export function getUserCountry(lat, long) {
     // eslint-disable-next-line array-callback-return, consistent-return
     const getCountry = Country.getAllCountries().filter((country) => {
         const { latitude, longitude } = country;
-        if (country.name === 'Poland') console.log(country);
         const [countryLat, countryLong] = [latitude, longitude].map((el) => getFirstElFromSplit(el, '.'));
         if (countryLat === userLat && userLong === countryLong) return country;
     });

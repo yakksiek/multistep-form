@@ -42,7 +42,7 @@ module.exports = function (env = {}) {
         },
         plugins: [
             new HtmlWebpackPlugin({
-                template: './index.html',
+                template: './src/index.html',
                 filename: 'index.html',
             }),
             new EsLintPlugin(),

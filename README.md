@@ -2,26 +2,31 @@
 
 # Multi-page form
 
-The application features a multi-page form interface, styled using Styled-Components. It includes a custom select component, allowing users to navigate through options with keys. Additionally, the app uses a photo file upload system and live form validation. 
+See the live version of [Multi-page form](https://yakksiek.github.io/multistep-form/).
+
+The application features a multi-page form interface, styled using Styled-Components. It includes a custom select component, allowing users to navigate through options with keys. Additionally, the app uses a photo file upload system and live form validation.
 
 **Main features**:
 
 1. **Styled-Components**
-   - Employs Styled-Components for advanced styling.
-   - Enables dynamic theming and modular CSS in JavaScript.
+
+    - Employs Styled-Components for advanced styling.
+    - Enables dynamic theming and modular CSS in JavaScript.
 
 2. **Live Validation**
-   - Integrates live validation for form inputs.
+
+    - Integrates live validation for form inputs.
 
 3. **Photo File Upload**
 
 4. **Custom Soft UI**
-   - Implements a custom Soft UI design.
-   - Offers a modern and user-friendly interface with subtle aesthetics.
+
+    - Implements a custom Soft UI design.
+    - Offers a modern and user-friendly interface with subtle aesthetics.
 
 5. **Use of Reducer in Form**
-   - Utilizes a reducer for state management in the form.
-   - Enhances form handling, making it more efficient and scalable.
+    - Utilizes a reducer for state management in the form.
+    - Enhances form handling, making it more efficient and scalable.
 
 &nbsp;
 
@@ -43,9 +48,9 @@ The application features a multi-page form interface, styled using Styled-Compon
 The project uses [node](https://nodejs.org/en/) and [npm](https://www.npmjs.com/). After ensuring they are installed, follow these steps:
 
 1. **Install Dependencies**
-   - Open your terminal.
-   - Navigate to the project's root directory.
-   - Type `npm i` to install the necessary packages.
+    - Open your terminal.
+    - Navigate to the project's root directory.
+    - Type `npm i` to install the necessary packages.
 
 &nbsp;
 
@@ -53,7 +58,7 @@ The project uses [node](https://nodejs.org/en/) and [npm](https://www.npmjs.com/
 
 **Custom Select**
 
-```javascript 
+```javascript
 function Select({ options, value, data }) {
     const { name, label, error } = data;
     const [listVisible, setListVisible] = useState(false);
