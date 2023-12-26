@@ -56,7 +56,7 @@ The project uses [node](https://nodejs.org/en/) and [npm](https://www.npmjs.com/
 
 ## 🤔 Solutions provided in the project
 
-**Custom Select**
+**Custom Select** - build from scratch and can be navigated through using keys. 
 
 ```javascript
 function Select({ options, value, data }) {
