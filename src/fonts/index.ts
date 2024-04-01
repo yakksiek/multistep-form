@@ -9,7 +9,14 @@ import SFProBoldWoff2 from './SFProDisplay-Bold.woff2';
 import SFProTextWoff from './sf-pro-text-regular-webfont.woff';
 import SFProTextWoff2 from './sf-pro-text-regular-webfont.woff2';
 
-const fontFiles = [
+interface FontFile {
+    family: string;
+    woff: string;
+    woff2: string;
+    style?: string;
+}
+
+const fontFiles: FontFile[] = [
     {
         family: 'SFPro',
         woff: SFProWoff,
@@ -28,16 +35,16 @@ const fontFiles = [
     },
 ];
 
-const createFontFace = ({ family, woff, woff2, style }) => `
-  @font-face {
-    font-family: '${family}';
-    src: local('${family}'), local('${family}'),
-      url(${woff}) format('woff'),
-      url(${woff2}) format('woff2');
-    font-style: ${style || 'normal'};
-  }
+const createFontFace = ({ family, woff, woff2, style = 'normal' }: FontFile) => `
+@font-face {
+  font-family: '${family}';
+  src: local('${family}'), local('${family}'),
+    url(${woff}) format('woff'),
+    url(${woff2}) format('woff2');
+  font-style: ${style};
+}
 `;
 
 export default createGlobalStyle`
-  ${fontFiles.map(createFontFace).join('\n')}
+${fontFiles.map(createFontFace).join('\n')}
 `;
