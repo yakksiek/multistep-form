@@ -9,7 +9,8 @@ import theme from './components/styled/theme';
 
 import App from './components/App';
 
-const root = createRoot(document.querySelector('#root'));
+const container = document.querySelector('#root')!;
+const root = createRoot(container);
 root.render(
     <>
         <Reset />
