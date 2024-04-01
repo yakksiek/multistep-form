@@ -1,6 +1,7 @@
 import { css } from 'styled-components';
+import { Theme } from '../../types/theme.interfaces';
 
-const theme = {
+const theme: Theme = {
     wrapper: {
         form: css`
             flex: 2;
