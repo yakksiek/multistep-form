@@ -1,16 +1,17 @@
-import React from 'react';
 import { createRoot } from 'react-dom/client';
-import { Reset } from 'styled-reset';
 import { ThemeProvider } from 'styled-components';
+import { Reset } from 'styled-reset';
 
 import GlobalFonts from './fonts';
-import GlobalStyles from './components/styled/GlobalStyles';
-import theme from './components/styled/theme';
+import GlobalStyles from './styled/GlobalStyles';
+import theme from './styled/theme';
 
 import App from './components/App';
 
-const container = document.querySelector('#root')!;
+const container = document.querySelector('#root');
+if (!container) throw new Error('Failed to find the root element');
 const root = createRoot(container);
+
 root.render(
     <>
         <Reset />
