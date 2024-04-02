@@ -1,15 +1,16 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
-import initial from './initialState';
+import { FormActions } from 'types/actionInterfaces';
+import { InitialState } from 'types/initialState.interfaces';
+import initialState from './initialState';
+import ActionT from '../types/FormActionTypes';
 
-const reducer = (state, action) => {
+const reducer = (state: InitialState, action: FormActions): InitialState => {
     switch (action.type) {
-        case 'updateStateKey':
+        case ActionT.UpdateStateKey:
             return { ...state, [action.payload.name]: action.payload.value };
-        case 'updateFormKey':
+        case ActionT.UpdateFormKey:
             return { ...state, form: { ...state.form, [action.payload.name]: action.payload.value } };
-        case 'resetState':
-            return initial;
+        case ActionT.ResetState:
+            return initialState;
         default:
             return state;
     }

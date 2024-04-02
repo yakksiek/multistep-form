@@ -11,7 +11,7 @@ import IconWrapper from '../../IconWrapper';
 
 import { StyledCustomInput, StyledInputWrapper } from './CustomInput.styled';
 
-function CustomInput({ children, data }) {
+function CustomInput({ children = '', data }) {
     const { isImageSelected, clearImage } = useImageUploaderContext();
     const { type, value, name, label, id, groupName, accept, onChange, error, deleteButton, handleClick } = data;
 

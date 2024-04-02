@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
-import FormFields from './types/formFields.interfaces';
+
+import FormFields from 'types/formFieldData.interfaces';
 
 export const formFields: FormFields = {
     'personal info': [
