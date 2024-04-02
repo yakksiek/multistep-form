@@ -1,18 +1,18 @@
 import { ICountry, IState, ICity } from 'country-state-city';
 
-interface School {
+export interface School {
     id: string;
     value: string;
     name: string;
 }
 
-interface Experience {
+export interface Experience {
     id: string;
     value: string;
     name: string;
 }
 
-interface Form {
+export interface Form {
     newsletter: boolean;
     firstName: string;
     lastName: string;

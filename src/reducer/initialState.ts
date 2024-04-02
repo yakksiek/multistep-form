@@ -1,11 +1,19 @@
 import { Country } from 'country-state-city';
 
-import { InitialState } from '../types/formReducer.interfaces';
+import { InitialState } from '../types/initialState.interfaces';
 
 import * as db from '../db';
 
 const initial: InitialState = {
     form: {
+        // newsletter: true,
+        // firstName: 'Marcin',
+        // lastName: 'Kulbicki',
+        // email: 'marcin.kulbicki@gmail.com',
+        // phone: '32423',
+        // country: 'Central African Republic',
+        // state: 'Bangui',
+        // city: 'Bangui',
         newsletter: false,
         firstName: '',
         lastName: '',

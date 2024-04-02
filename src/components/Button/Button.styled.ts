@@ -1,6 +1,10 @@
 import styled from 'styled-components';
 
-const DefaultStyledButton = styled.button`
+interface StyledButtonProps {
+    variant?: 'dark' | 'circle';
+}
+
+const DefaultStyledButton = styled.button<StyledButtonProps>`
     font-family: 'SFProBold', sans-serif;
     font-size: 0.9em;
     border: none;
@@ -26,6 +30,6 @@ const DefaultStyledButton = styled.button`
     }
 `;
 
-const StyledButton = styled(DefaultStyledButton)(({ theme, variant }) => theme.button[variant]);
+const StyledButton = styled(DefaultStyledButton)(({ theme, variant }) => (variant ? theme.button[variant] : ''));
 
 export default StyledButton;

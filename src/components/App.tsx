@@ -1,12 +1,12 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
 /* eslint-disable consistent-return */
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable import/named */
-/* eslint-disable no-unused-vars */
 import React, { useReducer, useEffect } from 'react';
+import { InitialState, Form as FormInterface } from 'types/initialState.interfaces';
+import { FormField } from 'types/formFieldData.interfaces';
 import { UilPlusCircle } from '@iconscout/react-unicons';
 
+import FormActionTypes from '../types/FormActionTypes';
 import reducer from '../reducer/formReducer';
 import initial from '../reducer/initialState';
 import * as db from '../db';
@@ -42,10 +42,10 @@ function App() {
     const { selectedImage, previewUrl, isImageSelected, handleImageSelect, clearImage } = useImageUploader();
     const location = useGeoLocation();
 
-    useEffect(() => {}, [state, selectedImage]);
+    useEffect(() => {}, [selectedImage]);
 
-    const updateState = (dataToUpdate, newValue) => {
-        dispatch({ type: 'updateStateKey', payload: { name: dataToUpdate, value: newValue } });
+    const updateState = (dataToUpdate: keyof InitialState, newValue: InitialState[keyof InitialState]) => {
+        dispatch({ type: FormActionTypes.UpdateStateKey, payload: { name: dataToUpdate, value: newValue } });
     };
 
     useEffect(() => {
@@ -63,7 +63,7 @@ function App() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [location]);
 
-    const liveValidation = (input) => {
+    const liveValidation = (input: HTMLInputElement) => {
         const inputName = input.name;
         const isErrorInState = state.errors[inputName];
         if (!isErrorInState) return;
@@ -71,13 +71,12 @@ function App() {
         h.resetErrorInState(inputError, inputName, state.errors, updateState);
     };
 
-    const handleChange = (e, id, groupName) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>, id: string, groupName?: 'school' | 'experience') => {
         const { name, value, type } = e.target;
         liveValidation(e.target);
-        let newName = name;
-        let newValue = value;
+        const newName = name as keyof FormInterface;
 
-        if (groupName === 'school' || groupName === 'experience') {
+        if (groupName) {
             const arrayCopy = [...state.form[groupName]];
             const itemIndex = arrayCopy.findIndex((item) => item.id === id);
             if (itemIndex === -1) {
@@ -86,33 +85,35 @@ function App() {
             } else {
                 arrayCopy[itemIndex].value = value;
             }
-            newName = groupName;
-            newValue = arrayCopy;
+
+            return dispatch({ type: FormActionTypes.UpdateFormKey, payload: { name: groupName, value: arrayCopy } });
         }
 
         if (type === 'checkbox') {
-            newValue = e.target.checked;
+            return dispatch({ type: FormActionTypes.UpdateFormKey, payload: { name: newName, value } });
         }
 
-        return dispatch({ type: 'updateFormKey', payload: { name: newName, value: newValue } });
+        return dispatch({ type: FormActionTypes.UpdateFormKey, payload: { name: newName, value } });
     };
 
-    const createInputs = (fields) => {
+    const createInputs = (fields: FormField[]) => {
         const formInputs = fields.map((field) => {
-            const { type, name, label, id, groupName, deleteButton } = field;
-            const value = state.form[name];
+            const { type, name, id, groupName, deleteButton } = field;
+            const value = state.form[name as keyof FormInterface];
             const error = state.errors[name];
             let data = { ...field, onChange: handleChange, value, error };
 
             if (type === 'select') {
-                const options = state[name];
+                const options = state[name as keyof InitialState];
                 return <Select key={name} data={data} options={options} value={value} />;
             }
 
-            if (label === 'School' || label === 'Experience') {
-                const group = state.form[groupName];
+            if (groupName) {
+                const group = state.form[groupName as 'school' | 'experience'];
                 const item = group.find((el) => el.id === id);
+
                 const newValue = item ? item.value : '';
+
                 data = { ...data, value: newValue, deleteButton, handleClick: removeFormField };
             }
 
@@ -130,13 +131,13 @@ function App() {
         return formInputs;
     };
 
-    const generateTabsAndInputs = (formTabs, formFields) => {
+    const generateTabsAndInputs = (formTabs: string[], formFields: FormField[]) => {
         const tabs = formTabs.map((tabName) => {
             const inputs = createInputs(formFields);
             const name = h.capitalize(tabName);
 
             return (
-                <Tab key={tabName} name={tabName}>
+                <Tab key={tabName}>
                     <h2>{name}</h2>
                     {inputs}
                 </Tab>
@@ -146,7 +147,7 @@ function App() {
         return tabs;
     };
 
-    const onSubmit = (e) => {
+    const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const form = e.target;
         const inputElements = h.findInputElementsInForm(form);
@@ -156,7 +157,7 @@ function App() {
 
         const requiredSelectsFields = h.checkForRequiredFieldType(formDataFields, 'select');
         if (requiredSelectsFields) {
-            const selectErrors = h.validateSelects(requiredSelectsFields, state.form, errors);
+            const selectErrors = h.validateSelects(requiredSelectsFields, state.form);
             errors = { ...errors, ...selectErrors };
         }
 
@@ -167,8 +168,8 @@ function App() {
 
         if (currentStepIndex + 1 === state.tabNames.length) {
             // eslint-disable-next-line no-alert, no-undef
-            alert('wysłano');
-            dispatch({ type: 'resetState' });
+            alert('sent');
+            dispatch({ type: FormActionTypes.ResetState });
             goToIndexTab(0);
             clearImage();
             return;
@@ -176,7 +177,7 @@ function App() {
         nextTab();
     };
 
-    const extraInputsJSX = state[`${state.tabNames[currentStepIndex]}ExtraInputs`];
+    // const extraInputsJSX = state[`${state.tabNames[currentStepIndex]}ExtraInputs`];
 
     const selectContextValue = {
         form: state.form,
@@ -224,7 +225,7 @@ function App() {
                 <Wrapper variant="form">
                     <Form onSubmit={onSubmit}>
                         {generateTabsAndInputs(state.tabNames, formDataFields)[currentStepIndex]}
-                        {extraInputsJSX}
+                        {/* {extraInputsJSX} */}
                         {renderAddFieldButton()}
                         {renderSummary()}
                         <Wrapper variant="btnContainer">

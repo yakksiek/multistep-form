@@ -8,6 +8,8 @@ interface BaseField {
     value?: string;
     groupName?: string;
     accept?: string;
+    deleteButton?: boolean;
+    handleClick?: () => void;
 }
 
 interface SelectField extends BaseField {
@@ -32,7 +34,7 @@ interface CheckboxField extends BaseField {
     type: 'checkbox';
 }
 
-type FormField = SelectField | TextField | EmailField | FileField | CheckboxField;
+export type FormField = SelectField | TextField | EmailField | FileField | CheckboxField;
 
 export default interface FormFields {
     'personal info': FormField[];
