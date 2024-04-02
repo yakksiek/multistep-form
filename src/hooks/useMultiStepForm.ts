@@ -1,14 +1,19 @@
 /* eslint-disable no-unused-vars */
-import { useState } from 'react';
+import { useState, Dispatch } from 'react';
+import { InitialState } from 'types/initialState.interfaces';
+import { MuliInputsGroupType } from 'types/mulitplyInputsGroupTypes';
+import FormFields from 'types/formFieldData.interfaces';
+import { FormActions } from 'types/actionInterfaces';
+import FormActionTypes from '../types/FormActionTypes';
 
-function useMultiStepForm(state, allFields, dispatch) {
+function useMultiStepForm(state: InitialState, allFields: FormFields, dispatch: Dispatch<FormActions>) {
     const [currentStepIndex, setCurrentStepIndex] = useState(1);
     const [allFormDataFields, setAllFormDataFields] = useState(allFields);
     const stepsNumber = state.tabNames.length;
     const isFirstStep = currentStepIndex === 0;
     const isLastStep = currentStepIndex === stepsNumber - 1;
     const currentTabName = state.tabNames[currentStepIndex];
-    const formDataFields = allFormDataFields[currentTabName];
+    const formDataFields = allFormDataFields[currentTabName as keyof FormFields];
 
     const nextTab = () => {
         setCurrentStepIndex((i) => {
@@ -24,7 +29,7 @@ function useMultiStepForm(state, allFields, dispatch) {
         });
     };
 
-    const goToIndexTab = (index) => {
+    const goToIndexTab = (index: number) => {
         setCurrentStepIndex(index);
     };
 
@@ -42,11 +47,11 @@ function useMultiStepForm(state, allFields, dispatch) {
         setAllFormDataFields((prevState) => ({ ...prevState, [currentTabName]: copyDataFields }));
     };
 
-    const removeFormField = (id, groupName) => {
+    const removeFormField = (id: string, groupName: MuliInputsGroupType) => {
         const filteredFormFields = formDataFields.filter((obj) => obj.id !== id);
         const filteredGroupState = state.form[groupName].filter((obj) => obj.id !== id);
         setAllFormDataFields((prevState) => ({ ...prevState, [currentTabName]: filteredFormFields }));
-        dispatch({ type: 'updateFormKey', payload: { name: groupName, value: filteredGroupState } });
+        dispatch({ type: FormActionTypes.UpdateFormKey, payload: { name: groupName, value: filteredGroupState } });
     };
 
     return {

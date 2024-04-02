@@ -6,9 +6,10 @@ import { InitialState, Form as FormInterface } from 'types/initialState.interfac
 import { FormField } from 'types/formFieldData.interfaces';
 import { UilPlusCircle } from '@iconscout/react-unicons';
 
+import { MuliInputsGroupType } from 'types/mulitplyInputsGroupTypes';
 import FormActionTypes from '../types/FormActionTypes';
-import reducer from '../reducer/formReducer';
 import initial from '../reducer/initialState';
+import reducer from '../reducer/formReducer';
 import * as db from '../db';
 import * as h from '../helpers';
 import ContextProviders from '../context/ContextProviders';
@@ -109,7 +110,7 @@ function App() {
             }
 
             if (groupName) {
-                const group = state.form[groupName as 'school' | 'experience'];
+                const group = state.form[groupName as MuliInputsGroupType];
                 const item = group.find((el) => el.id === id);
 
                 const newValue = item ? item.value : '';
