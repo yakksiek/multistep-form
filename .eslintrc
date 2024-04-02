@@ -1,12 +1,33 @@
 {
-    "parser": "@babel/eslint-parser",
-    "extends": ["airbnb", "airbnb/hooks", "prettier"],
+    "parser": "@typescript-eslint/parser",
+    "extends": ["airbnb", "airbnb/hooks", "plugin:@typescript-eslint/recommended", "prettier"],
+    "plugins": ["@typescript-eslint"],
     "rules": {
+        "@typescript-eslint/ban-ts-comment": [
+            "error",
+            {
+                "ts-expect-error": "allow-with-description",
+                "ts-ignore": "allow-with-description",
+                "ts-nocheck": true,
+                "ts-check": false
+            }
+        ],
+        "import/extensions": [
+            "error",
+            "ignorePackages",
+            {
+                "js": "never",
+                "jsx": "never",
+                "ts": "never",
+                "tsx": "never"
+            }
+        ],
+        "react/react-in-jsx-scope": "off",
         "no-console": "off",
         "react/jsx-filename-extension": [
             1,
             {
-                "extensions": [".js"]
+                "extensions": [".js", ".jsx", ".ts", ".tsx"]
             }
         ],
         "indent": ["error", 4, { "SwitchCase": 1 }],
@@ -19,5 +40,56 @@
     "globals": {
         "window": true,
         "document": true
+    },
+    "settings": {
+        "import/resolver": {
+            "node": {
+                "paths": ["src"],
+                "extensions": [".js", ".jsx", ".ts", ".tsx"]
+            }
+        }
     }
 }
+
+// {
+//     "parser": "@babel/eslint-parser",
+//     "extends": ["airbnb", "airbnb/hooks", "prettier"],
+//     "rules": {
+//         "import/extensions": [
+//             "error",
+//             "ignorePackages",
+//             {
+//                 "js": "never",
+//                 "jsx": "never",
+//                 "ts": "never",
+//                 "tsx": "never"
+//             }
+//         ],
+//         "react/react-in-jsx-scope": "off",
+//         "no-console": "off",
+//         "react/jsx-filename-extension": [
+//             1,
+//             {
+//                 "extensions": [".js", ".jsx", ".ts", ".tsx"]
+//             }
+//         ],
+//         "indent": ["error", 4, { "SwitchCase": 1 }],
+//         "react/jsx-indent": ["error", 4],
+//         "react/jsx-indent-props": ["error", 4],
+//         "react/jsx-no-constructed-context-values": "off",
+//         "func-names": ["error", "as-needed"],
+//         "react/prop-types": 0
+//     },
+//     "globals": {
+//         "window": true,
+//         "document": true
+//     },
+//     "settings": {
+//         "import/resolver": {
+//             "node": {
+//                 "paths": ["src"],
+//                 "extensions": [".js", ".jsx", ".ts", ".tsx"]
+//             }
+//         }
+//     }
+// }
