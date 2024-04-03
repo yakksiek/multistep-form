@@ -1,27 +1,35 @@
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 
-function useImageUploader() {
-    const [selectedImage, setSelectedImage] = useState(null);
+interface UseImageUploaderReturn {
+    selectedImage: File | null;
+    previewUrl: string;
+    isImageSelected: boolean;
+    handleImageSelect: (event: ChangeEvent<HTMLInputElement>) => void;
+    clearImage: () => void;
+}
+
+function useImageUploader(): UseImageUploaderReturn {
+    const [selectedImage, setSelectedImage] = useState<File | null>(null);
     const [previewUrl, setPreviewUrl] = useState('');
     const [isImageSelected, setIsImageSelected] = useState(false);
 
-    const handleImageSelect = (event) => {
-        const selectedFile = event.target.files[0];
+    const handleImageSelect = (event: ChangeEvent<HTMLInputElement>) => {
+        const selectedFile = event.target.files && event.target.files[0];
         if (selectedFile) {
             setSelectedImage(selectedFile);
             setIsImageSelected(true);
 
-            // eslint-disable-next-line no-undef
             const reader = new FileReader();
             reader.onload = () => {
-                setPreviewUrl(reader.result);
+                if (typeof reader.result === 'string') {
+                    setPreviewUrl(reader.result);
+                }
             };
             reader.readAsDataURL(selectedFile);
         }
     };
 
     const clearImage = () => {
-        console.log('działa');
         setSelectedImage(null);
         setPreviewUrl('');
         setIsImageSelected(false);
