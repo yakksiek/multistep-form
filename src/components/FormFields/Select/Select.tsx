@@ -1,6 +1,9 @@
 /* eslint-disable default-case */
 /* eslint-disable no-unused-vars */
+
 import React, { useState, useEffect, useRef, createRef } from 'react';
+import { FormField } from 'types/formFieldData.interfaces';
+import { ICity, ICountry, IState } from 'country-state-city';
 import { UilAngleDown, UilAngleUp } from '@iconscout/react-unicons';
 import { useSelectContext } from '../../../context/SelectContext';
 import Label from '../Label/Label';
@@ -8,12 +11,18 @@ import Wrapper from '../../Wrapper';
 import { StyledCustomSelect, StyledSelectOptions, StyledValue, StyledOptionItem } from './Select.styled';
 import FieldError from '../FieldError';
 
-function Select({ options, value, data }) {
+interface Props {
+    options: ICountry[] | IState[] | ICity[];
+    value: string;
+    data: FormField;
+}
+
+function Select({ options, value, data }: Props) {
     const { name, label, error } = data;
     const [listVisible, setListVisible] = useState(false);
     const [highlightedIndex, setHeighlitedIndex] = useState(0);
     const { form, updateState, errors } = useSelectContext();
-    const optionRefs = useRef([]);
+    const optionRefs = useRef<Array<HTMLLIElement | null>>([]);
     const disabled = options.length === 0;
 
     useEffect(() => {
@@ -23,7 +32,7 @@ function Select({ options, value, data }) {
     useEffect(() => {
         const scrollIntoView = () => {
             if (highlightedIndex >= 0 && optionRefs.current[highlightedIndex]) {
-                optionRefs.current[highlightedIndex].current.scrollIntoView({
+                optionRefs.current[highlightedIndex]?.scrollIntoView({
                     behavior: 'auto',
                     block: 'nearest',
                     inline: 'nearest',
@@ -36,13 +45,12 @@ function Select({ options, value, data }) {
 
     const resetSelectError = () => {
         const errorInState = errors[name];
-        console.log(errorInState);
         if (!errorInState) return;
         const { [name]: ommitedKey, ...rest } = errors;
         updateState('errors', rest);
     };
 
-    const handleStateUpdate = (newValue) => {
+    const handleStateUpdate = (newValue: string) => {
         resetSelectError();
 
         if (name === 'country') {
@@ -56,7 +64,7 @@ function Select({ options, value, data }) {
         updateState('form', { ...form, [name]: newValue });
     };
 
-    const handleKeyDown = (e) => {
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
         if (disabled) return;
 
         switch (e.code) {
@@ -86,7 +94,7 @@ function Select({ options, value, data }) {
         }
     };
 
-    const handleOver = (index) => {
+    const handleOver = (index: number) => {
         setHeighlitedIndex(index);
     };
 
@@ -98,7 +106,7 @@ function Select({ options, value, data }) {
         setListVisible(false);
     };
 
-    const selectOption = (e, listItem) => {
+    const selectOption = (e: React.MouseEvent<HTMLElement>, listItem: string) => {
         e.stopPropagation();
         handleStateUpdate(listItem);
         setListVisible(false);
@@ -107,12 +115,13 @@ function Select({ options, value, data }) {
     const optionsJSX = () => {
         const items = options.map((item, index) => {
             const isOver = highlightedIndex === index;
-            optionRefs.current[index] = optionRefs.current[index] || createRef();
 
             return (
                 <StyledOptionItem
-                    key={item.isoCode || index}
-                    ref={optionRefs.current[index]}
+                    key={item.name}
+                    ref={(el) => {
+                        optionRefs.current[index] = el;
+                    }}
                     onMouseOver={() => {
                         handleOver(index);
                     }}
@@ -140,9 +149,7 @@ function Select({ options, value, data }) {
                 disabled={disabled}
                 isVisible={listVisible}
             >
-                <StyledValue value={value} name={name} data-select={name}>
-                    {value || (!disabled && 'Choose one option')}
-                </StyledValue>
+                <StyledValue>{value || (!disabled && 'Choose one option')}</StyledValue>
                 {!disabled && renderArrow}
                 <StyledSelectOptions isVisible={listVisible}>{optionsJSX()}</StyledSelectOptions>
             </StyledCustomSelect>
