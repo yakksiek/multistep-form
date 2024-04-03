@@ -15,7 +15,7 @@ function Checkbox({ data, value }: Props) {
     return (
         <Wrapper variant="flex-column">
             <StyledInputWrapper type={type}>
-                <Label htmlFor={id} type={type}>
+                <Label htmlFor={id} type={type === 'checkbox' ? type : undefined}>
                     {label}:
                 </Label>
                 <StyledToggleContainer>

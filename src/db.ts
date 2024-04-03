@@ -32,7 +32,7 @@ export const formFields: FormFields = {
             name: 'phone',
             label: 'Phone',
             required: true,
-            pattern: '^[0-9]+$',
+            pattern: '^\\+?[0-9]+$',
             type: 'text',
             id: crypto.randomUUID(),
             value: '',

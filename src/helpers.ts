@@ -152,17 +152,3 @@ export function capitalize(string) {
     if (!isValidName) throw new Error('not string type');
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
-
-// export function isCountryArray(options: any): options is ICountry[] {
-//     return options.every(
-//         (option) => option.code !== undefined && option.isoCode === undefined && option.cityCode === undefined,
-//     );
-// }
-
-// export function isStateArray(options: any): options is IState[] {
-//     return options.every((option) => option.stateCode !== undefined);
-// }
-
-// export function isCityArray(options: any): options is ICity[] {
-//     return options.every((option) => option.cityCode !== undefined);
-// }

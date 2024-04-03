@@ -68,7 +68,7 @@ function CustomInput({ children, data, value }: Props) {
     return (
         <Wrapper variant="flex-column">
             <StyledInputWrapper type={type}>
-                <Label htmlFor={id} type={type}>
+                <Label htmlFor={id} type={type === 'file' ? type : undefined}>
                     {label}:
                     <StyledCustomInput
                         name={name}
