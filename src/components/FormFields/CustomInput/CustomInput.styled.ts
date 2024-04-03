@@ -1,5 +1,9 @@
 import styled, { css } from 'styled-components';
 
+interface InputWrapperProps {
+    type: string;
+}
+
 const StyledCustomInput = styled.input`
     margin-top: var(--input-top-margin);
     background-color: var(--background-color);
@@ -35,7 +39,7 @@ const StyledCustomInput = styled.input`
         `}
 `;
 
-const StyledInputWrapper = styled.div`
+const StyledInputWrapper = styled.div<InputWrapperProps>`
     display: flex;
     justify-content: space-between;
     align-items: flex-end;

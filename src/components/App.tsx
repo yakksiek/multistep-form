@@ -6,7 +6,7 @@ import { InitialState, Form as FormInterface } from 'types/initialState.interfac
 import { FormField } from 'types/formFieldData.interfaces';
 import { UilPlusCircle } from '@iconscout/react-unicons';
 
-import { MuliInputsGroupType } from 'types/mulitplyInputsGroupTypes';
+import { MuliInputsGroupType } from 'types/mulitInputsGroupTypes';
 import FormActionTypes from '../types/FormActionTypes';
 import initial from '../reducer/initialState';
 import reducer from '../reducer/formReducer';
@@ -72,7 +72,7 @@ function App() {
         h.resetErrorInState(inputError, inputName, state.errors, updateState);
     };
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>, id: string, groupName?: 'school' | 'experience') => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>, id: string, groupName?: MuliInputsGroupType) => {
         const { name, value, type } = e.target;
         liveValidation(e.target);
         const newName = name as keyof FormInterface;
@@ -100,9 +100,10 @@ function App() {
     const createInputs = (fields: FormField[]) => {
         const formInputs = fields.map((field) => {
             const { type, name, id, groupName, deleteButton } = field;
-            const value = state.form[name as keyof FormInterface];
             const error = state.errors[name];
-            let data = { ...field, onChange: handleChange, value, error };
+            let data = { ...field, onChange: handleChange, error };
+            const rawValue = state.form[name as keyof FormInterface];
+            const value = typeof rawValue === 'string' ? rawValue : '';
 
             if (type === 'select') {
                 const options = state[name as keyof InitialState];
@@ -112,10 +113,10 @@ function App() {
             if (groupName) {
                 const group = state.form[groupName as MuliInputsGroupType];
                 const item = group.find((el) => el.id === id);
-
                 const newValue = item ? item.value : '';
+                const groupInputData = { ...data, deleteButton, handleRemoveField: removeFormField };
 
-                data = { ...data, value: newValue, deleteButton, handleClick: removeFormField };
+                return <CustomInput key={id} data={groupInputData} value={newValue} />;
             }
 
             if (type === 'file') {
@@ -123,10 +124,11 @@ function App() {
             }
 
             if (type === 'checkbox') {
-                return <Checkbox key={id} data={data} />;
+                const isChecked: boolean = typeof rawValue === 'boolean' ? rawValue : false;
+                return <Checkbox key={id} data={data} value={isChecked} />;
             }
 
-            return <CustomInput key={id} data={data} />;
+            return <CustomInput key={id} data={data} value={value} />;
         });
 
         return formInputs;

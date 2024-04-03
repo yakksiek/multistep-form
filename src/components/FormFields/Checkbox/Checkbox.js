@@ -6,7 +6,7 @@ import { StyledInputWrapper } from '../CustomInput/CustomInput.styled';
 import Label from '../Label';
 import Wrapper from '../../Wrapper';
 
-function Checkbox({ data }) {
+function Checkbox({ data, value }) {
     const { type, value: checked, onChange, name, id, label } = data;
 
     return (
