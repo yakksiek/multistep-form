@@ -1,10 +1,17 @@
-/* eslint-disable no-undef */
 import { useState, useEffect } from 'react';
 
-function useGeoLocation() {
-    const [location, setLocation] = useState({ loaded: false, coords: { lat: '', long: '' } });
+interface LocationState {
+    loaded: boolean;
+    coords: {
+        lat: number | '';
+        long: number | '';
+    };
+}
 
-    const onSuccess = (locationData) => {
+function useGeoLocation(): LocationState {
+    const [location, setLocation] = useState<LocationState>({ loaded: false, coords: { lat: '', long: '' } });
+
+    const onSuccess = (locationData: GeolocationPosition) => {
         const { latitude, longitude } = locationData.coords;
         setLocation({ loaded: true, coords: { lat: latitude, long: longitude } });
     };
