@@ -8,12 +8,13 @@ interface BaseField {
     id: string;
     type: string;
     pattern?: string;
-    // value?: string | boolean | School[] | Experience[];
     value?: string;
     groupName?: MuliInputsGroupType;
     accept?: string;
     deleteButton?: boolean;
-    handleClick?: () => void;
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>, id: string, groupName?: MuliInputsGroupType) => void;
+    error?: string;
+    handleRemoveField?: (id: string, groupName: MuliInputsGroupType) => void;
 }
 
 interface SelectField extends BaseField {
