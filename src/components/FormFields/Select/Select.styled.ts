@@ -1,6 +1,11 @@
 import styled, { css } from 'styled-components';
 
-const StyledCustomSelect = styled.div`
+interface CustomSelectProps {
+    isVisible: boolean;
+    disabled?: boolean;
+}
+
+const StyledCustomSelect = styled.div<CustomSelectProps>`
     margin-top: var(--input-top-margin);
     position: relative;
     min-height: 1.5em;
@@ -41,14 +46,12 @@ const StyledCustomSelect = styled.div`
         `}
 `;
 
-const StyledValue = styled.span.attrs((props) => ({
-    'data-select': props['data-select'],
-}))`
+const StyledValue = styled.span`
     padding: 0 1.5em;
     flex-grow: 1;
 `;
 
-const StyledSelectOptions = styled.ul`
+const StyledSelectOptions = styled.ul<{ isVisible: boolean }>`
     margin: 0;
     padding: 0;
     display: none;
@@ -77,7 +80,7 @@ const StyledSelectOptions = styled.ul`
         `};
 `;
 
-const StyledOptionItem = styled.li`
+const StyledOptionItem = styled.li<{ isOver: boolean }>`
     padding: 0.5em 0.5em;
     cursor: pointer;
 

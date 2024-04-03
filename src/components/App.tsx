@@ -5,6 +5,7 @@ import React, { useReducer, useEffect } from 'react';
 import { InitialState, Form as FormInterface } from 'types/initialState.interfaces';
 import { FormField } from 'types/formFieldData.interfaces';
 import { UilPlusCircle } from '@iconscout/react-unicons';
+import { ICountry, IState, ICity } from 'country-state-city';
 
 import { MuliInputsGroupType } from 'types/mulitInputsGroupTypes';
 import FormActionTypes from '../types/FormActionTypes';
@@ -42,6 +43,7 @@ function App() {
     } = useMultiStepForm(state, db.formFields, dispatch);
     const { selectedImage, previewUrl, isImageSelected, handleImageSelect, clearImage } = useImageUploader();
     const location = useGeoLocation();
+    console.log(state.form);
 
     useEffect(() => {}, [selectedImage]);
 
@@ -107,7 +109,15 @@ function App() {
             const value = typeof rawValue === 'string' ? rawValue : '';
 
             if (type === 'select') {
-                const options = state[name as keyof InitialState];
+                let options: ICountry[] | IState[] | ICity[] = [];
+                if (name === 'city') {
+                    options = state.city as ICity[];
+                } else if (name === 'state') {
+                    options = state.state as IState[];
+                } else if (name === 'country') {
+                    options = state.country as ICountry[];
+                }
+
                 return <Select key={name} data={data} options={options} value={value} />;
             }
 
@@ -126,8 +136,6 @@ function App() {
 
             if (type === 'checkbox') {
                 const isChecked = Boolean(rawValue);
-                console.log('createCheckbox');
-                console.log(isChecked);
                 return <Checkbox key={id} data={data} value={isChecked} />;
             }
 

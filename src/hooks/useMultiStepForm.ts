@@ -7,7 +7,7 @@ import { FormActions } from 'types/actionInterfaces';
 import FormActionTypes from '../types/FormActionTypes';
 
 function useMultiStepForm(state: InitialState, allFields: FormFields, dispatch: Dispatch<FormActions>) {
-    const [currentStepIndex, setCurrentStepIndex] = useState(3);
+    const [currentStepIndex, setCurrentStepIndex] = useState(0);
     const [allFormDataFields, setAllFormDataFields] = useState(allFields);
     const stepsNumber = state.tabNames.length;
     const isFirstStep = currentStepIndex === 0;
