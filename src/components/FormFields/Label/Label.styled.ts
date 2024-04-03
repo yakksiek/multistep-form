@@ -1,6 +1,11 @@
 import styled, { css } from 'styled-components';
+import { LabelType } from './Label';
 
-const StyledLabel = styled.label`
+interface StyledLabel {
+    type?: LabelType;
+}
+
+const StyledLabel = styled.label<StyledLabel>`
     font-family: 'SFProBold', sans-serif;
     position: relative;
     display: flex;
