@@ -6,6 +6,13 @@ import { StyledInputWrapper } from '../CustomInput/CustomInput.styled';
 import Label from '../Label';
 import Wrapper from '../../Wrapper';
 
+// interface BaseFieldData {
+//     onChange: (e: React.ChangeEvent<HTMLInputElement>, id: string, groupName?: MuliInputsGroupType) => void;
+//     error: string;
+// }
+
+// type ExtendedFormField = FormField & BaseFieldData
+
 function Checkbox({ data, value }) {
     const { type, value: checked, onChange, name, id, label } = data;
 

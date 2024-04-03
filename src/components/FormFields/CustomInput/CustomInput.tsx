@@ -12,24 +12,15 @@ import Button from '../../Button';
 
 import { StyledCustomInput, StyledInputWrapper } from './CustomInput.styled';
 
-interface BaseFieldData {
-    onChange: (e: React.ChangeEvent<HTMLInputElement>, id: string, groupName?: MuliInputsGroupType) => void;
-    error: string;
-    handleRemoveField?: (id: string, groupName: MuliInputsGroupType) => void;
-}
-
-type ExtendedFormField = FormField & BaseFieldData;
-
 interface Props {
     children?: React.ReactNode;
-    data: ExtendedFormField;
+    data: FormField;
     value: string;
 }
 
 function CustomInput({ children, data, value }: Props) {
     const { isImageSelected, clearImage } = useImageUploaderContext();
-    const { type, name, label, id, groupName, accept, onChange, error, deleteButton, handleRemoveField } =
-        data;
+    const { type, name, label, id, groupName, accept, onChange, error, deleteButton, handleRemoveField } = data;
 
     const delInputButton = deleteButton && handleRemoveField && (
         <Button
@@ -82,10 +73,10 @@ function CustomInput({ children, data, value }: Props) {
                     <StyledCustomInput
                         name={name}
                         onChange={(e) => {
-                            if (groupName) {
+                            if (groupName && onChange) {
                                 return onChange(e, id, groupName);
                             }
-                            return onChange(e, id);
+                            return onChange && onChange(e, id);
                         }}
                         value={type === 'file' ? '' : value}
                         type={type}
