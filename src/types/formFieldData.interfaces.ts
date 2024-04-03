@@ -1,3 +1,6 @@
+import { Experience, School } from './initialState.interfaces';
+import { MuliInputsGroupType } from './mulitInputsGroupTypes';
+
 interface BaseField {
     name: string;
     label: string;
@@ -5,8 +8,9 @@ interface BaseField {
     id: string;
     type: string;
     pattern?: string;
+    // value?: string | boolean | School[] | Experience[];
     value?: string;
-    groupName?: string;
+    groupName?: MuliInputsGroupType;
     accept?: string;
     deleteButton?: boolean;
     handleClick?: () => void;

@@ -1,16 +1,44 @@
+import { MuliInputsGroupType } from 'types/mulitInputsGroupTypes';
 import StyledButton from './Button.styled';
 
 interface ButtonProps {
-    onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
-    type: 'button' | 'submit' | 'reset';
+    onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+    onDeleteInput?: (id: string, groupName: MuliInputsGroupType) => void;
+    type: 'button' | 'submit' | 'reset' | 'delete';
     children: React.ReactNode;
     disabled?: boolean;
     variant?: 'dark' | 'circle';
+    style?: React.CSSProperties;
+    id?: string;
+    groupName?: MuliInputsGroupType;
 }
 
-function Button({ onClick, type = 'button', children = '', disabled, variant }: ButtonProps) {
+function Button({
+    onClick,
+    type = 'button',
+    children,
+    disabled,
+    variant,
+    style,
+    onDeleteInput,
+    id,
+    groupName,
+}: ButtonProps) {
+    const clickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+        console.log('click');
+        if (type === 'delete') {
+            e.preventDefault();
+            if (onDeleteInput && id !== undefined && groupName !== undefined) {
+                onDeleteInput(id, groupName);
+            }
+        } else {
+            onClick?.(e);
+        }
+    };
+
+    const buttonType = type === 'delete' ? 'button' : type;
     return (
-        <StyledButton type={type} onClick={onClick} disabled={disabled} variant={variant}>
+        <StyledButton type={buttonType} onClick={clickHandler} disabled={disabled} variant={variant} style={style}>
             {children}
         </StyledButton>
     );

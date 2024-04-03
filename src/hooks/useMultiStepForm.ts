@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { useState, Dispatch } from 'react';
 import { InitialState } from 'types/initialState.interfaces';
-import { MuliInputsGroupType } from 'types/mulitplyInputsGroupTypes';
+import { MuliInputsGroupType } from 'types/mulitInputsGroupTypes';
 import FormFields from 'types/formFieldData.interfaces';
 import { FormActions } from 'types/actionInterfaces';
 import FormActionTypes from '../types/FormActionTypes';
