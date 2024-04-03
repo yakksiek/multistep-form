@@ -1,5 +1,9 @@
 import styled, { css } from 'styled-components';
 
+interface StyledCircleProps {
+    checked: boolean;
+}
+
 const StyledToggleContainer = styled.label`
     position: relative;
     display: inline-block;
@@ -47,7 +51,7 @@ const StyledSlider = styled.div`
     }
 `;
 
-const StyledCircle = styled.div`
+const StyledCircle = styled.div<StyledCircleProps>`
     position: absolute;
     height: 26px;
     width: 26px;

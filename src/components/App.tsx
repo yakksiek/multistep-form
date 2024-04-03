@@ -51,7 +51,6 @@ function App() {
 
     useEffect(() => {
         h.renderConditionallySelects(state.form, updateState);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [state.form]);
 
     useEffect(() => {
@@ -61,8 +60,7 @@ function App() {
             const newForm = { ...state.form, country: userCountry };
             updateState('form', newForm);
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [location]);
+    }, [location, state.form]);
 
     const liveValidation = (input: HTMLInputElement) => {
         const inputName = input.name;
@@ -91,7 +89,10 @@ function App() {
         }
 
         if (type === 'checkbox') {
-            return dispatch({ type: FormActionTypes.UpdateFormKey, payload: { name: newName, value } });
+            return dispatch({
+                type: FormActionTypes.UpdateFormKey,
+                payload: { name: newName, value: !state.form.newsletter },
+            });
         }
 
         return dispatch({ type: FormActionTypes.UpdateFormKey, payload: { name: newName, value } });
@@ -124,7 +125,9 @@ function App() {
             }
 
             if (type === 'checkbox') {
-                const isChecked: boolean = typeof rawValue === 'boolean' ? rawValue : false;
+                const isChecked = Boolean(rawValue);
+                console.log('createCheckbox');
+                console.log(isChecked);
                 return <Checkbox key={id} data={data} value={isChecked} />;
             }
 
