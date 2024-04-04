@@ -6,12 +6,18 @@ import {
     StyledListNumber,
 } from './FormSummary.styled';
 
-function FormSummary({ currentStepIndex, tabNames, tabDescriptions }) {
+interface Props {
+    currentStepIndex: number;
+    tabNames: string[];
+    tabDescriptions: string[];
+}
+
+function FormSummary({ currentStepIndex, tabNames, tabDescriptions }: Props) {
     const stepsJSX = tabNames.map((item, index) => {
         const isActive = currentStepIndex === index;
         return (
             <StyledListItem isActive={isActive} key={crypto.randomUUID()}>
-                <StyledListNumber isActive={isActive}>{index + 1}</StyledListNumber> {item}
+                <StyledListNumber>{index + 1}</StyledListNumber> {item}
             </StyledListItem>
         );
     });

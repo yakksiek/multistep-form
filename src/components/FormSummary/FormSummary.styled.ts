@@ -14,7 +14,7 @@ const StyledList = styled.ul`
     margin-top: 50px;
 `;
 
-const StyledListItem = styled.li`
+const StyledListItem = styled.li<{ isActive: boolean }>`
     color: ${({ isActive }) => (isActive ? 'white' : 'var(--color-1)')};
     margin-bottom: 2em;
     display: flex;
