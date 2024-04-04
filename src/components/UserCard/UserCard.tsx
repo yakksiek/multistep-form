@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { Form, School } from 'types/initialState.interfaces';
 import { useImageUploaderContext } from '../../context/ImageUploaderContext';
 import {
     StyledImgWrapper,
@@ -9,11 +10,15 @@ import {
     StyledLine,
 } from './UserCard.styled';
 
-function UserCard({ data }) {
+interface Props {
+    data: Form;
+}
+
+function UserCard({ data }: Props) {
     const { previewUrl, isImageSelected } = useImageUploaderContext();
     const { firstName, lastName, email, phone, country, city, school, experience } = data;
 
-    const renderListItems = (items) => items.map(({ value, id }) => <li key={id}>{value}</li>);
+    const renderListItems = (items: School[]) => items.map(({ value, id }) => <li key={id}>{value}</li>);
 
     const userProfileImage = isImageSelected ? (
         <StyledUserImg src={previewUrl} alt="selected" />
