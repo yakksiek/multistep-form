@@ -1,11 +1,9 @@
-import React from 'react';
-
 import {
     StyledFormSummary,
+    StyledFormSummarySubtitle,
+    StyledList,
     StyledListItem,
     StyledListNumber,
-    StyledFormSummarySubtitle,
-    StyledList
 } from './FormSummary.styled';
 
 function FormSummary({ currentStepIndex, tabNames, tabDescriptions }) {
