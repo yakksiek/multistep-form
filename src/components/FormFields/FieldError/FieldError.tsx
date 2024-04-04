@@ -1,8 +1,10 @@
-import React from 'react';
-
 import StyledFieldError from './FieldError.styled';
 
-function FieldError({ children }) {
+interface Props {
+    children: React.ReactNode;
+}
+
+function FieldError({ children }: Props) {
     return <StyledFieldError>{children}</StyledFieldError>;
 }
 

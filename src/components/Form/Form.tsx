@@ -1,7 +1,11 @@
-import React from 'react';
 import { StyledForm } from './Form.styled';
 
-function Form({ onSubmit, children }) {
+interface Props {
+    children: React.ReactNode;
+    onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+}
+
+function Form({ onSubmit, children }: Props) {
     return (
         <StyledForm noValidate onSubmit={onSubmit}>
             {children}
