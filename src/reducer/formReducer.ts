@@ -1,7 +1,7 @@
 import { FormActions } from 'types/actionInterfaces';
 import { InitialState } from 'types/initialState.interfaces';
 import initialState from './initialState';
-import ActionT from '../types/FormActionTypes';
+import ActionT from '../types/formActionTypes';
 
 const reducer = (state: InitialState, action: FormActions): InitialState => {
     switch (action.type) {

@@ -1,4 +1,4 @@
-import FormActionTypes from './FormActionTypes';
+import FormActionTypes from './formActionTypes';
 import { Form, InitialState } from './initialState.interfaces';
 
 export interface UpdateStateKeyAction {

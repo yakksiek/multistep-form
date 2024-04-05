@@ -4,7 +4,7 @@
 
 See the live version of [Multi-page form](https://yakksiek.github.io/multistep-form/).
 
-The application features a multi-page form interface, styled using Styled-Components. It includes a custom select component, allowing users to navigate through options with keys. Additionally, the app uses a photo file upload system and live form validation.
+The application features a multi-page form interface, styled using Styled-Components and TypeScript. It includes a custom select component, allowing users to navigate through options with keys. Additionally, the app uses a photo file upload system and live form validation.
 
 **Main features**:
 
@@ -25,8 +25,12 @@ The application features a multi-page form interface, styled using Styled-Compon
     - Offers a modern and user-friendly interface with subtle aesthetics.
 
 5. **Use of Reducer in Form**
+
     - Utilizes a reducer for state management in the form.
     - Enhances form handling, making it more efficient and scalable.
+
+6. **TypeScript Integration**
+    - Incorporates TypeScript for static type checking.
 
 &nbsp;
 
@@ -34,7 +38,7 @@ The application features a multi-page form interface, styled using Styled-Compon
 
 ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
-![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
+![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
 ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
 ![Styled Components](https://img.shields.io/badge/styled--components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white)
 ![Webpack](https://img.shields.io/badge/webpack-%238DD6F9.svg?style=for-the-badge&logo=webpack&logoColor=black)
@@ -56,15 +60,15 @@ The project uses [node](https://nodejs.org/en/) and [npm](https://www.npmjs.com/
 
 ## 🤔 Solutions provided in the project
 
-**Custom Select** - build from scratch and can be navigated through using keys. 
+**Custom Select** - build from scratch and can be navigated through using keys.
 
 ```javascript
-function Select({ options, value, data }) {
+function Select({ options, value, data }: Props) {
     const { name, label, error } = data;
     const [listVisible, setListVisible] = useState(false);
     const [highlightedIndex, setHeighlitedIndex] = useState(0);
     const { form, updateState, errors } = useSelectContext();
-    const optionRefs = useRef([]);
+    const optionRefs = (useRef < Array < HTMLLIElement) | (null >> []);
     const disabled = options.length === 0;
 
     useEffect(() => {
@@ -74,7 +78,7 @@ function Select({ options, value, data }) {
     useEffect(() => {
         const scrollIntoView = () => {
             if (highlightedIndex >= 0 && optionRefs.current[highlightedIndex]) {
-                optionRefs.current[highlightedIndex].current.scrollIntoView({
+                optionRefs.current[highlightedIndex]?.scrollIntoView({
                     behavior: 'auto',
                     block: 'nearest',
                     inline: 'nearest',
@@ -87,13 +91,13 @@ function Select({ options, value, data }) {
 
     const resetSelectError = () => {
         const errorInState = errors[name];
-        console.log(errorInState);
         if (!errorInState) return;
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { [name]: ommitedKey, ...rest } = errors;
         updateState('errors', rest);
     };
 
-    const handleStateUpdate = (newValue) => {
+    const handleStateUpdate = (newValue: string) => {
         resetSelectError();
 
         if (name === 'country') {
@@ -107,7 +111,7 @@ function Select({ options, value, data }) {
         updateState('form', { ...form, [name]: newValue });
     };
 
-    const handleKeyDown = (e) => {
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
         if (disabled) return;
 
         switch (e.code) {
@@ -134,10 +138,12 @@ function Select({ options, value, data }) {
             case 'Escape':
                 setListVisible(false);
                 break;
+            default:
+                break;
         }
     };
 
-    const handleOver = (index) => {
+    const handleOver = (index: number) => {
         setHeighlitedIndex(index);
     };
 
@@ -149,7 +155,7 @@ function Select({ options, value, data }) {
         setListVisible(false);
     };
 
-    const selectOption = (e, listItem) => {
+    const selectOption = (e: React.MouseEvent<HTMLElement>, listItem: string) => {
         e.stopPropagation();
         handleStateUpdate(listItem);
         setListVisible(false);
@@ -158,12 +164,13 @@ function Select({ options, value, data }) {
     const optionsJSX = () => {
         const items = options.map((item, index) => {
             const isOver = highlightedIndex === index;
-            optionRefs.current[index] = optionRefs.current[index] || createRef();
 
             return (
                 <StyledOptionItem
-                    key={item.isoCode || index}
-                    ref={optionRefs.current[index]}
+                    key={item.name}
+                    ref={(el) => {
+                        optionRefs.current[index] = el;
+                    }}
                     onMouseOver={() => {
                         handleOver(index);
                     }}
@@ -191,9 +198,7 @@ function Select({ options, value, data }) {
                 disabled={disabled}
                 isVisible={listVisible}
             >
-                <StyledValue value={value} name={name} data-select={name}>
-                    {value || (!disabled && 'Choose one option')}
-                </StyledValue>
+                <StyledValue>{value || (!disabled && 'Choose one option')}</StyledValue>
                 {!disabled && renderArrow}
                 <StyledSelectOptions isVisible={listVisible}>{optionsJSX()}</StyledSelectOptions>
             </StyledCustomSelect>
@@ -204,6 +209,21 @@ function Select({ options, value, data }) {
 ```
 
 &nbsp;
+
+## 🚀 Future Possible Improvements
+
+Here are some potential enhancements that could be considered for future iterations of the application:
+
+1. **Refactor Country/City/State Mechanism**
+
+    - Evaluate and potentially replace the current external library and use API calls to improve performance.
+
+2. **Mobile View Optimization**
+
+    - Implementing a fully responsive mobile view will ensure accessibility and usability across all devices.
+
+3. **Component Decoupling**
+    - Move the core logic away from the `App` component. This may include using additional hooks, context providers, or higher-order components.
 
 ## 🙋‍♂️ Feel free to contact me
 

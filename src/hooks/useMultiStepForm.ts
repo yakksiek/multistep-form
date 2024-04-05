@@ -4,7 +4,7 @@ import { InitialState } from 'types/initialState.interfaces';
 import { MuliInputsGroupType } from 'types/mulitInputsGroupTypes';
 import FormFields from 'types/formFieldData.interfaces';
 import { FormActions } from 'types/actionInterfaces';
-import FormActionTypes from '../types/FormActionTypes';
+import FormActionTypes from '../types/formActionTypes';
 
 function useMultiStepForm(state: InitialState, allFields: FormFields, dispatch: Dispatch<FormActions>) {
     const [currentStepIndex, setCurrentStepIndex] = useState(0);

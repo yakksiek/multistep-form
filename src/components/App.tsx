@@ -10,7 +10,7 @@ import { ICountry, IState, ICity } from 'country-state-city';
 import { MuliInputsGroupType } from 'types/mulitInputsGroupTypes';
 import * as db from '../db';
 import * as h from '../helpers';
-import FormActionTypes from '../types/FormActionTypes';
+import FormActionTypes from '../types/formActionTypes';
 import initial from '../reducer/initialState';
 import reducer from '../reducer/formReducer';
 import ContextProviders from '../context/ContextProviders';

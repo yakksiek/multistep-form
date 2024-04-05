@@ -36,6 +36,7 @@
         "eslint-plugin-react": "^7.33.2",
         "eslint-plugin-react-hooks": "^4.6.0",
         "eslint-webpack-plugin": "^3.2.0",
+        "gh-pages": "^4.0.0",
         "html-webpack-plugin": "^5.5.3",
         "prettier": "^2.8.8",
         "ts-loader": "^9.5.1",
@@ -44,11 +45,14 @@
         "webpack-cli": "^4.10.0",
         "webpack-dev-server": "^4.15.1"
     },
-    "name": "task-react-styling",
-    "description": "> ⭐ ***README** to coś więcej niż opis. Poprzez nie **pokazujesz swoje mocne strony** – swoją dokładność, sposób myślenia i podejście do rozwiązywania problemów. Niech Twoje README pokaże, że masz **świetne predyspozycje do rozwoju!*** >  > 🎁 *Zacznij od razu. Skorzystaj z **[szablonu README i wskazówek](https://github.com/devmentor-pl/readme-template)**.*",
+    "homepage": "https://yakksiek.github.com/multistep-form",
+    "name": "multistep-form",
+    "description": "The application features a multi-page form interface, styled using Styled-Components.",
     "version": "1.0.0",
     "main": "app.js",
     "scripts": {
+        "predeploy": "npm run build",
+        "deploy": "gh-pages -d build",
         "test": "echo \"Error: no test specified\" && exit 1",
         "start": "webpack serve --mode development",
         "build": "webpack --env production"
