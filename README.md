@@ -60,6 +60,27 @@ The project uses [node](https://nodejs.org/en/) and [npm](https://www.npmjs.com/
 
 ## 🤔 Solutions provided in the project
 
+**Dynamic Form Input Generation** - The application dynamically creates form inputs based on a structured object.
+
+Here is a simplified example of how form inputs are defined:
+
+```javascript
+export const formFields: FormFields = {
+    'profile details': [
+        {
+            name: 'firstName',
+            label: 'Name',
+            required: true,
+            pattern: '^[a-zA-Z -]+$',
+            id: crypto.randomUUID(),
+            type: 'text',
+        },
+        // Additional fields...
+    ],
+    // Other sections like 'education', 'experience', 'summary'...
+};
+```
+
 **Custom Select** - build from scratch and can be navigated through using keys.
 
 ```javascript
