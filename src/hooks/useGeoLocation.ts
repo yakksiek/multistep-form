@@ -3,13 +3,13 @@ import { useState, useEffect } from 'react';
 interface LocationState {
     loaded: boolean;
     coords: {
-        lat: number | '';
-        long: number | '';
+        lat: number | null;
+        long: number | null;
     };
 }
 
 function useGeoLocation(): LocationState {
-    const [location, setLocation] = useState<LocationState>({ loaded: false, coords: { lat: '', long: '' } });
+    const [location, setLocation] = useState<LocationState>({ loaded: false, coords: { lat: null, long: null } });
 
     const onSuccess = (locationData: GeolocationPosition) => {
         const { latitude, longitude } = locationData.coords;

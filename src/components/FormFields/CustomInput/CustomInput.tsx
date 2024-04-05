@@ -1,14 +1,12 @@
-/* eslint-disable no-unused-vars */
 import { UilImageUpload, UilTrashAlt } from '@iconscout/react-unicons';
 
 import { FormField } from 'types/formFieldData.interfaces';
-import { MuliInputsGroupType } from 'types/mulitInputsGroupTypes';
 import { useImageUploaderContext } from '../../../context/ImageUploaderContext';
+import Button from '../../Button';
 import IconWrapper from '../../IconWrapper';
 import Wrapper from '../../Wrapper';
 import FieldError from '../FieldError';
 import Label from '../Label/Label';
-import Button from '../../Button';
 
 import { StyledCustomInput, StyledInputWrapper } from './CustomInput.styled';
 
@@ -25,9 +23,7 @@ function CustomInput({ children, data, value }: Props) {
     const delInputButton = deleteButton && handleRemoveField && (
         <Button
             onDeleteInput={() => {
-                console.log('działa');
                 if (groupName) {
-                    console.log('działa 2');
                     handleRemoveField(id, groupName);
                 }
             }}
@@ -95,6 +91,3 @@ function CustomInput({ children, data, value }: Props) {
 }
 
 export default CustomInput;
-
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck

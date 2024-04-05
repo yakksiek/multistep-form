@@ -1,7 +1,4 @@
-/* eslint-disable default-case */
-/* eslint-disable no-unused-vars */
-
-import React, { useState, useEffect, useRef, createRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { FormField } from 'types/formFieldData.interfaces';
 import { ICity, ICountry, IState } from 'country-state-city';
 import { UilAngleDown, UilAngleUp } from '@iconscout/react-unicons';
@@ -46,6 +43,7 @@ function Select({ options, value, data }: Props) {
     const resetSelectError = () => {
         const errorInState = errors[name];
         if (!errorInState) return;
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { [name]: ommitedKey, ...rest } = errors;
         updateState('errors', rest);
     };
@@ -90,6 +88,8 @@ function Select({ options, value, data }: Props) {
                 break;
             case 'Escape':
                 setListVisible(false);
+                break;
+            default:
                 break;
         }
     };

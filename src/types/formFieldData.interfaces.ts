@@ -1,4 +1,3 @@
-import { Experience, School } from './initialState.interfaces';
 import { MuliInputsGroupType } from './mulitInputsGroupTypes';
 
 interface BaseField {
