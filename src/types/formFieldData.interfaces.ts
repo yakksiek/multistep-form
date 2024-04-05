@@ -41,7 +41,7 @@ interface CheckboxField extends BaseField {
 export type FormField = SelectField | TextField | EmailField | FileField | CheckboxField;
 
 export default interface FormFields {
-    'personal info': FormField[];
+    'profile details': FormField[];
     education: FormField[];
     experience: FormField[];
     summary: FormField[];

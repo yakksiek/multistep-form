@@ -8,11 +8,11 @@ import { UilPlusCircle } from '@iconscout/react-unicons';
 import { ICountry, IState, ICity } from 'country-state-city';
 
 import { MuliInputsGroupType } from 'types/mulitInputsGroupTypes';
+import * as db from '../db';
+import * as h from '../helpers';
 import FormActionTypes from '../types/FormActionTypes';
 import initial from '../reducer/initialState';
 import reducer from '../reducer/formReducer';
-import * as db from '../db';
-import * as h from '../helpers';
 import ContextProviders from '../context/ContextProviders';
 import useGeoLocation from '../hooks/useGeoLocation';
 import useImageUploader from '../hooks/useImageUploader';
@@ -190,8 +190,6 @@ function App() {
         nextTab();
     };
 
-    // const extraInputsJSX = state[`${state.tabNames[currentStepIndex]}ExtraInputs`];
-
     const selectContextValue = {
         form: state.form,
         updateState,
@@ -225,11 +223,8 @@ function App() {
     };
 
     return (
-        <Wrapper variant="container">
-            <ContextProviders
-                selectContextValue={selectContextValue}
-                imageUploaderContextValue={imageUploaderContextValue}
-            >
+        <ContextProviders selectContextValue={selectContextValue} imageUploaderContextValue={imageUploaderContextValue}>
+            <Wrapper variant="container">
                 <FormSummary
                     currentStepIndex={currentStepIndex}
                     tabNames={state.tabNames}
@@ -238,7 +233,6 @@ function App() {
                 <Wrapper variant="form">
                     <Form onSubmit={onSubmit}>
                         {generateTabsAndInputs(state.tabNames, formDataFields)[currentStepIndex]}
-                        {/* {extraInputsJSX} */}
                         {renderAddFieldButton()}
                         {renderSummary()}
                         <Wrapper variant="btnContainer">
@@ -251,8 +245,8 @@ function App() {
                         </Wrapper>
                     </Form>
                 </Wrapper>
-            </ContextProviders>
-        </Wrapper>
+            </Wrapper>
+        </ContextProviders>
     );
 }
 

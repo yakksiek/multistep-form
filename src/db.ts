@@ -3,7 +3,7 @@
 import FormFields from 'types/formFieldData.interfaces';
 
 export const formFields: FormFields = {
-    'personal info': [
+    'profile details': [
         {
             name: 'firstName',
             label: 'Name',
