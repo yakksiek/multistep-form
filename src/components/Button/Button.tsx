@@ -25,7 +25,6 @@ function Button({
     groupName,
 }: ButtonProps) {
     const clickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
-        console.log('click');
         if (type === 'delete') {
             e.preventDefault();
             if (onDeleteInput && id !== undefined && groupName !== undefined) {

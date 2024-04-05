@@ -43,7 +43,6 @@ function App() {
     } = useMultiStepForm(state, db.formFields, dispatch);
     const { selectedImage, previewUrl, isImageSelected, handleImageSelect, clearImage } = useImageUploader();
     const location = useGeoLocation();
-    console.log(state.form);
 
     useEffect(() => {}, [selectedImage]);
 
@@ -163,7 +162,7 @@ function App() {
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const form = e.target;
+        const form = e.target as HTMLFormElement;
         const inputElements = h.findInputElementsInForm(form);
         let errors = {};
         const submitErrors = h.validate(formDataFields, inputElements);

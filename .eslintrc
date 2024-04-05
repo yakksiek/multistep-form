@@ -3,8 +3,8 @@
     "extends": ["airbnb", "airbnb/hooks", "plugin:@typescript-eslint/recommended", "prettier"],
     "plugins": ["@typescript-eslint"],
     "rules": {
-        "no-unused-vars": "off",
-        "@typescript-eslint/no-unused-vars": "off",
+        // "no-unused-vars": "off",
+        // "@typescript-eslint/no-unused-vars": "off",
         "react/require-default-props": "off",
         "no-shadow": "off",
         "@typescript-eslint/ban-ts-comment": [
@@ -27,7 +27,7 @@
             }
         ],
         "react/react-in-jsx-scope": "off",
-        "no-console": "off",
+        // "no-console": "off",
         "react/jsx-filename-extension": [
             1,
             {
